@@ -1,0 +1,1 @@
+Mockup image/screen exports go here once produced from the approved mockup source (`Somacord Experience.dc.html`). See [/docs/design/website-mockups.md](../../docs/design/website-mockups.md) and [/docs/design/app-mockups.md](../../docs/design/app-mockups.md) for the approved screen list.
