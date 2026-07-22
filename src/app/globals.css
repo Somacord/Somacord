@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+/*
+ * Somacord Design System — CSS tokens
+ *
+ * Source of truth: /somacord-docs/docs/brand/colors.md,
+ * /somacord-docs/docs/brand/typography.md and
+ * /somacord-docs/docs/design/design-system.md.
+ *
+ * Tailwind v4 turns every `--color-*` / `--font-*` / `--radius-*` token
+ * below into matching utility classes automatically (e.g. `--color-cord-blue`
+ * becomes `bg-cord-blue`, `text-cord-blue`, `border-cord-blue`, ...).
+ */
+@theme {
+  /* Brand palette (docs/brand/colors.md) */
+  --color-cord-blue: #1f4e5f; /* Deep Cord Blue — nav, footer, headings, dark sections */
+  --color-community-green: #5e8c61; /* Community Green — primary CTAs */
+  --color-soft-sky: #d9eef2; /* Soft Sky — light section backgrounds */
+  --color-warm-sand: #e8dccb; /* Warm Sand — light section backgrounds */
+  --color-charcoal: #273238; /* Charcoal — dark text and dark sections */
+
+  /* Supporting ink tones used across the approved mockups for body copy */
+  --color-ink: #273238; /* alias of charcoal, used for default text */
+  --color-ink-muted: #55636a; /* secondary/body copy on white & sky backgrounds */
+  --color-sand-ink: #4a4038; /* body copy on warm-sand backgrounds */
+
+  /* Typography (docs/brand/typography.md) */
+  --font-display: var(--font-lora), "Lora", serif; /* Headlines, weights 500-700 */
+  --font-sans: var(--font-work-sans), "Work Sans", sans-serif; /* Body / UI, weights 400-700 */
+
+  /* Radii (docs/design/design-system.md) */
+  --radius-pill: 100px; /* buttons: always pill-shaped */
+  --radius-card: 16px; /* standard cards */
+  --radius-card-lg: 20px; /* pricing card, hero media, gathering detail hero */
+  --radius-card-sm: 14px; /* partner type cards */
+
+  /* Layout */
+  --breakpoint-3xl: 1600px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-soft-sky);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    color: var(--color-ink);
+    background-color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  a {
+    color: inherit;
+  }
+}
+
+@layer utilities {
+  /* Matches the approved mockup's max content width for marketing sections */
+  .container-page {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 40px;
+    }
+  }
+}

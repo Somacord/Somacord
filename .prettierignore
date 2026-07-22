@@ -1,0 +1,9 @@
+.next
+node_modules
+public
+package-lock.json
+
+# Approved documentation & mockup source — not part of the app build,
+# never auto-formatted.
+somacord-docs
+assets
