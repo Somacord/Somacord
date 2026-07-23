@@ -52,6 +52,19 @@ export default async function GatheringsPage() {
             ) : undefined
           }
         />
+        {gatherings.length === 0 && (
+          <p className="text-ink-muted mb-6 text-sm">
+            {siteConfig.launchCity.name} gatherings are just getting started — Speed Connect is live
+            now, and real gatherings are on the way.{" "}
+            {current ? (
+              <Link href="/gatherings/create" className="text-cord-blue font-medium underline">
+                Create the first one
+              </Link>
+            ) : (
+              <>Be the first to know when they land.</>
+            )}
+          </p>
+        )}
         <GatheringsBrowser gatherings={[speedConnectTile, ...gatherings]} />
       </Container>
     </Section>

@@ -18,9 +18,11 @@ import { getCityIdBySlug, getPublishedGatherings } from "@/lib/queries/gathering
 
 /**
  * Homepage — docs/design/website-mockups.md ("Homepage").
- * Section order follows the approved MVP build plan for this phase:
- * Hero → How It Works → Featured Gatherings → Community Partners →
- * Membership Preview → FAQ → Final CTA.
+ * Section order: Hero → How It Works → Featured Gatherings → Membership
+ * Preview → Community Partners → FAQ → Final CTA. Membership comes
+ * before the Community Partners teaser since the primary homepage
+ * audience is individual visitors, not businesses — see the first-time-
+ * visitor audit that reordered this from the original build-plan order.
  */
 export default async function HomePage() {
   const cityId = await getCityIdBySlug(siteConfig.launchCity.slug);
@@ -112,29 +114,6 @@ export default async function HomePage() {
         </Container>
       </Section>
 
-      <Section tone="sand">
-        <Container>
-          <SplitLayout
-            imageSrc={photography.communityPartner.src}
-            imageAlt={photography.communityPartner.alt}
-            reverse
-          >
-            <Eyebrow>Community Partners</Eyebrow>
-            <h2 className="mb-4 text-[32px]">
-              Local spots already bring people together. We help them do it better.
-            </h2>
-            <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              Coffee shops, restaurants, clubs, and hobby groups partner with Somacord as
-              organizations — not members — to bring their existing community in and reach new
-              people looking for exactly what they offer.
-            </p>
-            <Button asChild variant="secondary-light">
-              <Link href="/partners">Become a Partner</Link>
-            </Button>
-          </SplitLayout>
-        </Container>
-      </Section>
-
       <Section>
         <Container>
           <SplitLayout
@@ -156,6 +135,29 @@ export default async function HomePage() {
             />
             <Button asChild variant="primary">
               <Link href="/membership">See Membership</Link>
+            </Button>
+          </SplitLayout>
+        </Container>
+      </Section>
+
+      <Section tone="sand">
+        <Container>
+          <SplitLayout
+            imageSrc={photography.communityPartner.src}
+            imageAlt={photography.communityPartner.alt}
+            reverse
+          >
+            <Eyebrow>Community Partners</Eyebrow>
+            <h2 className="mb-4 text-[32px]">
+              Local spots already bring people together. We help them do it better.
+            </h2>
+            <p className="mb-6 text-base leading-relaxed text-[#55636A]">
+              Coffee shops, restaurants, clubs, and hobby groups partner with Somacord as
+              organizations — not members — to bring their existing community in and reach new
+              people looking for exactly what they offer.
+            </p>
+            <Button asChild variant="secondary-light">
+              <Link href="/partners">Become a Partner</Link>
             </Button>
           </SplitLayout>
         </Container>

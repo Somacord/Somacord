@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,14 @@ export function PartnerInquiryForm() {
     return (
       <div className="rounded-card border-soft-sky bg-soft-sky/10 border px-6 py-8 text-center">
         <h3 className="mb-2 text-xl text-white">Thanks for reaching out</h3>
-        <p className="text-sm text-white/85">{state.message}</p>
+        <p className="mb-4 text-sm text-white/85">{state.message}</p>
+        <p className="text-sm text-white/85">
+          In the meantime,{" "}
+          <Link href="/gatherings" className="underline">
+            see what&apos;s happening on Somacord
+          </Link>
+          .
+        </p>
       </div>
     );
   }
