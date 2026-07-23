@@ -24,6 +24,6 @@ Organization (already runs a coffee shop, brewery, restaurant, or community grou
 → Introduce their existing community to Somacord
 → Grow local presence and reach new people
 
-There is no shared membership subscription — Community Partners pay through partner products (flat fee, revenue share, or recurring subscription, per event), not the Somacord Membership. See [/docs/business/pricing.md](../business/pricing.md#community-partner-pricing).
+There is no shared membership subscription — Community Partners pay through partner products (flat fee, revenue share, or recurring subscription, per event), not the Somacord Membership. See [/docs/business/pricing.md](../business/pricing.md#community-partner-pricing-b2b).
 
 See [/docs/business/membership.md](../business/membership.md) and [/docs/business/community-partners.md](../business/community-partners.md) for the business-side detail behind this journey.

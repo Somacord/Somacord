@@ -1,50 +1,47 @@
 # Somacord Pricing
 
-Two distinct pricing tracks — Consumer (B2C) and Community Partner (B2B) — reflecting the two customer types in [business-model.md](business-model.md). They are no longer the same price list.
+**Status:** Approved pricing structure and launch-target numbers, superseding the earlier "one membership for everyone" model (Monthly $39 / Quarterly $99 / Yearly $349, shared by members and partners). See [business-model.md](business-model.md#superseded). Individual dollar amounts below are launch targets/recommendations, not all locked — see the per-section notes.
 
-## Consumer Pricing
+Two distinct pricing tracks — Consumer (B2C) and Community Partner (B2B) — reflecting the two customer types in [business-model.md](business-model.md).
 
-### Free Speed Connect
-- Free, no signup commitment required to try
-- A guided conversation experience that helps people meet a few new people quickly
-- The entry point into Somacord for every new visitor
+## Consumer Pricing (B2C)
 
-### Somacord Membership
-Recurring subscription — choose the billing plan that fits:
+### Free
+No subscription required:
+- Browse public gatherings and events
+- Limited RSVPs
+- Public profile
+- Discover local community
 
-| Plan | Price |
-|---|---|
-| Monthly | $39/month |
-| Quarterly | $99/quarter |
-| Yearly | $349/year |
+### Member Subscription
+Launch target: **$29/month**. Quarterly and annual plans may be added later, once the monthly plan is validated — not part of MVP launch.
 
-Same benefits on every plan — see [membership.md](membership.md) for the full list.
+Includes:
+- Unlimited RSVPs
+- Full Speed Connect access
+- Early registration
+- Discounts on Official Somacord Events
+- Member-only experiences
 
 ### One-Time Tickets
-Anyone can buy a ticket to an individual Partner or Somacord event without a membership — built for visitors, tourists, and first-time users. Price is set per event.
+No subscription required to attend a specific event:
+- **Community Gatherings** — free, or host-priced (set by the member hosting it)
+- **Official Somacord Events** — typically **$30–35/ticket**; may bundle networking, reserved seating, food, drinks, or an activity into the price. Members receive discounted pricing.
 
-### Premium Experiences
-Higher-priced, company-produced flagship Somacord events (e.g. Speed Networking, curated dinners, seasonal events), often bundling more than admission — see [business-model.md](business-model.md#event-ecosystem). Not part of MVP launch pricing.
+## Community Partner Pricing (B2B)
+Community Partners are organizations, not members — they do not purchase the Member Subscription above. See [community-partners.md](community-partners.md).
 
-## Community Partner Pricing
+### Option A — One-Time Event Promotion
+Recommended launch price: **$99 per promoted event**. Alternative: **15–20% revenue share** on ticketed events. Best for testing Somacord, one-off events, pop-ups, and launch parties.
 
-Community Partners are organizations, not members — they do not purchase the Somacord Membership above. See [community-partners.md](community-partners.md) for who partners are and what they get.
+### Option B — Partner Subscription
+Recommended launch pricing: **$149/month** or **$1,500/year**.
 
-### One-Time Partner
-For a single event, promotion, or campaign (a pop-up, a product launch, a single networking night). No recurring commitment. Possible monetization, exact structure TBD:
-- Flat promotional fee
-- Revenue share
-- Ticket package / split
-
-### Ongoing Partner
-For organizations running recurring programming (weekly trivia, monthly mixers). Possible monetization, exact structure TBD:
-- Recurring subscription
-- Platform commission
-- Hybrid (subscription + commission)
+Benefits: organization profile, unlimited event listings, featured placement, multi-user management, future analytics, priority support.
 
 ## Future: Marketplace Revenue
-Featured placement, promoted events, ticket commissions, sponsorships, premium discovery. Post-MVP only — see [/docs/product/mvp-requirements.md](../product/mvp-requirements.md#not-included-in-mvp).
+Ticket fees, revenue sharing beyond partner events, featured placement, sponsorships, advertising, premium experiences. Post-MVP — see [/docs/product/mvp-requirements.md](../product/mvp-requirements.md#not-included-in-mvp).
 
-**Status:** Consumer pricing (Somacord Membership) is final. Community Partner pricing structure is intentionally left flexible until validated with real partners — no partner pricing has shipped in the product yet.
+**Status:** Consumer Free/Member structure and the $30–35 Official Somacord Event range are approved for planning. Partner Option A ($99 or 15–20% rev share) and Option B ($149/mo or $1,500/yr) are explicitly "recommended launch pricing," not yet validated with real partners. **None of this billing structure exists in the product yet** — see [/docs/engineering/database-schema.md](../engineering/database-schema.md#known-gaps-vs-business-model-v2) for what implementing it would require.
 
 Source: [business-model.md](business-model.md).

@@ -19,15 +19,15 @@ Three event types, three different owners — see [community-partners.md](commun
 
 - **Community Gatherings** — created by members, organic community building (coffee meetups, hikes, board games).
 - **Partner Events** — created by Community Partner organizations, bring new people into a business while creating a real community experience (brewery mixers, trivia nights, workshops).
-- **Somacord Events** — created by Somacord itself, premium flagship experiences that define the brand (Speed Networking, New to the City Mixer).
+- **Somacord Events** — created by Somacord itself, premium flagship experiences that define the brand (Speed Networking, New in Town, Singles Social, Professional Networking).
 
 ## Revenue Model
 
-The business intentionally diversifies across several Experience Economy pricing models rather than relying on subscriptions alone:
+The business intentionally diversifies across several Experience Economy pricing models rather than relying on subscriptions alone. Full numbers: [pricing.md](pricing.md).
 
-- **Consumer revenue** — Somacord Membership (recurring), one-time event tickets, premium Somacord experiences. See [membership.md](membership.md) and [pricing.md](pricing.md).
-- **Business revenue** — Community Partner products (one-time and ongoing), platform commissions, revenue sharing. See [community-partners.md](community-partners.md) and [pricing.md](pricing.md).
-- **Marketplace revenue (post-MVP)** — featured placement, promoted events, ticket commissions, sponsorships. Not part of MVP scope — see [/docs/product/mvp-requirements.md](../product/mvp-requirements.md#not-included-in-mvp).
+- **Consumer revenue** — Free tier (no revenue, discovery/growth) + $29/month Member Subscription, plus one-time Official Somacord Event tickets ($30–35 typical).
+- **Business revenue** — Community Partner Option A (one-time promotion, $99/event or 15–20% revenue share) and Option B (ongoing subscription, $149/month or $1,500/year).
+- **Marketplace revenue (post-MVP)** — ticket fees, revenue sharing beyond partner events, featured placement, sponsorships, advertising. Not part of MVP scope — see [/docs/product/mvp-requirements.md](../product/mvp-requirements.md#not-included-in-mvp).
 
 Membership deepens engagement; it does not gate discovery — anyone can browse gatherings and buy a one-time ticket without joining.
 
