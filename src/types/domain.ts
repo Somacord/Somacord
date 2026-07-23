@@ -20,13 +20,30 @@ export interface SomacordUser {
   createdAt: string;
 }
 
+export type Availability = "weekday_evenings" | "weekends" | "flexible";
+
+export interface NotificationPreferences {
+  gatherings: boolean;
+  speedConnect: boolean;
+  communityUpdates: boolean;
+}
+
 export interface Profile {
   userId: string;
   interests: string[];
   activities: string[];
+  /**
+   * Onboarding step "Availability" (Weekday Evenings / Weekends /
+   * Flexible). Additive beyond the literal schema doc — see
+   * supabase/migrations/20260723010703_initial_schema.sql.
+   */
+  availability: Availability[];
   /** Free text, never appearance-based — see docs/product/vision.md principle 2 */
-  lookingFor: string;
+  lookingFor: string | null;
   avatarUrl: string | null;
+  notificationPreferences: NotificationPreferences;
+  /** Null until the onboarding wizard is completed — gates /home and /profile. */
+  onboardingCompletedAt: string | null;
 }
 
 export type CityLaunchStatus = "example" | "live";

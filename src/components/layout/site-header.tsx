@@ -5,10 +5,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
+import { SignOutButton } from "@/components/forms/sign-out-button";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
+import { env } from "@/lib/env";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+
+type HeaderUser = { name: string | null } | null;
 
 /**
  * Site header / primary navigation — docs/design/design-system.md ("Navigation")
@@ -17,11 +22,54 @@ import { cn } from "@/lib/utils";
  * with blur. The desktop layout follows the approved mockup exactly; the
  * slide-down mobile menu below is new engineering work to make that same
  * nav usable on small screens (the mockup only specifies hiding links).
+ * When signed in, the Sign In link + primary CTA are swapped for
+ * Profile/Sign Out — still no dropdown menus, per the design system.
+ *
+ * Auth state is checked client-side (not passed down from the root
+ * layout) so every marketing page can stay statically generated —
+ * reading the session server-side in the root layout would force every
+ * route in the app to render dynamically. The tradeoff is a brief
+ * signed-out-looking flash on first paint for already-authenticated
+ * visitors, which resolves as soon as the client-side check completes.
  */
 export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [lastPathname, setLastPathname] = React.useState(pathname);
+  const [user, setUser] = React.useState<HeaderUser>(null);
+
+  React.useEffect(() => {
+    if (!env.supabase.isConfigured) return;
+
+    const supabase = createSupabaseBrowserClient();
+    let active = true;
+
+    async function loadUser() {
+      const { data } = await supabase.auth.getUser();
+      if (!active) return;
+
+      if (!data.user) {
+        setUser(null);
+        return;
+      }
+
+      const { data: row } = await supabase
+        .from("users")
+        .select("name")
+        .eq("id", data.user.id)
+        .maybeSingle();
+      if (active) setUser({ name: row?.name ?? null });
+    }
+
+    loadUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(() => loadUser());
+
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
+  }, []);
 
   // Close the mobile menu on navigation without a synchronous setState-in-effect:
   // update derived state during render when the pathname prop we're tracking changes.
@@ -54,17 +102,33 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          <Link
-            href={siteConfig.signIn.href}
-            className="text-ink hover:text-cord-blue text-sm font-medium whitespace-nowrap transition-colors"
-          >
-            {siteConfig.signIn.label}
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href="/profile"
+                className="text-ink hover:text-cord-blue text-sm font-medium whitespace-nowrap transition-colors"
+              >
+                Profile
+              </Link>
+              <SignOutButton className="text-ink hover:text-cord-blue text-sm font-medium whitespace-nowrap transition-colors" />
+            </>
+          ) : (
+            <Link
+              href={siteConfig.signIn.href}
+              className="text-ink hover:text-cord-blue text-sm font-medium whitespace-nowrap transition-colors"
+            >
+              {siteConfig.signIn.label}
+            </Link>
+          )}
         </nav>
 
         <div className="hidden lg:block">
           <Button asChild variant="primary" size="small">
-            <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
+            {user ? (
+              <Link href="/home">{user.name ? `Hi, ${user.name.split(" ")[0]}` : "My Home"}</Link>
+            ) : (
+              <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
+            )}
           </Button>
         </div>
 
@@ -110,15 +174,35 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href={siteConfig.signIn.href}
-              className="text-ink hover:bg-soft-sky rounded-md px-2 py-2.5 text-sm font-medium"
-            >
-              {siteConfig.signIn.label}
-            </Link>
-            <Button asChild variant="primary" className="mt-2 justify-center">
-              <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
-            </Button>
+            {user ? (
+              <>
+                <Link
+                  href="/home"
+                  className="text-ink hover:bg-soft-sky rounded-md px-2 py-2.5 text-sm font-medium"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/profile"
+                  className="text-ink hover:bg-soft-sky rounded-md px-2 py-2.5 text-sm font-medium"
+                >
+                  Profile
+                </Link>
+                <SignOutButton className="text-ink hover:bg-soft-sky rounded-md px-2 py-2.5 text-left text-sm font-medium" />
+              </>
+            ) : (
+              <>
+                <Link
+                  href={siteConfig.signIn.href}
+                  className="text-ink hover:bg-soft-sky rounded-md px-2 py-2.5 text-sm font-medium"
+                >
+                  {siteConfig.signIn.label}
+                </Link>
+                <Button asChild variant="primary" className="mt-2 justify-center">
+                  <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
+                </Button>
+              </>
+            )}
           </Container>
         </div>
       </div>

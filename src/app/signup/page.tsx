@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 /**
  * Join / Sign Up — the first step of the account flow in
- * docs/website/sitemap.md (`/signup`). Profile setup (`/onboarding/profile`)
- * is a separate, later feature pass.
+ * docs/website/sitemap.md (`/signup`). Wired to Supabase Auth (email +
+ * password or Google); profile setup happens next at `/onboarding/profile`.
  */
 export default function SignUpPage() {
   return (

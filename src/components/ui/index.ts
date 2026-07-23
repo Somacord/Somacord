@@ -20,3 +20,4 @@ export * from "@/components/ui/select";
 export * from "@/components/ui/split-layout";
 export * from "@/components/ui/steps";
 export * from "@/components/ui/textarea";
+export * from "@/components/ui/toggle-switch";
