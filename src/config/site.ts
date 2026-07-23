@@ -59,16 +59,20 @@ export const siteConfig = {
     ],
   },
 
-  /** Primary top nav — docs/design/design-system.md ("Navigation") */
+  /**
+   * Primary top nav — docs/design/design-system.md ("Navigation").
+   * Membership is intentionally left out of the main nav for first-time
+   * visitors (it's still reachable via the footer) — leading with it here
+   * reads as "pay to join," which isn't how Somacord works.
+   */
   primaryNav: [
     { label: "Gatherings", href: "/gatherings" },
     { label: "Cities", href: "/cities/salt-lake-city" },
     { label: "Partners", href: "/partners" },
     { label: "How It Works", href: "/speed-connect" },
-    { label: "Membership", href: "/membership" },
   ] satisfies NavLink[],
 
-  primaryCta: { label: "Join a Free Speed Connect", href: "/speed-connect" } satisfies NavLink,
+  primaryCta: { label: "Join Free", href: "/signup" } satisfies NavLink,
   signIn: { label: "Sign In", href: "/signin" } satisfies NavLink,
   signUp: { label: "Sign Up", href: "/signup" } satisfies NavLink,
 

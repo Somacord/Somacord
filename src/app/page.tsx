@@ -34,14 +34,14 @@ export default async function HomePage() {
         imageSrc={photography.homepageHero1.src}
         imageAlt={photography.homepageHero1.alt}
         title="Real friendships start with one hello."
-        description={siteConfig.description}
+        description="Somacord is free to join. Attend local gatherings and try the experience for yourself. Membership comes later if you love it."
         actions={
           <>
             <Button asChild variant="primary">
-              <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
+              <Link href="/signup">Join Free &amp; Find Your Community</Link>
             </Button>
             <Button asChild variant="secondary-dark">
-              <Link href="/gatherings">Browse Gatherings</Link>
+              <Link href="/gatherings">Explore Gatherings</Link>
             </Button>
           </>
         }
@@ -174,9 +174,9 @@ export default async function HomePage() {
       <Section tone="dark">
         <Container className="max-w-xl text-center">
           <Eyebrow className="text-warm-sand">Ready when you are</Eyebrow>
-          <h2 className="mb-4 text-[36px]">Your first hello is one Speed Connect away.</h2>
+          <h2 className="mb-4 text-[36px]">Your first gathering is one free account away.</h2>
           <p className="mb-8 text-white/85">
-            Free, guided, and low-pressure — see who you meet this week.
+            Simple to join and free to start. See what is happening near you this week.
           </p>
           <Button asChild variant="primary">
             <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>

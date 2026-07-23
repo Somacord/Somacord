@@ -32,11 +32,10 @@ export default async function SignUpPage({
       <Container className="max-w-md">
         <div className="mb-8 text-center">
           <Eyebrow>Join Somacord</Eyebrow>
-          <h1 className="mb-2 text-[30px]">Create your account</h1>
+          <h1 className="mb-2 text-[30px]">Create your free account</h1>
           <p className="text-ink-muted text-sm">
-            Your account is free — join gatherings and try Speed Connect right away.{" "}
-            {siteConfig.membership.name} ($29/month) is there if you&apos;d like to support Somacord
-            as an early member.
+            Create your free account to join events and start meeting people.{" "}
+            {siteConfig.membership.name} is optional and comes later if you love it.
           </p>
         </div>
         <Panel>

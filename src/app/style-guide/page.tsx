@@ -245,7 +245,7 @@ export default function StyleGuidePage() {
             eyebrow={siteConfig.membership.name}
             plans={siteConfig.membership.plans}
             benefits={siteConfig.membership.benefits}
-            ctaLabel="Become a Member"
+            ctaLabel="Love Somacord? Become a member."
             ctaHref="/membership"
             footnote="Community Partners are organizations, not members — see /partners for how they work with Somacord instead."
           />

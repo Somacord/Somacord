@@ -61,7 +61,7 @@ export default function MembershipPage() {
             eyebrow={siteConfig.membership.name}
             plans={siteConfig.membership.plans}
             benefits={siteConfig.membership.benefits}
-            ctaLabel="Become a Member"
+            ctaLabel="Love Somacord? Become a member."
             ctaHref="/signup"
             footnote={
               <>
@@ -120,7 +120,7 @@ export default function MembershipPage() {
             {siteConfig.launchCity.name} from day one.
           </p>
           <Button asChild variant="primary">
-            <Link href="/signup">Become a Member</Link>
+            <Link href="/signup">Love Somacord? Become a member.</Link>
           </Button>
         </Container>
       </Section>
