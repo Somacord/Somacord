@@ -7,7 +7,7 @@
 - Gatherings discovery page (community and partner experiences, clearly labeled examples)
 - Gathering detail page
 - Speed Connect page (what it is, what to expect, why it's low pressure)
-- Membership page ($39/month, example month, join CTA)
+- Membership page (Somacord Membership plans, example month, join CTA)
 - Community Partners page (recruiting local community builders)
 - City page (Salt Lake City at launch)
 

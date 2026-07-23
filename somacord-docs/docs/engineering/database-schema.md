@@ -18,7 +18,7 @@ id, title, category (community | partner), created_by (user_id), city_id, locati
 id, gathering_id, user_id, status (going | interested | cancelled)
 
 ### memberships
-id, user_id, status (active | canceled), price (39.00), stripe_subscription_id, started_at
+id, user_id, status (active | canceled), plan (monthly | quarterly | yearly), price (39.00 | 99.00 | 349.00), stripe_subscription_id, started_at
 
 ### partners
 user_id, organization_name, organization_type (coffee_shop | restaurant | club | hobby_group | event_organizer | community_organization), verified

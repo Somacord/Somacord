@@ -9,7 +9,7 @@ Source file: `Somacord Experience.dc.html` (+ shared `EventCard.dc.html` compone
 - **Gatherings (discovery)** — featured Speed Connect, Community-created experiences, Partner experiences
 - **Gathering Detail** — example "Coffee Meetup" with photos, description, time/location, join CTA
 - **Speed Connect** — what to expect, why it's low pressure, what happens after
-- **Membership** — example month, Founding Membership ($39/month) with benefit list, Community Partner cross-link
+- **Membership** — example month, Somacord Membership (Monthly $39 / Quarterly $99 / Yearly $349) with benefit list, Community Partner cross-link
 - **Community Partners** — partner types, partner benefits, one-membership messaging, become-a-partner CTA
 - **City (Salt Lake City)** — example gatherings, local activity categories, the kinds of places we gather
 

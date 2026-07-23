@@ -24,8 +24,8 @@ export default function SignUpPage() {
           <Eyebrow>Join Somacord</Eyebrow>
           <h1 className="mb-2 text-[30px]">Create your account</h1>
           <p className="text-ink-muted text-sm">
-            The {siteConfig.membership.name} is ${siteConfig.membership.price}/
-            {siteConfig.membership.interval} — start by creating your account.
+            The {siteConfig.membership.name} is available monthly, quarterly, or yearly — start by
+            creating your account.
           </p>
         </div>
         <Panel>

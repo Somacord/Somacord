@@ -4,10 +4,10 @@
 Local community builders who already bring people together: coffee shops, restaurants, clubs, hiking/hobby groups, and event organizers.
 
 ## Partner Journey
-Visitor (already runs a coffee shop, hiking group, club, or hobby group) → Join Somacord as a Community Partner → Create profile → Add gatherings → Invite their existing community → Grow local presence → Remain a Somacord member (same $39/month).
+Visitor (already runs a coffee shop, hiking group, club, or hobby group) → Join Somacord as a Community Partner → Create profile → Add gatherings → Invite their existing community → Grow local presence → Remain a Somacord member (same Somacord Membership pricing).
 
 ## Pricing
-Partners pay the same $39/month Founding Membership as regular members — no separate partner tier. See [pricing.md](pricing.md).
+Partners pay the same Somacord Membership pricing as regular members — no separate partner tier. See [pricing.md](pricing.md).
 
 ## Product/Engineering Notes
 - A user with role `community_partner` also has a `partners` row (same membership, added capability) — see [/docs/engineering/database-schema.md](../engineering/database-schema.md).

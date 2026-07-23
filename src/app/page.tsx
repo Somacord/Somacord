@@ -113,7 +113,8 @@ export default function HomePage() {
             </h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
               Coffee shops, restaurants, clubs, and hobby groups join as Community Partners — same
-              $39/month, plus tools to organize and grow their gatherings on Somacord.
+              Somacord Membership pricing, plus tools to organize and grow their gatherings on
+              Somacord.
             </p>
             <Button asChild variant="secondary-light">
               <Link href="/partners">Become a Partner</Link>
@@ -129,10 +130,11 @@ export default function HomePage() {
             imageAlt={photography.dinnerGathering.alt}
           >
             <Eyebrow>Membership Preview</Eyebrow>
-            <h2 className="mb-4 text-[32px]">One membership. One price. One community.</h2>
+            <h2 className="mb-4 text-[32px]">One membership. Your choice of plan.</h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              The Founding Membership gets you community access, local gatherings, ongoing Speed
-              Connect, and the ability to create your own gatherings — for $39/month.
+              The {siteConfig.membership.name} gets you community access, local gatherings, ongoing
+              Speed Connect, and the ability to create your own gatherings — billed monthly,
+              quarterly, or yearly.
             </p>
             <CheckList
               items={[

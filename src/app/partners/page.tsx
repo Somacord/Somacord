@@ -14,7 +14,7 @@ import { partnerHowItWorks, whyPartner } from "@/data/content";
 export const metadata: Metadata = {
   title: "Community Partners",
   description:
-    "Join Somacord as a Community Partner and turn your regulars into an ongoing community — same $39/month membership, plus gathering tools.",
+    "Join Somacord as a Community Partner and turn your regulars into an ongoing community — same Somacord Membership pricing, plus gathering tools.",
 };
 
 const partnerTypes = [
@@ -47,7 +47,7 @@ export default function PartnersPage() {
         imageAlt={photography.communityPartner.alt}
         size="md"
         title="You already bring people together. Let's make it easier."
-        description="Join Somacord as a Community Partner and turn your regulars into an ongoing community — same $39/month membership, plus gathering tools."
+        description="Join Somacord as a Community Partner and turn your regulars into an ongoing community — same Somacord Membership pricing, plus gathering tools."
         actions={
           <Button asChild variant="primary">
             <Link href="/signup">Become a Partner</Link>
@@ -76,7 +76,7 @@ export default function PartnersPage() {
           <div className="rounded-card bg-warm-sand mt-4 px-8 py-7">
             <h3 className="mb-2 text-lg">One membership, not a separate tier</h3>
             <p className="text-sand-ink text-sm">
-              Partners pay the same $39/month Founding Membership as every member. The difference is
+              Partners pay the same Somacord Membership pricing as every member. The difference is
               role and ability — partners get gathering-organizing tools and can invite their
               existing community into Somacord.
             </p>
@@ -117,8 +117,8 @@ export default function PartnersPage() {
         <Container className="max-w-xl text-center">
           <h2 className="mb-4 text-[36px]">Ready to bring your community to Somacord?</h2>
           <p className="mb-8 text-white/85">
-            Apply as a Community Partner — same $39/month membership, plus tools to organize and
-            grow your gatherings.
+            Apply as a Community Partner — same Somacord Membership pricing, plus tools to organize
+            and grow your gatherings.
           </p>
           <Button asChild variant="primary">
             <Link href="/signup">Become a Partner</Link>

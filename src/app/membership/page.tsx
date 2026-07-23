@@ -17,7 +17,7 @@ import { membershipFaqs } from "@/data/faq";
 
 export const metadata: Metadata = {
   title: "Membership",
-  description: `The ${siteConfig.membership.name} — $${siteConfig.membership.price}/${siteConfig.membership.interval} for community access, local gatherings, and ongoing Speed Connect.`,
+  description: `The ${siteConfig.membership.name} — monthly, quarterly, or yearly — for community access, local gatherings, and ongoing Speed Connect.`,
 };
 
 const exampleMonth = [
@@ -45,23 +45,23 @@ export default function MembershipPage() {
       <Section tone="sky">
         <Container>
           <div className="mx-auto mb-12 max-w-xl text-center">
-            <Eyebrow>Founding Membership</Eyebrow>
+            <Eyebrow>{siteConfig.membership.name}</Eyebrow>
             <h1 className="text-[34px]">
-              One membership. One price.
+              One membership. Your choice of plan.
               <br />
               Everyone joins the same community.
             </h1>
           </div>
           <PricingCard
             eyebrow={siteConfig.membership.name}
-            price={siteConfig.membership.price}
-            interval={siteConfig.membership.interval}
+            plans={siteConfig.membership.plans}
             benefits={siteConfig.membership.benefits}
-            ctaLabel="Become a Founding Member"
+            ctaLabel="Become a Member"
             ctaHref="/signup"
             footnote={
               <>
-                Community Partners pay the same $39/month — the difference is role, not price.{" "}
+                Community Partners pay the same {siteConfig.membership.name} pricing — the
+                difference is role, not price.{" "}
                 <Link href="/partners" className="underline">
                   Learn about Partners →
                 </Link>
@@ -110,13 +110,13 @@ export default function MembershipPage() {
 
       <Section tone="dark">
         <Container className="max-w-xl text-center">
-          <h2 className="mb-4 text-[36px]">Ready to become a Founding Member?</h2>
+          <h2 className="mb-4 text-[36px]">Ready to become a member?</h2>
           <p className="mb-8 text-white/85">
-            Join for ${siteConfig.membership.price}/{siteConfig.membership.interval} and get full
-            access to {siteConfig.launchCity.name}&apos;s gatherings, Speed Connect, and community.
+            Choose monthly, quarterly, or yearly billing and get full access to{" "}
+            {siteConfig.launchCity.name}&apos;s gatherings, Speed Connect, and community.
           </p>
           <Button asChild variant="primary">
-            <Link href="/signup">Become a Founding Member</Link>
+            <Link href="/signup">Become a Member</Link>
           </Button>
         </Container>
       </Section>

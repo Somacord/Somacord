@@ -4,10 +4,10 @@ import { photography } from "@/config/media";
 /**
  * Mock gathering listings for the MVP public website.
  *
- * Launch Honesty Rule: Salt Lake City has no live gatherings yet, so
- * every entry here is explicitly an "Example" (see GatheringCard /
- * gathering detail page — `isExample` defaults to true and is never
- * overridden). Content is drawn directly from the approved mockup
+ * Salt Lake City has no live gatherings yet, so every entry here is
+ * explicitly an "Example" (see GatheringCard / gathering detail page —
+ * `isExample` defaults to true and is never overridden). Content is
+ * drawn directly from the approved mockup
  * (`/assets/mockups/somacord-website-mockup.html`); longer detail-page
  * descriptions extend that same one-line copy in the same voice rather
  * than inventing new scenarios, and never claim a specific number of

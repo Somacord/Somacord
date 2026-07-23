@@ -80,8 +80,7 @@ export function SiteFooter() {
             © {year} {siteConfig.name}. All rights reserved.
           </span>
           <span>
-            {siteConfig.launchCity.name} · {siteConfig.membership.name} $
-            {siteConfig.membership.price}/{siteConfig.membership.interval}
+            {siteConfig.launchCity.name} · {siteConfig.membership.name}
           </span>
         </div>
       </Container>

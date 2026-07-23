@@ -22,7 +22,7 @@ export interface GatheringCardProps {
   /** Location, date/time, group size — shown only when representing a specific example. */
   meta?: string[];
   href?: string;
-  /** Launch Honesty Rule — default true until real listings exist. */
+  /** Defaults true until real listings exist for a gathering. */
   isExample?: boolean;
   className?: string;
 }

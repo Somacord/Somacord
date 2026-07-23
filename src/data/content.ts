@@ -19,7 +19,7 @@ export const values = [
   {
     title: "One community, one membership",
     description:
-      "Members and Community Partners share the same $39/month membership; the difference is role and ability, not price.",
+      "Members and Community Partners share the same Somacord Membership pricing; the difference is role and ability, not price.",
   },
   {
     title: "Guided, not mechanical",
@@ -81,7 +81,7 @@ export const whyPartner = [
   {
     title: "One membership, no separate fees",
     description:
-      "Community Partners pay the same $39/month as every member — no separate partner tier.",
+      "Community Partners pay the same Somacord Membership pricing as every member — no separate partner tier.",
   },
 ];
 
@@ -107,6 +107,6 @@ export const partnerHowItWorks = [
     number: 4,
     title: "Grow your local presence",
     description:
-      "Reach new members actively looking for local connection — as a Somacord member, same $39/month.",
+      "Reach new members actively looking for local connection — as a Somacord member, same membership pricing.",
   },
 ];

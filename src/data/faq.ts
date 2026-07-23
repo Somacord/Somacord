@@ -7,6 +7,11 @@
  */
 
 import type { FaqItemData } from "@/components/ui/faq";
+import { siteConfig } from "@/config/site";
+
+const planSummary = siteConfig.membership.plans
+  .map((plan) => `${plan.label.toLowerCase()} ($${plan.price}/${plan.interval})`)
+  .join(", ");
 
 export const homeFaqs: FaqItemData[] = [
   {
@@ -31,21 +36,19 @@ export const homeFaqs: FaqItemData[] = [
   },
   {
     question: "How much does membership cost?",
-    answer:
-      "$39/month for the Founding Membership — one price for every member and Community Partner. It includes community access, local gatherings, ongoing Speed Connect, member discovery, and the ability to create your own gatherings.",
+    answer: `The ${siteConfig.membership.name} is available ${planSummary} — one price list for every member and Community Partner. It includes community access, local gatherings, ongoing Speed Connect, member discovery, and the ability to create your own gatherings.`,
   },
 ];
 
 export const membershipFaqs: FaqItemData[] = [
   {
-    question: "What's included in the Founding Membership?",
+    question: `What's included in the ${siteConfig.membership.name}?`,
     answer:
-      "Community access, local experiences (gatherings), ongoing Speed Connect access, member discovery & conversations, and the ability to create your own gatherings.",
+      "Community access, local experiences (gatherings), ongoing Speed Connect access, member discovery & conversations, and the ability to create your own gatherings — the same benefits on every plan.",
   },
   {
     question: "Do Community Partners pay a different price?",
-    answer:
-      "No — Community Partners pay the same $39/month Founding Membership as every member. The difference is role and ability, not price: partners get gathering-organizing tools and can invite their existing community into Somacord.",
+    answer: `No — Community Partners pay the same ${siteConfig.membership.name} pricing as every member. The difference is role and ability, not price: partners get gathering-organizing tools and can invite their existing community into Somacord.`,
   },
   {
     question: "Do I need to be a member to try Speed Connect?",
@@ -54,7 +57,6 @@ export const membershipFaqs: FaqItemData[] = [
   },
   {
     question: "Can I create my own gatherings?",
-    answer:
-      "Yes — creating gatherings is included in the Founding Membership, for members and Community Partners alike.",
+    answer: `Yes — creating gatherings is included in the ${siteConfig.membership.name}, for members and Community Partners alike, on any plan.`,
   },
 ];
