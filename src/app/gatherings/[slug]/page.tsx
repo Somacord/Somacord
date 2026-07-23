@@ -57,6 +57,7 @@ export default async function GatheringDetailPage({
 
   const isOwnerPreviewingDraft =
     gathering.status === "draft" && current?.user.id === gathering.createdBy;
+  const isPast = gathering.startsAt ? new Date(gathering.startsAt) <= new Date() : false;
 
   return (
     <>
@@ -100,6 +101,7 @@ export default async function GatheringDetailPage({
                 slug={gathering.slug}
                 isGoing={isGoing}
                 isSignedIn={Boolean(current)}
+                isPast={isPast}
               />
             </div>
 

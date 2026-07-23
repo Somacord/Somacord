@@ -8,11 +8,28 @@ export interface RsvpButtonProps {
   slug: string;
   isGoing: boolean;
   isSignedIn: boolean;
+  /** True once the gathering's start time has passed — RSVPing is no longer actionable. */
+  isPast: boolean;
   className?: string;
 }
 
 /** RSVP toggle for a gathering detail page, backed by the `rsvps` table. */
-export function RsvpButton({ gatheringId, slug, isGoing, isSignedIn, className }: RsvpButtonProps) {
+export function RsvpButton({
+  gatheringId,
+  slug,
+  isGoing,
+  isSignedIn,
+  isPast,
+  className,
+}: RsvpButtonProps) {
+  if (isPast) {
+    return (
+      <div className={className}>
+        <p className="text-ink-muted text-sm">This gathering already took place.</p>
+      </div>
+    );
+  }
+
   if (!isSignedIn) {
     return (
       <div className={className}>

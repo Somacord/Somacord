@@ -35,7 +35,8 @@ export default async function SignUpPage({
           <h1 className="mb-2 text-[30px]">Create your account</h1>
           <p className="text-ink-muted text-sm">
             Your account is free — join gatherings and try Speed Connect right away.{" "}
-            {siteConfig.membership.name} ($29/month) is there when you want unlimited access.
+            {siteConfig.membership.name} ($29/month) is there if you&apos;d like to support Somacord
+            as an early member.
           </p>
         </div>
         <Panel>

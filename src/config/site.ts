@@ -53,11 +53,8 @@ export const siteConfig = {
       { id: "monthly", label: "Monthly", price: 29, interval: "month" },
     ] as const satisfies readonly MembershipPricingPlan[],
     benefits: [
-      "Unlimited RSVPs",
-      "Unlimited Speed Connect sessions",
-      "Early registration for Official Somacord Events",
-      "Member discounts on Official Somacord Events",
-      "Ability to create gatherings",
+      "Support Somacord as an early member while we grow",
+      "One flat price — no tiers, no hidden fees",
     ],
   },
 

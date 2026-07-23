@@ -123,14 +123,13 @@ export default async function HomePage() {
             <Eyebrow>Membership Preview</Eyebrow>
             <h2 className="mb-4 text-[32px]">One membership. $29/month.</h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              The {siteConfig.membership.name} gets you unlimited RSVPs, unlimited Speed Connect,
-              and the ability to create your own gatherings — no tiers, no add-ons.
+              The {siteConfig.membership.name} is one flat price — no tiers, no add-ons. It directly
+              supports Somacord as we grow in {siteConfig.launchCity.name}.
             </p>
             <CheckList
               items={[
-                "Unlimited Speed Connect sessions",
-                "Full access to community & partner gatherings",
-                "Create and host your own gatherings",
+                "One flat price — no tiers, no hidden fees",
+                "Support Somacord as an early member while we grow",
               ]}
             />
             <Button asChild variant="primary">

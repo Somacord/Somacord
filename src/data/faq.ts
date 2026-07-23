@@ -36,7 +36,7 @@ export const homeFaqs: FaqItemData[] = [
   },
   {
     question: "How much does membership cost?",
-    answer: `The ${siteConfig.membership.name} is ${planSummary}. It includes unlimited RSVPs, unlimited Speed Connect, member discounts on Official Somacord Events, and the ability to create your own gatherings. Browsing gatherings and trying Speed Connect don't require a membership at all.`,
+    answer: `The ${siteConfig.membership.name} is ${planSummary} — one flat price that directly supports Somacord as we grow. Browsing gatherings, RSVPing, and trying Speed Connect are all free and don't require a membership.`,
   },
 ];
 
@@ -44,7 +44,7 @@ export const membershipFaqs: FaqItemData[] = [
   {
     question: `What's included in the ${siteConfig.membership.name}?`,
     answer:
-      "Community access, local experiences (gatherings), ongoing Speed Connect access, member discovery & conversations, and the ability to create your own gatherings — the same benefits on every plan.",
+      "One flat price, with no tiers or add-ons. Membership directly supports Somacord as we grow — the core experience (gatherings, RSVPs, and Speed Connect) is the same whether or not you're a member.",
   },
   {
     question: "Do Community Partners pay for a Somacord Membership?",
@@ -53,11 +53,11 @@ export const membershipFaqs: FaqItemData[] = [
   },
   {
     question: "Do I need to be a member to try Speed Connect?",
-    answer:
-      "No. Free accounts get limited Speed Connect access at no cost — membership gets you unlimited sessions.",
+    answer: "No — Speed Connect is free to try, membership or not.",
   },
   {
     question: "Can I create my own gatherings?",
-    answer: `Yes — creating gatherings is included in the ${siteConfig.membership.name}, and Community Partners can create their own events too.`,
+    answer:
+      "Yes — any signed-in member, free or paid, can create and host a gathering. Community Partners can create their own events too.",
   },
 ];

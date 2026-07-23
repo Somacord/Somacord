@@ -26,6 +26,8 @@ export interface GatheringListItem extends GatheringSummary {
   status: GatheringStatus;
   createdBy: string;
   cityId: string;
+  /** Raw start time, e.g. for a caller to determine whether it's already past. */
+  startsAt: string | null;
 }
 
 interface GatheringRow {
@@ -66,6 +68,7 @@ function mapGathering(row: GatheringRow): GatheringListItem {
     status: row.status,
     createdBy: row.created_by,
     cityId: row.city_id,
+    startsAt: row.starts_at,
   };
 }
 
@@ -86,6 +89,9 @@ export async function getPublishedGatherings(
     .select(GATHERING_COLUMNS)
     .eq("status", "published")
     .eq("city_id", cityId)
+    // Once a gathering has started it's no longer "upcoming" — exclude it,
+    // but keep gatherings with no date set yet (schedule TBD).
+    .or(`starts_at.is.null,starts_at.gt.${new Date().toISOString()}`)
     .order("starts_at", { ascending: true });
 
   if (take) {
@@ -132,6 +138,7 @@ export async function getRelatedGatherings(
     .eq("status", "published")
     .eq("city_id", cityId)
     .neq("id", currentId)
+    .or(`starts_at.is.null,starts_at.gt.${new Date().toISOString()}`)
     .order("starts_at", { ascending: true })
     .limit(take);
 
