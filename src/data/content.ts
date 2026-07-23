@@ -17,9 +17,8 @@ export const values = [
     description: "Never appearance-first, never swiping, never attractiveness scoring.",
   },
   {
-    title: "One community, one membership",
-    description:
-      "Members and Community Partners share the same Somacord Membership pricing and the same ability to create gatherings. Members create community; Community Partners bring an existing community with them.",
+    title: "Membership deepens engagement, it doesn't gate discovery",
+    description: "Anyone can browse gatherings or buy a one-time ticket without joining.",
   },
   {
     title: "Guided, not mechanical",
@@ -79,9 +78,9 @@ export const whyPartner = [
       "Your gatherings show up under your organization's name, so the regulars you invite know it's really you.",
   },
   {
-    title: "One membership, no separate fees",
+    title: "No membership fee",
     description:
-      "Community Partners pay the same Somacord Membership pricing as every member — no separate partner tier.",
+      "You don't pay for a Somacord Membership — partnership works differently, from a one-time event to an ongoing relationship built for your organization.",
   },
 ];
 

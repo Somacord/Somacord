@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { PartnerInquiryForm } from "@/components/forms/partner-inquiry-form";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ import { partnerHowItWorks, whyPartner } from "@/data/content";
 export const metadata: Metadata = {
   title: "Community Partners",
   description:
-    "Join Somacord as a Community Partner and bring your existing community with you — same Somacord Membership pricing, same tools every member has.",
+    "Join Somacord as a Community Partner and bring your existing community with you — a partnership built for your organization, not a membership.",
 };
 
 const partnerTypes = [
@@ -47,10 +48,10 @@ export default function PartnersPage() {
         imageAlt={photography.communityPartner.alt}
         size="md"
         title="You already bring people together. Let's make it easier."
-        description="Join Somacord as a Community Partner and bring your existing community with you — same Somacord Membership pricing, same tools every member has."
+        description="Join Somacord as a Community Partner and bring your existing community with you — a partnership built for your organization, not a membership."
         actions={
           <Button asChild variant="primary">
-            <Link href="/signup">Become a Partner</Link>
+            <Link href="#apply">Become a Partner</Link>
           </Button>
         }
       />
@@ -74,11 +75,12 @@ export default function PartnersPage() {
           </div>
 
           <div className="rounded-card bg-warm-sand mt-4 px-8 py-7">
-            <h3 className="mb-2 text-lg">One membership, not a separate tier</h3>
+            <h3 className="mb-2 text-lg">A partnership, not a membership</h3>
             <p className="text-sand-ink text-sm">
-              Partners pay the same Somacord Membership pricing as every member, with the same
-              ability to create gatherings. The difference isn&apos;t permissions — it&apos;s that
-              partners bring an existing community with them instead of building one from scratch.
+              Community Partners are organizations, not members — you don&apos;t sign up for the
+              Somacord Membership. Instead, we work out the right fit for your organization: a
+              one-time event, or an ongoing partnership. Reach out and we&apos;ll figure out what
+              makes sense together.
             </p>
           </div>
         </Container>
@@ -114,15 +116,13 @@ export default function PartnersPage() {
       </Section>
 
       <Section tone="dark">
-        <Container className="max-w-xl text-center">
+        <Container id="apply" className="max-w-xl scroll-mt-24 text-center">
           <h2 className="mb-4 text-[36px]">Ready to bring your community to Somacord?</h2>
           <p className="mb-8 text-white/85">
-            Apply as a Community Partner — same Somacord Membership pricing, and a head start from
-            the community you already bring.
+            Tell us about your organization — a member of our team will follow up to figure out the
+            right fit, whether that&apos;s a single event or an ongoing partnership.
           </p>
-          <Button asChild variant="primary">
-            <Link href="/signup">Become a Partner</Link>
-          </Button>
+          <PartnerInquiryForm />
         </Container>
       </Section>
     </>
