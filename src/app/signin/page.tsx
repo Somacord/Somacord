@@ -10,7 +10,13 @@ export const metadata: Metadata = {
   title: "Sign In",
 };
 
-export default function SignInPage() {
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string; error?: string }>;
+}) {
+  const { next, error } = await searchParams;
+
   return (
     <Section tone="sky">
       <Container className="max-w-md">
@@ -18,8 +24,15 @@ export default function SignInPage() {
           <Eyebrow>Welcome back</Eyebrow>
           <h1 className="text-[30px]">Sign in to Somacord</h1>
         </div>
+        {error && (
+          <p className="bg-warm-sand text-sand-ink mb-6 rounded-[10px] px-4 py-3 text-center text-sm">
+            {error === "google"
+              ? "Google sign-in didn't go through. Please try again."
+              : "That link didn't work — please sign in again."}
+          </p>
+        )}
         <Panel>
-          <SignInForm />
+          <SignInForm next={next} />
         </Panel>
       </Container>
     </Section>

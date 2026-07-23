@@ -31,10 +31,29 @@ npm run dev
 ```
 
 The app runs at `http://localhost:3000` without any environment variables
-configured — Supabase/Stripe/Resend calls are only made lazily, from
-inside the specific feature code that needs them (none of which exists
-yet in this foundation pass). Fill in `.env.local` before building
-features that touch auth, billing, or email.
+configured — marketing pages render normally, and any page/action that
+needs Supabase treats "not configured" as "signed out" (clean redirects,
+no crashes) rather than throwing. Fill in `.env.local`, then apply the
+migrations in `supabase/migrations/` to your Supabase project (via the
+SQL editor or `supabase db push` once linked) before testing sign
+up/in/out, onboarding, or the profile page for real.
+
+### Supabase project setup (required for auth to work)
+
+1. Create a project at [supabase.com](https://supabase.com) and copy its URL/anon key/service role
+   key into `.env.local`.
+2. Run the two migrations in `supabase/migrations/` against it (SQL editor, or `supabase link` +
+   `supabase db push` with the CLI).
+3. In the Supabase Dashboard → **Authentication → Sign In / Providers → Email**, enable "Confirm
+   email" (this milestone's flow requires email verification).
+4. In **Authentication → Sign In / Providers → Google**, add your Google OAuth Client ID/Secret
+   (create one in Google Cloud Console with authorized redirect URI
+   `https://<project-ref>.supabase.co/auth/v1/callback`).
+5. In **Authentication → URL Configuration**, set the Site URL and add
+   `<your-app-url>/auth/callback` to the redirect allow-list.
+
+`supabase/config.toml` mirrors all of this for local development via the Supabase CLI
+(`supabase start`), which needs Docker and isn't required for the steps above.
 
 ### Scripts
 
@@ -62,7 +81,14 @@ src/
     speed-connect/           /speed-connect ("How It Works")
     about/                   /about
     contact/                 /contact
-    signin/ , signup/        Sign In / Join Somacord (UI only — see note below)
+    signin/ , signup/        Sign In / Join Somacord — real Supabase Auth (email+password, Google)
+    forgot-password/         Request a password-reset email
+    reset-password/          Set a new password (lands here from the recovery email link)
+    auth/callback/           Route handler: exchanges the PKCE code for a session (email
+                             confirmation, Google OAuth, and password recovery all land here)
+    onboarding/profile/      7-step onboarding wizard (see docs/website/sitemap.md's `/onboarding/profile`)
+    home/                    Member Dashboard (docs/website/sitemap.md's `/home`) — auth + onboarding required
+    profile/                 Member profile: edit info, avatar, interests, notification settings
     style-guide/             Internal, unlinked design-system reference page
     globals.css              Design tokens (colors, fonts, radii) via Tailwind v4 @theme
     robots.ts / sitemap.ts
@@ -71,9 +97,13 @@ src/
     layout/                  Chrome shared by every page: Container, Section, SiteHeader, SiteFooter
     ui/                      Reusable design-system primitives (Button, Card, GatheringCard,
                              PricingCard, Hero, Steps, Faq, EmptyState, Input/Textarea/Select/
-                             FormField, Panel, badges/tags, etc.)
+                             FormField, Panel, ToggleSwitch, badges/tags, etc.)
     gatherings/              Gathering-feature compositions (GatheringsBrowser, RsvpButton, AttendeeStack)
-    forms/                   Page-level form compositions (ContactForm, SignInForm, SignUpForm)
+    forms/                   Auth + contact form compositions (SignIn/SignUp/ForgotPassword/
+                             ResetPasswordForm, GoogleAuthButton, SignOutButton, ContactForm)
+    onboarding/              7-step wizard (OnboardingWizard, ProgressSteps, StepActions, steps/*)
+    profile/                 Profile page sections (ProfileInfoForm, AvatarUploader,
+                             InterestsEditor, NotificationSettingsForm)
 
   config/
     site.ts                  Nav links, membership pricing, launch city, footer — single source of truth
@@ -84,22 +114,31 @@ src/
     cities.ts                 City content (activity categories) — Salt Lake City only for now
     faq.ts                    FAQ copy for Homepage / Membership, grounded in approved docs
     content.ts                Values, partner, and journey copy sourced from approved docs
+    onboarding.ts              Interest and availability options for the onboarding wizard
+    dashboard.ts               Placeholder data for the Member Dashboard sections
 
   lib/
     env.ts                    Typed, lazily-validated environment variable access
     fonts.ts                  next/font setup for Lora + Work Sans
     utils.ts                  cn() class-merging helper
     stripe.ts / resend.ts     Lazily-instantiated server-only SDK clients
-    supabase/                 Browser client, server client, and middleware session helper
+    supabase/                 Browser client, server client, middleware session helper,
+                             and auth.ts (getCurrentUser / requireUser / requireOnboarded)
+    actions/                   Server Actions: auth.ts, onboarding.ts, profile.ts
 
   types/
     domain.ts                 TypeScript types mirroring the approved database schema
 
-middleware.ts                Refreshes the Supabase auth session per request (no-ops if
-                             Supabase env vars aren't set yet)
+middleware.ts                Refreshes the Supabase auth session and gates protected routes
+                             (/home, /onboarding, /profile) — see src/lib/supabase/middleware.ts
 public/
   brand/                      Copied from /assets/brand — logo lockups
   images/                     Copied from /assets/mockups/photography — approved photo library
+supabase/
+  config.toml                 Local-dev Supabase CLI config (email confirmations + Google OAuth on)
+  migrations/                  Full schema (users, profiles, cities, gatherings, rsvps,
+                             memberships, partners, speed_connect_sessions), RLS policies, the
+                             handle_new_user trigger, and the `avatars` Storage bucket
 ```
 
 ## Design system
@@ -139,27 +178,46 @@ All gathering listings are mock data (`src/data/gatherings.ts`), sourced from th
 and always rendered with an `ExampleTag` — no fabricated testimonials, event counts, or community
 statistics anywhere on the site.
 
-**Not implemented yet (by design):** authentication/session logic, Stripe checkout, RSVP/
-Speed-Connect persistence, and email sending. The Sign In / Join forms and the Contact form are
-fully styled and interactive on the client (validation, local success states) but don't call
-Supabase, Stripe, or Resend yet — see the "lazily-instantiated" clients in `src/lib/`. The member
-account flow (onboarding, member home, profile, create gathering) is also out of scope for this
-pass — see [`docs/product/mvp-requirements.md`](somacord-docs/docs/product/mvp-requirements.md)
-for full MVP scope.
+**Review follow-ups pass:**
 
-**Review follow-ups (current):**
-
-- **City page** (`/cities/[city]`) — built on a dynamic route so additional cities can be added
-  via `src/data/cities.ts` without new code, per docs/website/sitemap.md and seo-strategy.md. Only
-  Salt Lake City exists today (`/cities/salt-lake-city`), so the primary nav's "Cities" link now
-  resolves instead of 404ing.
+- **City page** (`/cities/[city]`) — dynamic route, `src/data/cities.ts` holds the content. Only
+  Salt Lake City exists today, so the primary nav's "Cities" link resolves instead of 404ing.
 - **Membership pricing** — renamed "Founding Membership" to **Somacord Membership**, now offered
   Monthly ($39), Quarterly ($99), or Yearly ($349) instead of a single $39/month price. Updated
   across the site, the approved docs, and the static mockup file.
 
+**Authentication + Onboarding + Member Foundation pass (current):** real Supabase Auth, a 7-step
+onboarding wizard, the Member Dashboard, and the Profile page.
+
+- **Auth** — email/password sign up with email verification, sign in, sign out, forgot/reset
+  password, and "Sign in with Google", all via Supabase Auth (`src/lib/actions/auth.ts`,
+  `src/app/auth/callback/route.ts`). The existing Sign In (`/signin`) and Join (`/signup`) pages
+  were wired up in place, not replaced. Sessions persist across refreshes via `@supabase/ssr`
+  cookies; `middleware.ts` redirects signed-out visitors away from `/home`, `/onboarding`, and
+  `/profile`, and redirects signed-in visitors away from `/signin`/`/signup`.
+- **Onboarding** (`/onboarding/profile`) — 7-step wizard: Welcome, Name, City, Interests,
+  Availability, optional Photo, Confirmation. Written to Supabase in one submit on "Finish";
+  `requireOnboarded()` gates `/home` and `/profile` until it's done.
+- **Member Dashboard** (`/home`) — Welcome, Upcoming Gatherings, Recommended Gatherings, Upcoming
+  Speed Connect, My RSVPs, Community Updates. All placeholder data (`src/data/dashboard.ts`) —
+  no RSVP/Speed-Connect backend logic yet, per this milestone's scope.
+- **Profile** (`/profile`) — edit name, avatar upload (Supabase Storage), interest management,
+  notification settings — each section its own small form/Server Action.
+- **Database** — `supabase/migrations/` creates the full approved schema (see
+  [database-schema.md](somacord-docs/docs/engineering/database-schema.md)) with Row Level
+  Security on every table, plus a `handle_new_user` trigger and the `avatars` Storage bucket.
+  Not yet connected to a live Supabase project in this environment — see "Supabase project setup"
+  above.
+
+**Not implemented yet (by design, out of scope for this milestone):** Stripe checkout/membership
+billing, Speed Connect booking logic, gathering creation, and Community Partner management. See
+[`docs/product/mvp-requirements.md`](somacord-docs/docs/product/mvp-requirements.md) for full MVP
+scope.
+
 ## Next milestone
 
-Per product review: **City page → Sign up flow → Sign in flow → Onboarding → Member dashboard.**
-The City page above is done; Sign up/Sign in currently exist as UI-only forms (see "Not
-implemented yet" above) and need real Supabase auth wired in before Onboarding and the Member
-dashboard (both net-new) can follow.
+Stripe subscriptions/checkout for the Somacord Membership, using the plan choice already captured
+in the Membership page's plan toggle (`src/config/site.ts`) and the `memberships` table already
+in place. See "Remaining work before Stripe integration" in the PR description for the specific
+gaps to close first (mainly: connecting a real Supabase project and testing the auth flows
+end-to-end, which couldn't be done from this sandboxed environment).

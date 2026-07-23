@@ -36,7 +36,7 @@ export const siteConfig = {
   tagline: "Real friendships start with one hello.",
   description:
     "Somacord is a friendship-first social club — guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
 
   /** Salt Lake City only at MVP launch — see docs/business/launch-strategy.md */
   launchCity: {

@@ -7,8 +7,10 @@ import { gatherings } from "@/data/gatherings";
 /**
  * Extend this alongside each new page as it ships — see
  * /somacord-docs/docs/website/sitemap.md for the full approved site
- * structure this will eventually cover (the member account flow is not
- * part of the public marketing site built so far).
+ * structure this will eventually cover. Intentionally excluded: the
+ * authenticated member experience (/home, /onboarding, /profile) and
+ * auth utility pages (/auth/callback, /forgot-password, /reset-password)
+ * — see robots.ts for the matching disallow rules.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

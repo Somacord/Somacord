@@ -27,7 +27,7 @@ function requireEnv(name: string): string {
 export const env = {
   site: {
     get url() {
-      return readEnv("NEXT_PUBLIC_SITE_URL") ?? "http://localhost:3000";
+      return readEnv("NEXT_PUBLIC_APP_URL") ?? "http://localhost:3000";
     },
   },
 
@@ -76,7 +76,7 @@ export const env = {
       return requireEnv("RESEND_API_KEY");
     },
     get fromEmail() {
-      return readEnv("RESEND_FROM_EMAIL") ?? "Somacord <hello@somacord.com>";
+      return readEnv("EMAIL_FROM") ?? "Somacord <hello@somacord.com>";
     },
   },
 } as const;
