@@ -10,14 +10,14 @@ directly against those approved docs; when in doubt, the docs win.
 
 ## Stack
 
-| Layer              | Choice                                                        |
-| ------------------ | ------------------------------------------------------------- |
-| Framework          | [Next.js](https://nextjs.org) (App Router), TypeScript        |
-| Styling            | [Tailwind CSS v4](https://tailwindcss.com)                    |
-| Database / Backend | [Supabase](https://supabase.com) (PostgreSQL, Auth, Storage)  |
-| Payments           | [Stripe](https://stripe.com) (Founding Membership, $39/month) |
-| Email              | [Resend](https://resend.com)                                  |
-| Hosting            | [Vercel](https://vercel.com)                                  |
+| Layer              | Choice                                                                       |
+| ------------------ | ---------------------------------------------------------------------------- |
+| Framework          | [Next.js](https://nextjs.org) (App Router), TypeScript                       |
+| Styling            | [Tailwind CSS v4](https://tailwindcss.com)                                   |
+| Database / Backend | [Supabase](https://supabase.com) (PostgreSQL, Auth, Storage)                 |
+| Payments           | [Stripe](https://stripe.com) (Somacord Membership: monthly/quarterly/yearly) |
+| Email              | [Resend](https://resend.com)                                                 |
+| Hosting            | [Vercel](https://vercel.com)                                                 |
 
 See [`somacord-docs/docs/engineering/tech-stack.md`](somacord-docs/docs/engineering/tech-stack.md)
 for the full approved stack.
@@ -56,6 +56,7 @@ src/
     layout.tsx             Root layout: fonts, <SiteHeader>, <SiteFooter>
     page.tsx                Homepage
     gatherings/             /gatherings (browse) and /gatherings/[slug] (detail)
+    cities/[city]/          /cities/salt-lake-city (dynamic route, ready for more cities)
     membership/             /membership
     partners/                /partners (Community Partners)
     speed-connect/           /speed-connect ("How It Works")
@@ -79,7 +80,8 @@ src/
     media.ts                 Approved photography library, mapped to /public/images
 
   data/
-    gatherings.ts             Mock gathering listings (all explicitly "Example" — see Launch Honesty Rule)
+    gatherings.ts             Mock gathering listings (all explicitly labeled "Example")
+    cities.ts                 City content (activity categories) — Salt Lake City only for now
     faq.ts                    FAQ copy for Homepage / Membership, grounded in approved docs
     content.ts                Values, partner, and journey copy sourced from approved docs
 
@@ -127,22 +129,37 @@ photography, and mockups:
 - **Homepage** — hero, How It Works, Featured Gatherings, Community Partners, Membership preview, FAQ, final CTA.
 - **Gatherings** (`/gatherings`) — search + category filters, empty state, gathering cards.
 - **Gathering Detail** (`/gatherings/[slug]`) — hero image, description, date/time, location, attendees, RSVP toggle, related gatherings.
-- **Membership** (`/membership`) — Founding Membership pricing, benefits, example monthly rhythm, FAQ, join CTA.
+- **Membership** (`/membership`) — Somacord Membership pricing (monthly/quarterly/yearly), benefits, example monthly rhythm, FAQ, join CTA.
 - **Community Partners** (`/partners`) — why partner, partner types ("who it's for"), how it works, apply CTA.
 - **How It Works** (`/speed-connect`) — Speed Connect explainer + the Discover → Join a Speed Connect → Attend Gatherings → Build Friendships journey.
 - **About** (`/about`) — mission, why Somacord exists, values (the approved product principles).
 - **Contact** (`/contact`), **Sign In** (`/signin`), **Join** (`/signup`) — new pages not covered by the original mockup, built consistently with the same design system.
 
 All gathering listings are mock data (`src/data/gatherings.ts`), sourced from the approved mockup
-and always rendered with an `ExampleTag`, per the Launch Honesty Rule — no fabricated testimonials,
-event counts, or community statistics anywhere on the site.
+and always rendered with an `ExampleTag` — no fabricated testimonials, event counts, or community
+statistics anywhere on the site.
 
 **Not implemented yet (by design):** authentication/session logic, Stripe checkout, RSVP/
 Speed-Connect persistence, and email sending. The Sign In / Join forms and the Contact form are
 fully styled and interactive on the client (validation, local success states) but don't call
-Supabase, Stripe, or Resend yet — see the "lazily-instantiated" clients in `src/lib/`. City pages
-(`/cities/[city]`) and the member account flow (onboarding, member home, profile, create
-gathering) are also out of scope for this pass — see
-[`docs/product/mvp-requirements.md`](somacord-docs/docs/product/mvp-requirements.md) for full MVP
-scope. The primary nav's "Cities" link points to `/cities/salt-lake-city`, which doesn't exist
-yet and will 404 until that page is built.
+Supabase, Stripe, or Resend yet — see the "lazily-instantiated" clients in `src/lib/`. The member
+account flow (onboarding, member home, profile, create gathering) is also out of scope for this
+pass — see [`docs/product/mvp-requirements.md`](somacord-docs/docs/product/mvp-requirements.md)
+for full MVP scope.
+
+**Review follow-ups (current):**
+
+- **City page** (`/cities/[city]`) — built on a dynamic route so additional cities can be added
+  via `src/data/cities.ts` without new code, per docs/website/sitemap.md and seo-strategy.md. Only
+  Salt Lake City exists today (`/cities/salt-lake-city`), so the primary nav's "Cities" link now
+  resolves instead of 404ing.
+- **Membership pricing** — renamed "Founding Membership" to **Somacord Membership**, now offered
+  Monthly ($39), Quarterly ($99), or Yearly ($349) instead of a single $39/month price. Updated
+  across the site, the approved docs, and the static mockup file.
+
+## Next milestone
+
+Per product review: **City page → Sign up flow → Sign in flow → Onboarding → Member dashboard.**
+The City page above is done; Sign up/Sign in currently exist as UI-only forms (see "Not
+implemented yet" above) and need real Supabase auth wired in before Onboarding and the Member
+dashboard (both net-new) can follow.

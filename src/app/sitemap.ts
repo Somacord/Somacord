@@ -1,13 +1,14 @@
 import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/config/site";
+import { cities } from "@/data/cities";
 import { gatherings } from "@/data/gatherings";
 
 /**
  * Extend this alongside each new page as it ships — see
  * /somacord-docs/docs/website/sitemap.md for the full approved site
- * structure this will eventually cover (city pages and the member
- * account flow are not part of the public marketing site built so far).
+ * structure this will eventually cover (the member account flow is not
+ * part of the public marketing site built so far).
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -36,5 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     }));
 
-  return [...staticRoutes, ...gatheringRoutes];
+  const cityRoutes: MetadataRoute.Sitemap = cities.map((city) => ({
+    url: `${siteConfig.url}/cities/${city.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...cityRoutes, ...gatheringRoutes];
 }
