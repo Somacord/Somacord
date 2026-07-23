@@ -63,10 +63,12 @@ export async function signUpAction(
 
   // Email confirmation is required (the normal path — see supabase/config.toml).
   // No session yet, so show a "check your email" state instead of redirecting.
+  // Clicking the link signs them in automatically (PKCE via /auth/callback) —
+  // no separate sign-in step, so the copy shouldn't imply one.
   if (data.user && !data.session) {
     return {
       status: "success",
-      message: "Check your email to confirm your account, then sign in.",
+      message: "Click the confirmation link in your email — it signs you in automatically.",
     };
   }
 
