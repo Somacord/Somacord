@@ -15,8 +15,18 @@ export const metadata: Metadata = {
  * Join / Sign Up — the first step of the account flow in
  * docs/website/sitemap.md (`/signup`). Wired to Supabase Auth (email +
  * password or Google); profile setup happens next at `/onboarding/profile`.
+ *
+ * `next` (e.g. from a gathering's "Sign Up to RSVP" link) carries the
+ * visitor's original destination through signup, email confirmation, and
+ * back — see signUpAction and /auth/callback.
  */
-export default function SignUpPage() {
+export default async function SignUpPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string }>;
+}) {
+  const { next } = await searchParams;
+
   return (
     <Section tone="sky">
       <Container className="max-w-md">
@@ -29,7 +39,7 @@ export default function SignUpPage() {
           </p>
         </div>
         <Panel>
-          <SignUpForm />
+          <SignUpForm next={next} />
         </Panel>
       </Container>
     </Section>

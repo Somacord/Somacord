@@ -61,7 +61,10 @@ export function SignInForm({ next }: SignInFormProps) {
 
       <p className="text-ink-muted text-center text-sm">
         New to Somacord?{" "}
-        <Link href="/signup" className="text-cord-blue font-medium underline">
+        <Link
+          href={next ? `/signup?next=${encodeURIComponent(next)}` : "/signup"}
+          className="text-cord-blue font-medium underline"
+        >
           Join Somacord
         </Link>
       </p>

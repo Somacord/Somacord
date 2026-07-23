@@ -35,6 +35,7 @@ export async function signUpAction(
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
+  const next = safeNextPath(formData.get("next"));
 
   if (!name || !email || !password) {
     return { status: "error", message: "Please fill in your name, email, and password." };
@@ -49,7 +50,10 @@ export async function signUpAction(
     password,
     options: {
       data: { name },
-      emailRedirectTo: `${env.site.url}/auth/callback`,
+      // Carries the original destination (e.g. the gathering someone was
+      // trying to RSVP to) through the email confirmation round-trip —
+      // /auth/callback already knows how to honor `next` once it's here.
+      emailRedirectTo: `${env.site.url}/auth/callback${next ? `?next=${encodeURIComponent(next)}` : ""}`,
     },
   });
 
@@ -67,9 +71,9 @@ export async function signUpAction(
   }
 
   // Email confirmation is disabled on this project: a session came back
-  // immediately, so continue straight into onboarding.
+  // immediately, so continue straight to `next` (or onboarding).
   if (data.user) {
-    redirect(await resolvePostAuthDestination(data.user.id));
+    redirect(next ?? (await resolvePostAuthDestination(data.user.id)));
   }
 
   return {

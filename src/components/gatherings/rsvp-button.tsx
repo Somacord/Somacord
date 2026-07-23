@@ -15,9 +15,20 @@ export interface RsvpButtonProps {
 export function RsvpButton({ gatheringId, slug, isGoing, isSignedIn, className }: RsvpButtonProps) {
   if (!isSignedIn) {
     return (
-      <Button asChild variant="primary" className={className}>
-        <Link href={`/signin?next=/gatherings/${slug}`}>Sign In to RSVP</Link>
-      </Button>
+      <div className={className}>
+        <Button asChild variant="primary">
+          <Link href={`/signup?next=/gatherings/${slug}`}>Sign Up to RSVP</Link>
+        </Button>
+        <p className="text-ink-muted mt-2 text-xs">
+          Already have an account?{" "}
+          <Link
+            href={`/signin?next=/gatherings/${slug}`}
+            className="text-cord-blue font-medium underline"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
     );
   }
 

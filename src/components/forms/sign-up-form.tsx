@@ -11,8 +11,13 @@ import { siteConfig } from "@/config/site";
 import { initialAuthActionState } from "@/lib/actions/auth-state";
 import { signUpAction } from "@/lib/actions/auth";
 
+export interface SignUpFormProps {
+  /** Return-to path after signup completes (e.g. a gathering someone was trying to RSVP to). */
+  next?: string;
+}
+
 /** Join / create-account form — wired to Supabase Auth (email/password + Google). */
-export function SignUpForm() {
+export function SignUpForm({ next }: SignUpFormProps) {
   const [state, formAction, pending] = useActionState(signUpAction, initialAuthActionState);
 
   if (state.status === "success") {
@@ -26,7 +31,7 @@ export function SignUpForm() {
 
   return (
     <div className="space-y-5">
-      <GoogleAuthButton next="/onboarding/profile" />
+      <GoogleAuthButton next={next} />
 
       <div className="text-ink-muted flex items-center gap-3 text-xs">
         <span className="bg-soft-sky h-px flex-1" />
@@ -35,6 +40,7 @@ export function SignUpForm() {
       </div>
 
       <form action={formAction} className="space-y-5">
+        {next && <input type="hidden" name="next" value={next} />}
         <FormField label="Name" htmlFor="signup-name">
           <Input id="signup-name" name="name" type="text" autoComplete="name" required />
         </FormField>
@@ -77,7 +83,10 @@ export function SignUpForm() {
 
       <p className="text-ink-muted text-center text-sm">
         Already a member?{" "}
-        <Link href="/signin" className="text-cord-blue font-medium underline">
+        <Link
+          href={next ? `/signin?next=${encodeURIComponent(next)}` : "/signin"}
+          className="text-cord-blue font-medium underline"
+        >
           Sign in
         </Link>
       </p>
