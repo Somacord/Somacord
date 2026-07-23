@@ -58,11 +58,16 @@ export interface City {
 
 export type GatheringCategory = "community" | "partner";
 
+/** draft until the creator publishes it; only published gatherings are publicly visible. */
+export type GatheringStatus = "draft" | "published";
+
 export interface Gathering {
   id: string;
+  slug: string;
   title: string;
   description: string;
   category: GatheringCategory;
+  status: GatheringStatus;
   createdBy: string;
   cityId: string;
   location: string;
