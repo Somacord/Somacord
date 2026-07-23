@@ -36,7 +36,7 @@ export const homeFaqs: FaqItemData[] = [
   },
   {
     question: "How much does membership cost?",
-    answer: `The ${siteConfig.membership.name} is available ${planSummary} — one price list for every member and Community Partner. It includes community access, local gatherings, ongoing Speed Connect, member discovery, and the ability to create your own gatherings.`,
+    answer: `The ${siteConfig.membership.name} is ${planSummary}. It includes unlimited RSVPs, unlimited Speed Connect, member discounts on Official Somacord Events, and the ability to create your own gatherings. Browsing gatherings and trying Speed Connect don't require a membership at all.`,
   },
 ];
 
@@ -47,16 +47,17 @@ export const membershipFaqs: FaqItemData[] = [
       "Community access, local experiences (gatherings), ongoing Speed Connect access, member discovery & conversations, and the ability to create your own gatherings — the same benefits on every plan.",
   },
   {
-    question: "Do Community Partners pay a different price?",
-    answer: `No — Community Partners pay the same ${siteConfig.membership.name} pricing as every member, with the same ability to create gatherings. The difference is what they bring: partners already have an existing community, and introduce it to Somacord.`,
+    question: "Do Community Partners pay for a Somacord Membership?",
+    answer:
+      "No — Community Partners are organizations, not members, so they don't purchase the Somacord Membership at all. They partner with Somacord differently, from a one-time event to an ongoing relationship. See the Community Partners page for how that works.",
   },
   {
     question: "Do I need to be a member to try Speed Connect?",
     answer:
-      "No. Speed Connect is free with no signup commitment required — it's the entry point into Somacord for every new visitor.",
+      "No. Free accounts get limited Speed Connect access at no cost — membership gets you unlimited sessions.",
   },
   {
     question: "Can I create my own gatherings?",
-    answer: `Yes — creating gatherings is included in the ${siteConfig.membership.name}, for members and Community Partners alike, on any plan.`,
+    answer: `Yes — creating gatherings is included in the ${siteConfig.membership.name}, and Community Partners can create their own events too.`,
   },
 ];

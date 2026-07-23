@@ -21,8 +21,9 @@ export interface PricingCardProps {
 
 /**
  * Pricing card — used on the Membership page for the Somacord Membership.
- * One membership, three billing plans (monthly / quarterly / yearly) with
- * a shared benefits list, since every plan includes the same benefits.
+ * Renders a billing-plan selector only when there's more than one plan to
+ * choose between; a single plan (the current launch state — see
+ * docs/business/pricing.md) just shows its price directly.
  */
 export function PricingCard({
   eyebrow,
@@ -45,20 +46,27 @@ export function PricingCard({
     >
       <Eyebrow className="mb-0">{eyebrow}</Eyebrow>
 
-      <div className="my-5 flex justify-center gap-2">
-        {plans.map((plan) => (
-          <FilterPill
-            key={plan.id}
-            active={plan.id === selectedPlan?.id}
-            onClick={() => setSelectedId(plan.id)}
-          >
-            {plan.label}
-          </FilterPill>
-        ))}
-      </div>
+      {plans.length > 1 && (
+        <div className="my-5 flex justify-center gap-2">
+          {plans.map((plan) => (
+            <FilterPill
+              key={plan.id}
+              active={plan.id === selectedPlan?.id}
+              onClick={() => setSelectedId(plan.id)}
+            >
+              {plan.label}
+            </FilterPill>
+          ))}
+        </div>
+      )}
 
       {selectedPlan && (
-        <div className="font-display text-cord-blue mb-2 text-5xl font-bold">
+        <div
+          className={cn(
+            "font-display text-cord-blue mb-2 text-5xl font-bold",
+            plans.length > 1 ? "mt-0" : "mt-5",
+          )}
+        >
           ${selectedPlan.price}
           <span className="text-ink-muted text-base font-medium">/{selectedPlan.interval}</span>
         </div>

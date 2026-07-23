@@ -94,7 +94,7 @@ export interface Membership {
   userId: string;
   status: MembershipStatus;
   plan: MembershipPlan;
-  /** 39.00 (monthly), 99.00 (quarterly), or 349.00 (yearly) — see docs/business/pricing.md */
+  /** 29.00 (monthly) at launch — quarterly/yearly values are reserved, not currently offered. See docs/business/pricing.md */
   price: number;
   stripeSubscriptionId: string | null;
   startedAt: string;

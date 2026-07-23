@@ -52,15 +52,15 @@ export default async function HomePage() {
             steps={[
               {
                 number: 1,
-                title: "Try Speed Connect, free",
+                title: "Discover what's happening nearby",
                 description:
-                  "A short, guided conversation experience — no commitment, no awkward small talk to figure out on your own.",
+                  "Browse community and Community Partner gatherings — no account required to look around.",
               },
               {
                 number: 2,
-                title: "Meet a few new people",
+                title: "Try Speed Connect, free",
                 description:
-                  "Speed Connect is built for a handful of genuine first conversations, not a crowd.",
+                  "A short, guided conversation experience — no commitment, no awkward small talk to figure out on your own.",
               },
               {
                 number: 3,
@@ -124,9 +124,9 @@ export default async function HomePage() {
               Local spots already bring people together. We help them do it better.
             </h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              Coffee shops, restaurants, clubs, and hobby groups join as Community Partners — same
-              Somacord Membership pricing, plus tools to organize and grow their gatherings on
-              Somacord.
+              Coffee shops, restaurants, clubs, and hobby groups partner with Somacord as
+              organizations — not members — to bring their existing community in and reach new
+              people looking for exactly what they offer.
             </p>
             <Button asChild variant="secondary-light">
               <Link href="/partners">Become a Partner</Link>
@@ -142,11 +142,10 @@ export default async function HomePage() {
             imageAlt={photography.dinnerGathering.alt}
           >
             <Eyebrow>Membership Preview</Eyebrow>
-            <h2 className="mb-4 text-[32px]">One membership. Your choice of plan.</h2>
+            <h2 className="mb-4 text-[32px]">One membership. $29/month.</h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              The {siteConfig.membership.name} gets you community access, local gatherings, ongoing
-              Speed Connect, and the ability to create your own gatherings — billed monthly,
-              quarterly, or yearly.
+              The {siteConfig.membership.name} gets you unlimited RSVPs, unlimited Speed Connect,
+              and the ability to create your own gatherings — no tiers, no add-ons.
             </p>
             <CheckList
               items={[

@@ -105,7 +105,6 @@ export const partnerHowItWorks = [
   {
     number: 4,
     title: "Grow your local presence",
-    description:
-      "Reach new members actively looking for local connection — as a Somacord member, same membership pricing.",
+    description: "Reach new people actively looking for local connection, on your own terms.",
   },
 ];

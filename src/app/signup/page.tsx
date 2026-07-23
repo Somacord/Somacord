@@ -24,8 +24,8 @@ export default function SignUpPage() {
           <Eyebrow>Join Somacord</Eyebrow>
           <h1 className="mb-2 text-[30px]">Create your account</h1>
           <p className="text-ink-muted text-sm">
-            The {siteConfig.membership.name} is available monthly, quarterly, or yearly — start by
-            creating your account.
+            Start free — the {siteConfig.membership.name} is $29/month whenever you&apos;re ready
+            for unlimited access.
           </p>
         </div>
         <Panel>

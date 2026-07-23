@@ -39,8 +39,8 @@ export default function AboutPage() {
             </p>
             <p className="text-ink-muted text-base leading-relaxed">
               We believe in showing connection, not explaining loneliness; in guided structure over
-              mechanical matching; and in one community, one membership, where everyone — members
-              and local partners alike — belongs the same way.
+              mechanical matching; and in membership that deepens engagement without ever gating
+              discovery — anyone can browse gatherings or try Speed Connect before they join.
             </p>
           </SplitLayout>
         </Container>

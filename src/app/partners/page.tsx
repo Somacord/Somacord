@@ -18,6 +18,29 @@ export const metadata: Metadata = {
     "Join Somacord as a Community Partner and bring your existing community with you — a partnership built for your organization, not a membership.",
 };
 
+const partnerEventFormats = [
+  {
+    icon: "🆓",
+    title: "Free",
+    description: "No cost to attend — a low-risk way to introduce your regulars to Somacord.",
+  },
+  {
+    icon: "🎟",
+    title: "Ticketed",
+    description: "Set your own price — bundle in a drink, a meal, or an activity.",
+  },
+  {
+    icon: "💛",
+    title: "Donation-based",
+    description: "Pay-what-you-want, if that fits your community better.",
+  },
+  {
+    icon: "🔒",
+    title: "Members-only or discounted",
+    description: "Give Somacord members a discount or first access.",
+  },
+];
+
 const partnerTypes = [
   { icon: "☕", title: "Coffee shops", description: "Host standing meetups for your regulars." },
   { icon: "🍽", title: "Restaurants", description: "Turn slow nights into community dinners." },
@@ -99,6 +122,26 @@ export default function PartnersPage() {
                 icon="✓"
                 title={item.title}
                 description={item.description}
+              />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="sand">
+        <Container>
+          <SectionHeader
+            eyebrow="How Partner Events Work"
+            title="You set the format — we bring the people"
+            subhead="Free, ticketed, donation-based, or members-only. It's your event, priced your way."
+          />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {partnerEventFormats.map((format) => (
+              <PartnerTypeCard
+                key={format.title}
+                icon={format.icon}
+                title={format.title}
+                description={format.description}
               />
             ))}
           </div>

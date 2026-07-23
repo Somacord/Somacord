@@ -27,7 +27,7 @@ export interface MembershipPricingPlan {
   id: MembershipPlanId;
   label: string;
   price: number;
-  /** Billing period, for display (e.g. "$39/month"). */
+  /** Billing period, for display (e.g. "$29/month"). */
   interval: string;
 }
 
@@ -45,20 +45,18 @@ export const siteConfig = {
     state: "UT",
   },
 
-  /** One membership, three ways to pay — see docs/business/pricing.md */
+  /** Launch target: $29/month — see docs/business/pricing.md#consumer-pricing-b2c. An annual plan is prepared but not confirmed for MVP launch. */
   membership: {
     name: "Somacord Membership",
     currency: "USD",
     plans: [
-      { id: "monthly", label: "Monthly", price: 39, interval: "month" },
-      { id: "quarterly", label: "Quarterly", price: 99, interval: "quarter" },
-      { id: "yearly", label: "Yearly", price: 349, interval: "year" },
+      { id: "monthly", label: "Monthly", price: 29, interval: "month" },
     ] as const satisfies readonly MembershipPricingPlan[],
     benefits: [
-      "Community access",
-      "Local experiences (gatherings)",
-      "Speed Connect access, ongoing",
-      "Member discovery & conversations",
+      "Unlimited RSVPs",
+      "Unlimited Speed Connect sessions",
+      "Early registration for Official Somacord Events",
+      "Member discounts on Official Somacord Events",
       "Ability to create gatherings",
     ],
   },

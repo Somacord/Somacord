@@ -246,7 +246,7 @@ export default function StyleGuidePage() {
             benefits={siteConfig.membership.benefits}
             ctaLabel="Become a Member"
             ctaHref="/membership"
-            footnote="Community Partners pay the same membership pricing — the difference is role, not price."
+            footnote="Community Partners are organizations, not members — see /partners for how they work with Somacord instead."
           />
         </Container>
       </Section>

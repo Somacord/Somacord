@@ -17,7 +17,7 @@ import { membershipFaqs } from "@/data/faq";
 
 export const metadata: Metadata = {
   title: "Membership",
-  description: `The ${siteConfig.membership.name} — monthly, quarterly, or yearly — for community access, local gatherings, and ongoing Speed Connect.`,
+  description: `The ${siteConfig.membership.name} — $29/month for unlimited RSVPs, unlimited Speed Connect, and the ability to create your own gatherings.`,
 };
 
 const exampleMonth = [
@@ -47,7 +47,7 @@ export default function MembershipPage() {
           <div className="mx-auto mb-12 max-w-xl text-center">
             <Eyebrow>{siteConfig.membership.name}</Eyebrow>
             <h1 className="text-[34px]">
-              One membership. Your choice of plan.
+              One membership. $29/month.
               <br />
               Everyone joins the same community.
             </h1>
@@ -60,10 +60,9 @@ export default function MembershipPage() {
             ctaHref="/signup"
             footnote={
               <>
-                Community Partners pay the same {siteConfig.membership.name} pricing — the
-                difference is role, not price.{" "}
+                A business or organization?{" "}
                 <Link href="/partners" className="underline">
-                  Learn about Partners →
+                  Community Partners work differently →
                 </Link>
               </>
             }
@@ -112,8 +111,8 @@ export default function MembershipPage() {
         <Container className="max-w-xl text-center">
           <h2 className="mb-4 text-[36px]">Ready to become a member?</h2>
           <p className="mb-8 text-white/85">
-            Choose monthly, quarterly, or yearly billing and get full access to{" "}
-            {siteConfig.launchCity.name}&apos;s gatherings, Speed Connect, and community.
+            $29/month for unlimited access to {siteConfig.launchCity.name}&apos;s gatherings, Speed
+            Connect, and community.
           </p>
           <Button asChild variant="primary">
             <Link href="/signup">Become a Member</Link>
