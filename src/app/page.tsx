@@ -14,7 +14,7 @@ import { Steps } from "@/components/ui/steps";
 import { photography } from "@/config/media";
 import { siteConfig } from "@/config/site";
 import { homeFaqs } from "@/data/faq";
-import { getFeaturedGatherings, getGatheringHref } from "@/data/gatherings";
+import { getCityIdBySlug, getPublishedGatherings } from "@/lib/queries/gatherings";
 
 /**
  * Homepage — docs/design/website-mockups.md ("Homepage").
@@ -22,8 +22,9 @@ import { getFeaturedGatherings, getGatheringHref } from "@/data/gatherings";
  * Hero → How It Works → Featured Gatherings → Community Partners →
  * Membership Preview → FAQ → Final CTA.
  */
-export default function HomePage() {
-  const featured = getFeaturedGatherings(3);
+export default async function HomePage() {
+  const cityId = await getCityIdBySlug(siteConfig.launchCity.slug);
+  const featured = cityId ? await getPublishedGatherings(cityId, 3) : [];
 
   return (
     <>
@@ -83,20 +84,31 @@ export default function HomePage() {
               </Button>
             }
           />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((gathering) => (
-              <GatheringCard
-                key={gathering.slug}
-                title={gathering.title}
-                description={gathering.shortDescription}
-                category={gathering.category}
-                imageSrc={gathering.imageSrc}
-                imageAlt={gathering.imageAlt}
-                meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
-                href={getGatheringHref(gathering)}
-              />
-            ))}
-          </div>
+          {featured.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((gathering) => (
+                <GatheringCard
+                  key={gathering.id}
+                  title={gathering.title}
+                  description={gathering.shortDescription}
+                  category={gathering.category}
+                  imageSrc={gathering.imageSrc}
+                  imageAlt={gathering.imageAlt}
+                  meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
+                  href={gathering.href}
+                  isExample={false}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-ink-muted">
+              {siteConfig.launchCity.name} gatherings are just getting started — check back soon, or{" "}
+              <Link href="/speed-connect" className="text-cord-blue font-medium underline">
+                join a free Speed Connect
+              </Link>{" "}
+              in the meantime.
+            </p>
+          )}
         </Container>
       </Section>
 

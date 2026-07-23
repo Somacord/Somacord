@@ -1,27 +1,41 @@
-"use client";
+import Link from "next/link";
 
-import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { cancelRsvpAction, rsvpGoingAction } from "@/lib/actions/rsvps";
 
-import { Button, type ButtonProps } from "@/components/ui/button";
+export interface RsvpButtonProps {
+  gatheringId: string;
+  slug: string;
+  isGoing: boolean;
+  isSignedIn: boolean;
+  className?: string;
+}
 
-/**
- * RSVP toggle for a gathering detail page. This is local UI state only —
- * there is no backend/RSVP persistence yet (see docs/engineering/database-schema.md
- * `rsvps` table for the eventual shape). Wire this up to Supabase in a
- * follow-up feature pass.
- */
-export function RsvpButton({ className, ...props }: Omit<ButtonProps, "children" | "onClick">) {
-  const [isGoing, setIsGoing] = React.useState(false);
+/** RSVP toggle for a gathering detail page, backed by the `rsvps` table. */
+export function RsvpButton({ gatheringId, slug, isGoing, isSignedIn, className }: RsvpButtonProps) {
+  if (!isSignedIn) {
+    return (
+      <Button asChild variant="primary" className={className}>
+        <Link href={`/signin?next=/gatherings/${slug}`}>Sign In to RSVP</Link>
+      </Button>
+    );
+  }
+
+  if (isGoing) {
+    return (
+      <form action={cancelRsvpAction.bind(null, gatheringId, slug)}>
+        <Button type="submit" variant="secondary-light" className={className}>
+          You&apos;re Going ✓ — Cancel
+        </Button>
+      </form>
+    );
+  }
 
   return (
-    <Button
-      type="button"
-      variant={isGoing ? "secondary-light" : "primary"}
-      onClick={() => setIsGoing((going) => !going)}
-      className={className}
-      {...props}
-    >
-      {isGoing ? "You're Going ✓" : "Join This Gathering"}
-    </Button>
+    <form action={rsvpGoingAction.bind(null, gatheringId, slug)}>
+      <Button type="submit" variant="primary" className={className}>
+        Join This Gathering
+      </Button>
+    </form>
   );
 }

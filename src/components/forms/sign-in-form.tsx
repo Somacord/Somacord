@@ -8,7 +8,8 @@ import { GoogleAuthButton } from "@/components/forms/google-auth-button";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
-import { initialAuthActionState, signInAction } from "@/lib/actions/auth";
+import { initialAuthActionState } from "@/lib/actions/auth-state";
+import { signInAction } from "@/lib/actions/auth";
 
 export interface SignInFormProps {
   /** Return-to path after a successful sign-in (e.g. from middleware's ?next=). */

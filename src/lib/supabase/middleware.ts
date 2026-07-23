@@ -6,6 +6,9 @@ import { env } from "@/lib/env";
 /** Requires a signed-in user; redirects to /signin (with a return-to `next`) otherwise. */
 const PROTECTED_PATH_PREFIXES = ["/home", "/onboarding", "/profile"];
 
+/** Same protection as above, for exact gathering-management paths (not the public /gatherings routes). */
+const PROTECTED_EXACT_PATHS = ["/gatherings/create", "/gatherings/manage"];
+
 /** Signed-in users shouldn't see these — bounce them to their dashboard instead. */
 const SIGNED_OUT_ONLY_PATHS = ["/signin", "/signup"];
 
@@ -49,7 +52,10 @@ export async function updateSession(request: NextRequest) {
   const isSignedIn = Boolean(data.user);
   const pathname = request.nextUrl.pathname;
 
-  const isProtected = PROTECTED_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+  const isProtected =
+    PROTECTED_PATH_PREFIXES.some((prefix) => pathname.startsWith(prefix)) ||
+    PROTECTED_EXACT_PATHS.includes(pathname) ||
+    (pathname.startsWith("/gatherings/") && pathname.endsWith("/edit"));
   if (!isSignedIn && isProtected) {
     const redirectUrl = new URL("/signin", request.url);
     redirectUrl.searchParams.set("next", pathname);

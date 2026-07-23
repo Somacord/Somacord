@@ -5,7 +5,8 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
-import { initialAuthActionState, resetPasswordAction } from "@/lib/actions/auth";
+import { initialAuthActionState } from "@/lib/actions/auth-state";
+import { resetPasswordAction } from "@/lib/actions/auth";
 
 export function ResetPasswordForm() {
   const [state, formAction, pending] = useActionState(resetPasswordAction, initialAuthActionState);

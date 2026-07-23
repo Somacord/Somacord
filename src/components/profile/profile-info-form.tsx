@@ -5,7 +5,8 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
-import { initialProfileActionState, updateProfileInfoAction } from "@/lib/actions/profile";
+import { updateProfileInfoAction } from "@/lib/actions/profile";
+import { initialProfileActionState } from "@/lib/actions/profile-state";
 
 export interface ProfileInfoFormProps {
   name: string;

@@ -2,15 +2,9 @@
 
 import { redirect } from "next/navigation";
 
+import type { AuthActionState } from "@/lib/actions/auth-state";
 import { env } from "@/lib/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-export interface AuthActionState {
-  status: "idle" | "success" | "error";
-  message?: string;
-}
-
-export const initialAuthActionState: AuthActionState = { status: "idle" };
 
 const NOT_CONFIGURED_MESSAGE =
   "Sign-in isn't configured yet on this environment. Please check back soon.";

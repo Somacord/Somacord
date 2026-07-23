@@ -2,15 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 
+import type { ProfileActionState } from "@/lib/actions/profile-state";
 import { requireUser } from "@/lib/supabase/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-export interface ProfileActionState {
-  status: "idle" | "success" | "error";
-  message?: string;
-}
-
-export const initialProfileActionState: ProfileActionState = { status: "idle" };
 
 export async function updateProfileInfoAction(
   _prevState: ProfileActionState,

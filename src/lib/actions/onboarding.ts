@@ -2,15 +2,9 @@
 
 import { redirect } from "next/navigation";
 
+import type { OnboardingActionState } from "@/lib/actions/onboarding-state";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/supabase/auth";
-
-export interface OnboardingActionState {
-  status: "idle" | "error";
-  message?: string;
-}
-
-export const initialOnboardingActionState: OnboardingActionState = { status: "idle" };
 
 /**
  * Submitted once, from the wizard's final "Finish" step — see

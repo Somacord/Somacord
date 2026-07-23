@@ -6,7 +6,8 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { FilterPill } from "@/components/ui/filter-pill";
 import { interestOptions } from "@/data/onboarding";
-import { initialProfileActionState, updateInterestsAction } from "@/lib/actions/profile";
+import { updateInterestsAction } from "@/lib/actions/profile";
+import { initialProfileActionState } from "@/lib/actions/profile-state";
 
 export interface InterestsEditorProps {
   initialInterests: string[];

@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
 import { siteConfig } from "@/config/site";
-import { initialAuthActionState, signUpAction } from "@/lib/actions/auth";
+import { initialAuthActionState } from "@/lib/actions/auth-state";
+import { signUpAction } from "@/lib/actions/auth";
 
 /** Join / create-account form — wired to Supabase Auth (email/password + Google). */
 export function SignUpForm() {
