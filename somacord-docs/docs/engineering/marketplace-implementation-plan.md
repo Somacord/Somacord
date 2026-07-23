@@ -8,6 +8,22 @@ Source strategy: [/docs/business/business-model.md](../business/business-model.m
 
 ---
 
+## 0. Architecture Review — Does the Plan Still Hold?
+
+Answering the seven review questions directly, now that the launch strategy and revenue priority are final:
+
+1. **Does the architecture still support the model? Yes**, with one real gap closed below: nothing in the plan let anyone act *for* a partner org before that partner has a self-serve manager. Since launch is concierge-run (§12, [launch-strategy.md](../business/launch-strategy.md)), that gap would have blocked the very first event. Added an `admin`-bypass to §9.
+2. **Should phases be reordered? Yes — this is the main finding.** The first draft built ticketing for Official Somacord Events *before* Partner Events, treating Official Events as the simple proving-ground case. That's backwards: Revenue Priority ranks Partner Event tickets #1 and the launch sequence starts with a Community Partner event, not a Somacord-run one. §12 is reordered so ticketing ships with Partner Events first; Official Events reuse the same plumbing immediately after, not the other way around.
+3. **Does the DB design still make sense? Yes**, with two simplifications (both applied below): `partner_promotions.gathering_id` is now `not null` (a promotion that isn't tied to an event doesn't mean anything), and `organizations.stripe_connect_account_id` moves out of the Phase 1 migration into the Phase-6-only migration that actually uses it, so the first migration doesn't carry a column nothing reads for five phases.
+4. **Does Stripe still make sense? Yes, unchanged.** The static-subscription vs. dynamic-Checkout-Session split (§8) is exactly what "Partners have separate Stripe products from Member subscriptions" requires, and nothing about the finalized launch sequence changes it.
+5. **Missing tables/relationships/workflows?** One: there's no mechanism yet for the Meetaway freemium limit (free = N sessions/month, member = unlimited) — already tracked as a gap in [database-schema.md](database-schema.md#known-gaps-vs-business-model-v2), intentionally **not** added here since it's outside this phase's Organizations-only scope. Everything else needed for launch (concierge event creation, partner billing, ticketing) is covered once §9's admin-bypass is added.
+6. **Unnecessary complexity to remove? Yes, three things**, all applied below: (a) defer `stripe_connect_account_id` to Phase 6 (§3, §10); (b) skip building a partner-application/intake table — a spreadsheet is enough while onboarding is concierge-run by hand; (c) skip building self-serve manager-invite UI at launch — the `organization_managers` *table* ships in Phase 1 (the data model needs it), but nothing requires a partner-facing UI for it until partners are self-serving their own events, which isn't a launch requirement.
+7. **Simpler/faster MVP? Yes — this is the same finding as #6.** Because launch is concierge-run, Phase 1 only needs the `organizations`/`organization_managers` tables plus an `admin`-can-act-for-any-org RLS bypass — no partner-facing dashboard, no invite flow, no application form. Somacord staff creates the organization row, the first Partner Event, and its ticket tiers directly (internal tooling or direct Supabase access), which means Phase 2 (ticketing + Partner Events) doesn't block on any partner-facing UI being built at all.
+
+Every "yes, with changes" above is applied in the sections below — nothing in this review is left as an unapplied suggestion.
+
+---
+
 ## 1. Conflict Inventory — every place the current codebase disagrees with the approved model
 
 | Area | Current implementation | Conflicts with |
@@ -60,10 +76,14 @@ create table public.organizations (
   description text,
   city_id uuid references public.cities(id),
   verified boolean not null default false,
-  stripe_connect_account_id text,        -- null until revenue-share ships (§6, final phase)
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- stripe_connect_account_id is intentionally NOT added here. It's only
+-- relevant once revenue-share ships (§7, final phase) — added by that
+-- phase's own migration (§10, step 7) instead of carried unused through
+-- five earlier phases.
 
 create table public.organization_managers (
   organization_id uuid not null references public.organizations(id) on delete cascade,
@@ -140,7 +160,7 @@ A gathering is either free (uses `rsvps` only, `event_ticket_tiers` empty) or pa
 create table public.partner_promotions (               -- Option A: one-time
   id uuid primary key default gen_random_uuid(),
   organization_id uuid not null references public.organizations(id) on delete cascade,
-  gathering_id uuid references public.gatherings(id),
+  gathering_id uuid not null references public.gatherings(id),  -- a promotion always ties to one event
   pricing_type text not null check (pricing_type in ('flat_fee', 'revenue_share')),
   flat_fee numeric(10,2),
   revenue_share_percent numeric(5,2),
@@ -174,7 +194,7 @@ When it is eventually built, it needs **Stripe Connect** (Express accounts — l
 
 ---
 
-## 8. Stripe Products & Checkout
+## 8. Stripe Products and Checkout
 
 **Two different patterns, not one** — this is the second correction from the first draft:
 
@@ -201,16 +221,18 @@ One webhook endpoint (`/api/webhooks/stripe`, doesn't exist yet) handles `checko
 ## 9. Authentication & Permissions (RLS)
 
 New/changed auth helpers (`src/lib/supabase/auth.ts` pattern):
-- `requireOrganizationManager(organizationId)` — analogous to `requireUser()`; redirects/errors if the signed-in user has no `organization_managers` row for that specific org. This — not `role = 'community_partner'` — is the real gate (§2).
+- `requireOrganizationManager(organizationId)` — analogous to `requireUser()`; passes if the signed-in user has an `organization_managers` row for that specific org **or** is `role = 'admin'`. This — not `role = 'community_partner'` — is the real gate (§2).
 - `requireAdmin()` — gates Somacord-Event creation and any future partner-verification surface.
 
+**Admin bypass, added by this review (§0.1, §0.7):** launch is concierge-run — Somacord staff creates the first Partner Events on a partner's behalf before that partner has any self-serve manager account at all. Every organization-scoped RLS policy below therefore checks `organization_managers` membership **or** `role = 'admin'`, not `organization_managers` alone. This is what makes Phase 2 (§12) possible without first building any partner-facing manager UI.
+
 RLS changes, all additive (new policies/columns, not loosening existing ones):
-- **`organizations`**: public `select` (org profiles should be discoverable); `insert` restricted to `service_role` only for now (manual assignment, no self-serve); `update` allowed for rows where the caller is an `organization_managers` member.
-- **`organization_managers`**: members can view their own org's manager list; only `role = 'owner'` can insert/delete other managers.
-- **`gatherings`**: existing policy (`status = 'published' or auth.uid() = created_by`) gets an `or exists (select 1 from organization_managers where organization_id = gatherings.organization_id and user_id = auth.uid())` clause, so any manager — not just the literal creator — can see and edit their org's drafts. Insert/update/delete policies need the same addition. Somacord events (`owner_type = 'somacord'`) additionally require the inserting user to be `role = 'admin'`.
-- **`event_ticket_tiers`**: public `select` (pricing must be visible pre-purchase); write restricted to the gathering's owner (member creator, or any manager of its organization, or admin for Somacord events).
+- **`organizations`**: public `select` (org profiles should be discoverable); `insert` restricted to `service_role`/`admin` only for now (manual assignment, no self-serve); `update` allowed for `organization_managers` members or `admin`.
+- **`organization_managers`**: members can view their own org's manager list; `role = 'owner'` or `admin` can insert/delete other managers. (No UI needs to exist for this at launch — see §0.6 — but the policy is needed the moment an admin adds the first manager for a partner going self-serve.)
+- **`gatherings`**: existing policy (`status = 'published' or auth.uid() = created_by`) gets an `or exists (select 1 from organization_managers where organization_id = gatherings.organization_id and user_id = auth.uid()) or (select role from users where id = auth.uid()) = 'admin'` clause, so any manager — or an admin acting on a partner's behalf — can see and edit an org's drafts, not just the literal creator. Insert/update/delete policies need the same addition. Somacord events (`owner_type = 'somacord'`) additionally require the inserting user to be `role = 'admin'`.
+- **`event_ticket_tiers`**: public `select` (pricing must be visible pre-purchase); write restricted to the gathering's owner (member creator, org manager, or admin).
 - **`event_tickets`**: buyer can view their own; gathering owner (member, org managers, or admin) can view tickets for their own events, for check-in/attendance.
-- **`partner_promotions`, `partner_subscriptions`**: organization managers can view their own org's rows; all writes are `service_role`-only (billing state is webhook-driven, never user-editable directly).
+- **`partner_promotions`, `partner_subscriptions`**: organization managers or admin can view their own org's rows; all writes are `service_role`-only (billing state is webhook-driven, never user-editable directly).
 
 ---
 
@@ -224,7 +246,7 @@ RLS changes, all additive (new policies/columns, not loosening existing ones):
 4. `partner_promotions` + `partner_subscriptions` + RLS (`flat_fee` usable immediately; `revenue_share` present in the schema but not wired to any checkout flow until §7 ships).
 5. `users.role` check constraint gains `'admin'`. `'community_partner'` is **kept**, not removed (§2) — this is an additive constraint change only.
 6. Consumer/partner Stripe price corrections — `site.ts` and Stripe dashboard config updated per §8; `memberships.plan`/`price` check constraints are left as-is (non-breaking) even though the values they enumerate are stale, since narrowing them isn't required to fix the live pricing bug (the app just needs to stop writing the wrong values).
-7. *(Final phase, separately approved — §7)* `organizations.stripe_connect_account_id` usage + Connect onboarding flow.
+7. *(Final phase, separately approved — §7)* `alter table organizations add column stripe_connect_account_id text` + Connect onboarding flow. Deliberately not part of migration #1 (§0.3/§0.6) — added only when this phase actually starts.
 8. *(Cleanup, only after full confidence in the new model — requires its own explicit approval, not bundled with any of the above)* Deprecate/drop `public.partners` once every code path reads from `organizations`/`organization_managers` instead and the backfill has been verified row-for-row.
 
 ---
@@ -263,13 +285,14 @@ Open questions to resolve when this is actually scoped: how far in advance insta
 
 ## 12. Recommended Phasing
 
-Confirmed launch scope (per direction): Free/Member consumer tiers, Option A flat-fee + Option B partner billing, RSVPs and tickets both live. Revenue-share/Connect explicitly deferred. Suggested build order, each phase shippable and useful on its own:
+**Reordered by this review (§0.2)** to match Revenue Priority and the confirmed launch sequence (Community Partner event first, not a Somacord-run one, and not a membership sale). Each phase is shippable and useful on its own; revenue-share/Connect stays explicitly deferred.
 
-1. **Organizations entity** (§3, migration #1) — unblocks correct partner modeling with zero billing risk; `partners` untouched. No user-facing change required immediately.
-2. **Consumer pricing correction** — Member Monthly Stripe price live (Annual prepared per §8 but gated by pricing.md's launch decision), `site.ts` update, migration #6. Smallest surface area, fixes the highest-visibility conflict (the live price is currently wrong).
-3. **Event ownership + ticketing for Official Somacord Events only** (§4, §5, admin role, migration #2–3) — one owner type, no partner complexity, proves out the dynamic-Checkout-Session/webhook plumbing end to end.
-4. **Partner Events + Option A flat-fee** (§6, migration #4 minus revenue-share) — organizations can now run paid events; Somacord charges them a flat $99, no payout obligation.
-5. **Option B partner subscriptions** — recurring partner billing, same Checkout/webhook plumbing as consumer membership.
-6. **Option A revenue-share + Stripe Connect payouts** (§7) — highest complexity and compliance surface; last, and only once flat-fee partner demand validates the model.
+1. **Organizations entity** (§3, migration #1) — unblocks correct partner modeling with zero billing risk; `partners` untouched. Table only, no partner-facing UI (§0.6/§0.7) — Somacord staff (as `admin`) can create orgs and act on their behalf immediately via the RLS bypass added in §9.
+2. **Ticketing + Partner Events + Option A flat-fee** (§4, §5, §6 minus revenue-share, migration #2–4) — **this is launch.** Matches Revenue Priority #1 and the launch sequence's first step. An `admin` creates the organization's first Partner Event and ticket tiers on the partner's behalf; the $99 flat fee is charged via a static Checkout, tickets via dynamic Checkout Sessions (§8). Proves out the Checkout/webhook plumbing using the case that actually matters first, not a simplified stand-in for it.
+3. **Official Somacord Events** (§4's `somacord` owner type, admin role) — reuses the exact ticketing plumbing from phase 2 with no new tables, just a different `owner_type` and an `admin`-only insert check. Matches Revenue Priority #2.
+4. **Consumer Member Subscription correction** (migration #6, `site.ts` update) — fixes the live pricing bug ($39 shown today vs. $29 target) and matches Revenue Priority #3. Independent of phases 2–3 and cheap enough to run in parallel with either if useful, but sequenced here to mirror priority order.
+5. **Option B partner subscriptions** — recurring partner billing, same Checkout/webhook plumbing as phase 4. Matches Revenue Priority #4.
+6. **Option A revenue-share + Stripe Connect payouts** (§7, migration #7) — highest complexity and compliance surface; last, and only once flat-fee partner demand (phase 2) validates the model. Matches Revenue Priority #5.
+7. Revenue Priority #6–7 (Sponsorships, Advertising) have no schema implications in this plan — they're marketplace/media revenue, not a build phase; revisit when they're actually being scoped.
 
 Stopping here per your instruction — no migrations or code until this revised plan is reviewed and approved.

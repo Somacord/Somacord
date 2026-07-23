@@ -5,6 +5,8 @@
 ## Who They Are
 Local businesses and organizations that already bring people together: coffee shops, breweries, restaurants, coworking spaces, community organizations, nonprofits, networking groups, hobby clubs, and event organizers.
 
+**Community Partners are the launch entry point, not a secondary revenue line.** Somacord launches with Community Partner events, not membership sales — see [/docs/business/launch-strategy.md](launch-strategy.md#launch-sequence-partner-events-first-not-memberships) and step 1 of the [growth flywheel](../product/user-journey.md#growth-flywheel-core-journey).
+
 ## Organizations, Not Members
 Organizations are a distinct concept from users:
 - Organizations are businesses; users are people.

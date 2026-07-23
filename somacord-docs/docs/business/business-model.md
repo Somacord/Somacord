@@ -6,6 +6,8 @@
 
 Somacord is a membership-powered local experiences marketplace. It combines recurring memberships, one-time paid experiences, local businesses, and community-created gatherings into one ecosystem that helps people build real friendships.
 
+**The primary product is real-world experiences** — gatherings, Partner Events, Official Somacord Events. Meetaway (customer-facing as "Speed Connect") is not the product being sold; it's the acquisition and connection engine that turns a first virtual hello into someone who shows up to a real event and eventually becomes a paying member. See the [Growth Flywheel](../product/user-journey.md#growth-flywheel-core-journey) and [Meetaway Access](#meetaway-access) below.
+
 ## Two Customer Types
 
 Somacord serves two fundamentally different customers, and treats them as such throughout product, pricing, and (eventually) data model:
@@ -21,15 +23,28 @@ Three event types, three different owners — see [community-partners.md](commun
 - **Partner Events** — created by Community Partner organizations, bring new people into a business while creating a real community experience (brewery mixers, trivia nights, workshops).
 - **Somacord Events** — created by Somacord itself, premium flagship experiences that define the brand (Speed Networking, New in Town, Singles Social, Professional Networking).
 
-## Revenue Model
+## Revenue Priority
 
-The business intentionally diversifies across several Experience Economy pricing models rather than relying on subscriptions alone. Full numbers: [pricing.md](pricing.md).
+Revenue streams in the order they matter to the business, from launch-critical to long-term:
 
-- **Consumer revenue** — Free tier (no revenue, discovery/growth) + $29/month Member Subscription, plus one-time Official Somacord Event tickets ($30–35 typical).
-- **Business revenue** — Community Partner Option A (one-time promotion, $99/event or 15–20% revenue share) and Option B (ongoing subscription, $149/month or $1,500/year).
-- **Marketplace revenue (post-MVP)** — ticket fees, revenue sharing beyond partner events, featured placement, sponsorships, advertising. Not part of MVP scope — see [/docs/product/mvp-requirements.md](../product/mvp-requirements.md#not-included-in-mvp).
+1. **Community Partner Events** — ticket revenue from events at/with Community Partner venues (the launch entry point — see [/docs/business/launch-strategy.md](launch-strategy.md)).
+2. **Official Somacord Event Tickets** — Somacord's own flagship experiences ($30–35 typical).
+3. **Member Subscriptions** — $29/month recurring.
+4. **Community Partner Subscriptions** — Option B, $149/month or $1,500/year.
+5. **Revenue Sharing** — the 15–20% alternative to Option A's flat fee; deferred until Stripe Connect ships (see [/docs/engineering/marketplace-implementation-plan.md](../engineering/marketplace-implementation-plan.md)).
+6. **Sponsorships**
+7. **Advertising**
+
+This ordering is deliberately experience-first: paid, real-world events (1–2) outrank subscriptions (3–4), and pure marketplace/media revenue (5–7) comes last. Full numbers for streams 1–4: [pricing.md](pricing.md).
 
 Membership deepens engagement; it does not gate discovery — anyone can browse gatherings and buy a one-time ticket without joining.
+
+## Meetaway Access
+
+Meetaway (customer-facing: Speed Connect) uses a freemium model whose entire purpose is converting free users into members — see [membership.md](membership.md) and [pricing.md](pricing.md#free).
+
+- **Free users** — limited access (e.g. one free session per month, occasional public sessions). Purpose: lead generation, not the product itself.
+- **Members** — unlimited access, plus priority matching, early registration, and discounts on Official Somacord Events.
 
 ## Product Principles
 

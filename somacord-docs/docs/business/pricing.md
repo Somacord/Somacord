@@ -10,15 +10,16 @@ Two distinct pricing tracks — Consumer (B2C) and Community Partner (B2B) — r
 No subscription required:
 - Browse public gatherings and events
 - Limited RSVPs
+- Limited Meetaway Speed Connect access (e.g. one free session/month, occasional public sessions) — lead generation, not the product itself. See [business-model.md](business-model.md#meetaway-access).
 - Public profile
 - Discover local community
 
 ### Member Subscription
-Launch target: **$29/month**. Quarterly and annual plans may be added later, once the monthly plan is validated — not part of MVP launch.
+Launch target: **$29/month**. An annual plan is architecturally prepared (see [/docs/engineering/marketplace-implementation-plan.md](../engineering/marketplace-implementation-plan.md)) but not confirmed for MVP launch — monthly is the launch target.
 
 Includes:
 - Unlimited RSVPs
-- Full Speed Connect access
+- **Unlimited** Meetaway Speed Connect access (vs. Free's limited sessions) — the primary reason a free user converts
 - Early registration
 - Discounts on Official Somacord Events
 - Member-only experiences
