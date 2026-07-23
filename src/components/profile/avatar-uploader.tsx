@@ -4,7 +4,8 @@ import Image from "next/image";
 import * as React from "react";
 import { useActionState } from "react";
 
-import { initialProfileActionState, updateAvatarAction } from "@/lib/actions/profile";
+import { updateAvatarAction } from "@/lib/actions/profile";
+import { initialProfileActionState } from "@/lib/actions/profile-state";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export interface AvatarUploaderProps {

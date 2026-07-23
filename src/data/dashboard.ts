@@ -1,31 +1,9 @@
-import { gatherings, getGatheringBySlug } from "@/data/gatherings";
-
 /**
- * Placeholder data for the Member Dashboard (/home) — per this
- * milestone's brief: "Use placeholder data where necessary. Do not
- * build backend event logic yet." Gatherings shown here reuse the same
- * approved mock dataset as the public site (still example content, still
- * labeled as such); Speed Connect and Community Updates are clearly
- * illustrative placeholders, not real scheduled events or announcements.
+ * Placeholder data for the Member Dashboard (/home) that's still out of
+ * scope for this pass — Speed Connect booking and Community Updates.
+ * Gatherings/RSVPs on the dashboard are real, fetched from Supabase via
+ * src/lib/queries/gatherings.ts — see src/app/home/page.tsx.
  */
-
-export function getUpcomingGatherings() {
-  const slugs = ["saturday-coffee-meetup", "foothills-sunset-hike"];
-  return slugs
-    .map((slug) => getGatheringBySlug(slug))
-    .filter((g): g is NonNullable<typeof g> => Boolean(g));
-}
-
-export function getRecommendedGatherings() {
-  return gatherings.filter((g) => !g.external).slice(3, 6);
-}
-
-export function getMyRsvps() {
-  const slugs = ["board-game-night"];
-  return slugs
-    .map((slug) => getGatheringBySlug(slug))
-    .filter((g): g is NonNullable<typeof g> => Boolean(g));
-}
 
 export interface PlaceholderSpeedConnectSession {
   scheduledFor: string;

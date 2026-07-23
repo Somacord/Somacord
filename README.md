@@ -10,14 +10,14 @@ directly against those approved docs; when in doubt, the docs win.
 
 ## Stack
 
-| Layer              | Choice                                                                       |
-| ------------------ | ---------------------------------------------------------------------------- |
-| Framework          | [Next.js](https://nextjs.org) (App Router), TypeScript                       |
-| Styling            | [Tailwind CSS v4](https://tailwindcss.com)                                   |
-| Database / Backend | [Supabase](https://supabase.com) (PostgreSQL, Auth, Storage)                 |
-| Payments           | [Stripe](https://stripe.com) (Somacord Membership: monthly/quarterly/yearly) |
-| Email              | [Resend](https://resend.com)                                                 |
-| Hosting            | [Vercel](https://vercel.com)                                                 |
+| Layer              | Choice                                                        |
+| ------------------ | ------------------------------------------------------------- |
+| Framework          | [Next.js](https://nextjs.org) (App Router), TypeScript        |
+| Styling            | [Tailwind CSS v4](https://tailwindcss.com)                    |
+| Database / Backend | [Supabase](https://supabase.com) (PostgreSQL, Auth, Storage)  |
+| Payments           | [Stripe](https://stripe.com) (Somacord Membership: $29/month) |
+| Email              | [Resend](https://resend.com)                                  |
+| Hosting            | [Vercel](https://vercel.com)                                  |
 
 See [`somacord-docs/docs/engineering/tech-stack.md`](somacord-docs/docs/engineering/tech-stack.md)
 for the full approved stack.
@@ -110,7 +110,6 @@ src/
     media.ts                 Approved photography library, mapped to /public/images
 
   data/
-    gatherings.ts             Mock gathering listings (all explicitly labeled "Example")
     cities.ts                 City content (activity categories) — Salt Lake City only for now
     faq.ts                    FAQ copy for Homepage / Membership, grounded in approved docs
     content.ts                Values, partner, and journey copy sourced from approved docs
@@ -168,23 +167,23 @@ photography, and mockups:
 - **Homepage** — hero, How It Works, Featured Gatherings, Community Partners, Membership preview, FAQ, final CTA.
 - **Gatherings** (`/gatherings`) — search + category filters, empty state, gathering cards.
 - **Gathering Detail** (`/gatherings/[slug]`) — hero image, description, date/time, location, attendees, RSVP toggle, related gatherings.
-- **Membership** (`/membership`) — Somacord Membership pricing (monthly/quarterly/yearly), benefits, example monthly rhythm, FAQ, join CTA.
+- **Membership** (`/membership`) — Somacord Membership pricing ($29/month), benefits, example monthly rhythm, FAQ, join CTA.
 - **Community Partners** (`/partners`) — why partner, partner types ("who it's for"), how it works, apply CTA.
 - **How It Works** (`/speed-connect`) — Speed Connect explainer + the Discover → Join a Speed Connect → Attend Gatherings → Build Friendships journey.
 - **About** (`/about`) — mission, why Somacord exists, values (the approved product principles).
 - **Contact** (`/contact`), **Sign In** (`/signin`), **Join** (`/signup`) — new pages not covered by the original mockup, built consistently with the same design system.
 
-All gathering listings are mock data (`src/data/gatherings.ts`), sourced from the approved mockup
-and always rendered with an `ExampleTag` — no fabricated testimonials, event counts, or community
-statistics anywhere on the site.
+Gathering listings are real data, stored in Supabase (`src/lib/queries/gatherings.ts`) — no
+fabricated testimonials, event counts, or community statistics anywhere on the site.
 
 **Review follow-ups pass:**
 
 - **City page** (`/cities/[city]`) — dynamic route, `src/data/cities.ts` holds the content. Only
   Salt Lake City exists today, so the primary nav's "Cities" link resolves instead of 404ing.
-- **Membership pricing** — renamed "Founding Membership" to **Somacord Membership**, now offered
-  Monthly ($39), Quarterly ($99), or Yearly ($349) instead of a single $39/month price. Updated
-  across the site, the approved docs, and the static mockup file.
+- **Membership pricing** — renamed "Founding Membership" to **Somacord Membership**. Briefly
+  offered Monthly/Quarterly/Yearly tiers; later consolidated back to a single **$29/month** plan
+  per the approved pricing model (`somacord-docs/docs/business/pricing.md`) — the current state
+  across the site, the approved docs, and `src/config/site.ts`.
 
 **Authentication + Onboarding + Member Foundation pass (current):** real Supabase Auth, a 7-step
 onboarding wizard, the Member Dashboard, and the Profile page.

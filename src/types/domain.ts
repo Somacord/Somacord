@@ -9,7 +9,7 @@
  * extend them alongside future schema changes, not ahead of them.
  */
 
-export type UserRole = "member" | "community_partner";
+export type UserRole = "member" | "community_partner" | "admin";
 
 export interface SomacordUser {
   id: string;
@@ -58,11 +58,16 @@ export interface City {
 
 export type GatheringCategory = "community" | "partner";
 
+/** draft until the creator publishes it; only published gatherings are publicly visible. */
+export type GatheringStatus = "draft" | "published";
+
 export interface Gathering {
   id: string;
+  slug: string;
   title: string;
   description: string;
   category: GatheringCategory;
+  status: GatheringStatus;
   createdBy: string;
   cityId: string;
   location: string;
@@ -89,7 +94,7 @@ export interface Membership {
   userId: string;
   status: MembershipStatus;
   plan: MembershipPlan;
-  /** 39.00 (monthly), 99.00 (quarterly), or 349.00 (yearly) — see docs/business/pricing.md */
+  /** 29.00 (monthly) at launch — quarterly/yearly values are reserved, not currently offered. See docs/business/pricing.md */
   price: number;
   stripeSubscriptionId: string | null;
   startedAt: string;
@@ -108,6 +113,42 @@ export interface Partner {
   organizationName: string;
   organizationType: PartnerOrganizationType;
   verified: boolean;
+}
+
+/**
+ * Organizations (Phase 1 of the marketplace implementation plan) —
+ * supersedes `Partner`/`PartnerOrganizationType` above, which mirror the
+ * legacy `public.partners` table (kept in place, unread by the app, for
+ * backward compatibility). See docs/business/community-partners.md and
+ * docs/engineering/marketplace-implementation-plan.md.
+ */
+export type OrganizationType =
+  | "coffee_shop"
+  | "restaurant"
+  | "brewery"
+  | "coworking_space"
+  | "club"
+  | "hobby_group"
+  | "event_organizer"
+  | "community_organization"
+  | "nonprofit";
+
+export interface Organization {
+  id: string;
+  name: string;
+  organizationType: OrganizationType;
+  description: string | null;
+  cityId: string | null;
+  verified: boolean;
+}
+
+export type OrganizationManagerRole = "owner" | "manager";
+
+/** Many-to-many: which users can act for which organizations. */
+export interface OrganizationManager {
+  organizationId: string;
+  userId: string;
+  role: OrganizationManagerRole;
 }
 
 export type SpeedConnectSessionStatus = "booked" | "completed" | "no_show";

@@ -8,7 +8,8 @@ import { GoogleAuthButton } from "@/components/forms/google-auth-button";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
-import { initialAuthActionState, signInAction } from "@/lib/actions/auth";
+import { initialAuthActionState } from "@/lib/actions/auth-state";
+import { signInAction } from "@/lib/actions/auth";
 
 export interface SignInFormProps {
   /** Return-to path after a successful sign-in (e.g. from middleware's ?next=). */
@@ -60,7 +61,10 @@ export function SignInForm({ next }: SignInFormProps) {
 
       <p className="text-ink-muted text-center text-sm">
         New to Somacord?{" "}
-        <Link href="/signup" className="text-cord-blue font-medium underline">
+        <Link
+          href={next ? `/signup?next=${encodeURIComponent(next)}` : "/signup"}
+          className="text-cord-blue font-medium underline"
+        >
           Join Somacord
         </Link>
       </p>

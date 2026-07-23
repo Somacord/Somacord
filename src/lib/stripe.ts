@@ -6,7 +6,7 @@ let stripeClient: Stripe | null = null;
 
 /**
  * Server-only Stripe client, used for Somacord Membership billing
- * (monthly/quarterly/yearly plans — see /somacord-docs/docs/business/pricing.md).
+ * ($29/month at launch — see /somacord-docs/docs/business/pricing.md).
  * Lazily instantiated so importing this module never requires
  * `STRIPE_SECRET_KEY` to be set until a caller actually needs it.
  */

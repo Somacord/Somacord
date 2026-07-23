@@ -7,7 +7,7 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { FilterPill } from "@/components/ui/filter-pill";
 import { GatheringCard } from "@/components/ui/gathering-card";
 import { Input } from "@/components/ui/input";
-import { getGatheringHref, type MockGathering } from "@/data/gatherings";
+import type { GatheringSummary } from "@/lib/queries/gatherings";
 
 type FilterKey = "all" | "speed-connect" | "community" | "partner";
 
@@ -18,7 +18,7 @@ const filters: { key: FilterKey; label: string }[] = [
   { key: "partner", label: "Partner experiences" },
 ];
 
-function matchesFilter(gathering: MockGathering, filter: FilterKey) {
+function matchesFilter(gathering: GatheringSummary, filter: FilterKey) {
   if (filter === "all") return true;
   if (filter === "speed-connect") return gathering.category === "Start here";
   if (filter === "community") return gathering.category === "Community";
@@ -26,13 +26,14 @@ function matchesFilter(gathering: MockGathering, filter: FilterKey) {
 }
 
 export interface GatheringsBrowserProps {
-  gatherings: MockGathering[];
+  gatherings: GatheringSummary[];
 }
 
 /**
  * Client-side search + category filter pills over the gatherings list —
- * docs/design/website-mockups.md ("Gatherings (discovery)"). All data is
- * passed in from the server as static, approved example content.
+ * docs/design/website-mockups.md ("Gatherings (discovery)"). Data is
+ * fetched server-side from Supabase and passed in as real, published
+ * gatherings (plus the evergreen Speed Connect tile).
  */
 export function GatheringsBrowser({ gatherings }: GatheringsBrowserProps) {
   const [query, setQuery] = React.useState("");
@@ -74,21 +75,22 @@ export function GatheringsBrowser({ gatherings }: GatheringsBrowserProps) {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((gathering) => (
             <GatheringCard
-              key={gathering.slug}
+              key={gathering.id}
               title={gathering.title}
               description={gathering.shortDescription}
               category={gathering.category}
               imageSrc={gathering.imageSrc}
               imageAlt={gathering.imageAlt}
               meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
-              href={getGatheringHref(gathering)}
+              href={gathering.href}
+              isExample={false}
             />
           ))}
         </div>
       ) : (
         <EmptyState
           title="No gatherings match yet"
-          description="Try a different category or search term — or start with a free Speed Connect while you wait for the right gathering to come along."
+          description="Try a different category or search term — or be the first member or Community Partner to create a gathering in Salt Lake City."
           action={
             <Button
               variant="secondary-light"

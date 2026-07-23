@@ -11,7 +11,8 @@ import { InterestsStep } from "@/components/onboarding/steps/interests-step";
 import { NameStep } from "@/components/onboarding/steps/name-step";
 import { PhotoStep } from "@/components/onboarding/steps/photo-step";
 import { WelcomeStep } from "@/components/onboarding/steps/welcome-step";
-import { completeOnboardingAction, initialOnboardingActionState } from "@/lib/actions/onboarding";
+import { completeOnboardingAction } from "@/lib/actions/onboarding";
+import { initialOnboardingActionState } from "@/lib/actions/onboarding-state";
 import type { Availability } from "@/types/domain";
 
 const STEP_LABELS = [

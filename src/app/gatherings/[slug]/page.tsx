@@ -1,27 +1,23 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AttendeeStack } from "@/components/gatherings/attendee-stack";
 import { RsvpButton } from "@/components/gatherings/rsvp-button";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { CategoryTag, ExampleTag } from "@/components/ui/badge";
+import { CategoryTag } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { GatheringCard } from "@/components/ui/gathering-card";
 import { SectionHeader } from "@/components/ui/section-header";
-import { photography } from "@/config/media";
 import {
-  gatherings,
   getGatheringBySlug,
-  getGatheringHref,
+  getGatheringRsvpCount,
   getRelatedGatherings,
-} from "@/data/gatherings";
-
-export function generateStaticParams() {
-  return gatherings
-    .filter((gathering) => !gathering.external)
-    .map((gathering) => ({ slug: gathering.slug }));
-}
+  getUserRsvpStatus,
+} from "@/lib/queries/gatherings";
+import { getCurrentUser } from "@/lib/supabase/auth";
 
 export async function generateMetadata({
   params,
@@ -29,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const gathering = getGatheringBySlug(slug);
+  const gathering = await getGatheringBySlug(slug, null);
 
   if (!gathering) return {};
 
@@ -46,19 +42,38 @@ export default async function GatheringDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const gathering = getGatheringBySlug(slug);
+  const current = await getCurrentUser();
+  const gathering = await getGatheringBySlug(slug, current?.user.id ?? null);
 
   if (!gathering) {
     notFound();
   }
 
-  const related = getRelatedGatherings(slug);
+  const [related, goingCount, isGoing] = await Promise.all([
+    getRelatedGatherings(gathering.id, gathering.cityId),
+    getGatheringRsvpCount(gathering.id),
+    current ? getUserRsvpStatus(gathering.id, current.user.id) : Promise.resolve(false),
+  ]);
+
+  const isOwnerPreviewingDraft =
+    gathering.status === "draft" && current?.user.id === gathering.createdBy;
+  const isPast = gathering.startsAt ? new Date(gathering.startsAt) <= new Date() : false;
 
   return (
     <>
       <Section>
         <Container>
-          <ExampleTag />
+          {isOwnerPreviewingDraft && (
+            <div className="rounded-card border-warm-sand bg-warm-sand/40 mb-6 flex flex-wrap items-center justify-between gap-3 border px-5 py-4">
+              <p className="text-sm font-medium">
+                This gathering is a draft — only you can see it.
+              </p>
+              <Button asChild variant="secondary-light" size="small">
+                <Link href={`/gatherings/${gathering.slug}/edit`}>Edit &amp; Publish</Link>
+              </Button>
+            </div>
+          )}
+
           <div className="rounded-card-lg relative mb-8 h-[240px] overflow-hidden sm:h-[380px]">
             <Image
               src={gathering.imageSrc}
@@ -78,10 +93,16 @@ export default async function GatheringDetailPage({
 
               <h2 className="mb-2.5 text-lg">Who&apos;s going</h2>
               <div className="mb-7">
-                <AttendeeStack imageSrc={photography.memberProfilePortrait01.src} />
+                <AttendeeStack count={goingCount} />
               </div>
 
-              <RsvpButton />
+              <RsvpButton
+                gatheringId={gathering.id}
+                slug={gathering.slug}
+                isGoing={isGoing}
+                isSignedIn={Boolean(current)}
+                isPast={isPast}
+              />
             </div>
 
             <div className="rounded-card border-soft-sky bg-soft-sky/60 h-fit border p-7 lg:sticky lg:top-24">
@@ -101,14 +122,15 @@ export default async function GatheringDetailPage({
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((item) => (
                 <GatheringCard
-                  key={item.slug}
+                  key={item.id}
                   title={item.title}
                   description={item.shortDescription}
                   category={item.category}
                   imageSrc={item.imageSrc}
                   imageAlt={item.imageAlt}
                   meta={[`📍 ${item.location}`, `🗓 ${item.schedule}`]}
-                  href={getGatheringHref(item)}
+                  href={item.href}
+                  isExample={false}
                 />
               ))}
             </div>

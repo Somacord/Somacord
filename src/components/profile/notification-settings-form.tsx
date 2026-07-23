@@ -4,10 +4,8 @@ import { useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ToggleSwitch } from "@/components/ui/toggle-switch";
-import {
-  initialProfileActionState,
-  updateNotificationPreferencesAction,
-} from "@/lib/actions/profile";
+import { updateNotificationPreferencesAction } from "@/lib/actions/profile";
+import { initialProfileActionState } from "@/lib/actions/profile-state";
 import type { NotificationPreferences } from "@/types/domain";
 
 export interface NotificationSettingsFormProps {

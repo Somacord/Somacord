@@ -17,9 +17,8 @@ export const values = [
     description: "Never appearance-first, never swiping, never attractiveness scoring.",
   },
   {
-    title: "One community, one membership",
-    description:
-      "Members and Community Partners share the same Somacord Membership pricing; the difference is role and ability, not price.",
+    title: "Membership deepens engagement, it doesn't gate discovery",
+    description: "Anyone can browse gatherings or buy a one-time ticket without joining.",
   },
   {
     title: "Guided, not mechanical",
@@ -74,14 +73,14 @@ export const whyPartner = [
     description: "Reach adults actively looking for local connection.",
   },
   {
-    title: "Simple gathering tools",
+    title: "Represent your organization",
     description:
-      "Add and manage gatherings for your existing community, right alongside standard community gatherings.",
+      "Your gatherings show up under your organization's name, so the regulars you invite know it's really you.",
   },
   {
-    title: "One membership, no separate fees",
+    title: "No membership fee",
     description:
-      "Community Partners pay the same Somacord Membership pricing as every member — no separate partner tier.",
+      "You don't pay for a Somacord Membership — partnership works differently, from a one-time event to an ongoing relationship built for your organization.",
   },
 ];
 
@@ -106,7 +105,6 @@ export const partnerHowItWorks = [
   {
     number: 4,
     title: "Grow your local presence",
-    description:
-      "Reach new members actively looking for local connection — as a Somacord member, same membership pricing.",
+    description: "Reach new people actively looking for local connection, on your own terms.",
   },
 ];

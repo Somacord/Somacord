@@ -6,7 +6,8 @@ import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { FormField } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
-import { forgotPasswordAction, initialAuthActionState } from "@/lib/actions/auth";
+import { initialAuthActionState } from "@/lib/actions/auth-state";
+import { forgotPasswordAction } from "@/lib/actions/auth";
 
 export function ForgotPasswordForm() {
   const [state, formAction, pending] = useActionState(forgotPasswordAction, initialAuthActionState);

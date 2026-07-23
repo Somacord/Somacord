@@ -224,8 +224,8 @@ export default function StyleGuidePage() {
             <h3 className="mb-3 text-2xl">One membership. One price. One community.</h3>
             <CheckList
               items={[
-                "Unlimited Speed Connect sessions",
-                "Full access to community & partner gatherings",
+                "One flat price — no tiers, no hidden fees",
+                "Support Somacord as an early member while we grow",
               ]}
             />
             <Button variant="primary">See Membership</Button>
@@ -246,7 +246,7 @@ export default function StyleGuidePage() {
             benefits={siteConfig.membership.benefits}
             ctaLabel="Become a Member"
             ctaHref="/membership"
-            footnote="Community Partners pay the same membership pricing — the difference is role, not price."
+            footnote="Community Partners are organizations, not members — see /partners for how they work with Somacord instead."
           />
         </Container>
       </Section>

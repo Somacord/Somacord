@@ -106,3 +106,17 @@ export async function requireOnboarded() {
   }
   return current;
 }
+
+/**
+ * Redirects to /signin if there's no session, or /home if the signed-in
+ * user isn't an admin. Gates Somacord-owned actions (e.g. creating an
+ * organization on a partner's behalf) — see
+ * docs/engineering/marketplace-implementation-plan.md §2.
+ */
+export async function requireAdmin() {
+  const current = await requireUser();
+  if (current.user.role !== "admin") {
+    redirect("/home");
+  }
+  return current;
+}

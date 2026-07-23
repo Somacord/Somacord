@@ -2,15 +2,9 @@
 
 import { redirect } from "next/navigation";
 
+import type { AuthActionState } from "@/lib/actions/auth-state";
 import { env } from "@/lib/env";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-export interface AuthActionState {
-  status: "idle" | "success" | "error";
-  message?: string;
-}
-
-export const initialAuthActionState: AuthActionState = { status: "idle" };
 
 const NOT_CONFIGURED_MESSAGE =
   "Sign-in isn't configured yet on this environment. Please check back soon.";
@@ -41,6 +35,7 @@ export async function signUpAction(
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
+  const next = safeNextPath(formData.get("next"));
 
   if (!name || !email || !password) {
     return { status: "error", message: "Please fill in your name, email, and password." };
@@ -55,7 +50,10 @@ export async function signUpAction(
     password,
     options: {
       data: { name },
-      emailRedirectTo: `${env.site.url}/auth/callback`,
+      // Carries the original destination (e.g. the gathering someone was
+      // trying to RSVP to) through the email confirmation round-trip —
+      // /auth/callback already knows how to honor `next` once it's here.
+      emailRedirectTo: `${env.site.url}/auth/callback${next ? `?next=${encodeURIComponent(next)}` : ""}`,
     },
   });
 
@@ -65,17 +63,19 @@ export async function signUpAction(
 
   // Email confirmation is required (the normal path — see supabase/config.toml).
   // No session yet, so show a "check your email" state instead of redirecting.
+  // Clicking the link signs them in automatically (PKCE via /auth/callback) —
+  // no separate sign-in step, so the copy shouldn't imply one.
   if (data.user && !data.session) {
     return {
       status: "success",
-      message: "Check your email to confirm your account, then sign in.",
+      message: "Click the confirmation link in your email — it signs you in automatically.",
     };
   }
 
   // Email confirmation is disabled on this project: a session came back
-  // immediately, so continue straight into onboarding.
+  // immediately, so continue straight to `next` (or onboarding).
   if (data.user) {
-    redirect(await resolvePostAuthDestination(data.user.id));
+    redirect(next ?? (await resolvePostAuthDestination(data.user.id)));
   }
 
   return {

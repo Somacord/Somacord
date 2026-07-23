@@ -14,16 +14,19 @@ import { Steps } from "@/components/ui/steps";
 import { photography } from "@/config/media";
 import { siteConfig } from "@/config/site";
 import { homeFaqs } from "@/data/faq";
-import { getFeaturedGatherings, getGatheringHref } from "@/data/gatherings";
+import { getCityIdBySlug, getPublishedGatherings } from "@/lib/queries/gatherings";
 
 /**
  * Homepage — docs/design/website-mockups.md ("Homepage").
- * Section order follows the approved MVP build plan for this phase:
- * Hero → How It Works → Featured Gatherings → Community Partners →
- * Membership Preview → FAQ → Final CTA.
+ * Section order: Hero → How It Works → Featured Gatherings → Membership
+ * Preview → Community Partners → FAQ → Final CTA. Membership comes
+ * before the Community Partners teaser since the primary homepage
+ * audience is individual visitors, not businesses — see the first-time-
+ * visitor audit that reordered this from the original build-plan order.
  */
-export default function HomePage() {
-  const featured = getFeaturedGatherings(3);
+export default async function HomePage() {
+  const cityId = await getCityIdBySlug(siteConfig.launchCity.slug);
+  const featured = cityId ? await getPublishedGatherings(cityId, 3) : [];
 
   return (
     <>
@@ -51,15 +54,15 @@ export default function HomePage() {
             steps={[
               {
                 number: 1,
-                title: "Try Speed Connect, free",
+                title: "Discover what's happening nearby",
                 description:
-                  "A short, guided conversation experience — no commitment, no awkward small talk to figure out on your own.",
+                  "Browse community and Community Partner gatherings — no account required to look around.",
               },
               {
                 number: 2,
-                title: "Meet a few new people",
+                title: "Try Speed Connect, free",
                 description:
-                  "Speed Connect is built for a handful of genuine first conversations, not a crowd.",
+                  "A short, guided conversation experience — no commitment, no awkward small talk to figure out on your own.",
               },
               {
                 number: 3,
@@ -83,20 +86,56 @@ export default function HomePage() {
               </Button>
             }
           />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((gathering) => (
-              <GatheringCard
-                key={gathering.slug}
-                title={gathering.title}
-                description={gathering.shortDescription}
-                category={gathering.category}
-                imageSrc={gathering.imageSrc}
-                imageAlt={gathering.imageAlt}
-                meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
-                href={getGatheringHref(gathering)}
-              />
-            ))}
-          </div>
+          {featured.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((gathering) => (
+                <GatheringCard
+                  key={gathering.id}
+                  title={gathering.title}
+                  description={gathering.shortDescription}
+                  category={gathering.category}
+                  imageSrc={gathering.imageSrc}
+                  imageAlt={gathering.imageAlt}
+                  meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
+                  href={gathering.href}
+                  isExample={false}
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="text-ink-muted">
+              {siteConfig.launchCity.name} gatherings are just getting started — check back soon, or{" "}
+              <Link href="/speed-connect" className="text-cord-blue font-medium underline">
+                join a free Speed Connect
+              </Link>{" "}
+              in the meantime.
+            </p>
+          )}
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SplitLayout
+            imageSrc={photography.dinnerGathering.src}
+            imageAlt={photography.dinnerGathering.alt}
+          >
+            <Eyebrow>Membership Preview</Eyebrow>
+            <h2 className="mb-4 text-[32px]">One membership. $29/month.</h2>
+            <p className="mb-6 text-base leading-relaxed text-[#55636A]">
+              The {siteConfig.membership.name} is one flat price — no tiers, no add-ons. It directly
+              supports Somacord as we grow in {siteConfig.launchCity.name}.
+            </p>
+            <CheckList
+              items={[
+                "One flat price — no tiers, no hidden fees",
+                "Support Somacord as an early member while we grow",
+              ]}
+            />
+            <Button asChild variant="primary">
+              <Link href="/membership">See Membership</Link>
+            </Button>
+          </SplitLayout>
         </Container>
       </Section>
 
@@ -112,39 +151,12 @@ export default function HomePage() {
               Local spots already bring people together. We help them do it better.
             </h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              Coffee shops, restaurants, clubs, and hobby groups join as Community Partners — same
-              Somacord Membership pricing, plus tools to organize and grow their gatherings on
-              Somacord.
+              Coffee shops, restaurants, clubs, and hobby groups partner with Somacord as
+              organizations — not members — to bring their existing community in and reach new
+              people looking for exactly what they offer.
             </p>
             <Button asChild variant="secondary-light">
               <Link href="/partners">Become a Partner</Link>
-            </Button>
-          </SplitLayout>
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <SplitLayout
-            imageSrc={photography.dinnerGathering.src}
-            imageAlt={photography.dinnerGathering.alt}
-          >
-            <Eyebrow>Membership Preview</Eyebrow>
-            <h2 className="mb-4 text-[32px]">One membership. Your choice of plan.</h2>
-            <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              The {siteConfig.membership.name} gets you community access, local gatherings, ongoing
-              Speed Connect, and the ability to create your own gatherings — billed monthly,
-              quarterly, or yearly.
-            </p>
-            <CheckList
-              items={[
-                "Unlimited Speed Connect sessions",
-                "Full access to community & partner gatherings",
-                "Create and host your own gatherings",
-              ]}
-            />
-            <Button asChild variant="primary">
-              <Link href="/membership">See Membership</Link>
             </Button>
           </SplitLayout>
         </Container>

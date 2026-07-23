@@ -8,11 +8,12 @@ import { Section } from "@/components/layout/section";
 import { CategoryTag, ExampleTag } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardBody, CardDescription, CardImage, CardTitle } from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
 import { GatheringCard } from "@/components/ui/gathering-card";
 import { Hero } from "@/components/ui/hero";
 import { SectionHeader } from "@/components/ui/section-header";
 import { cities, getCityBySlug } from "@/data/cities";
-import { getFeaturedGatherings, getGatheringHref } from "@/data/gatherings";
+import { getCityIdBySlug, getPublishedGatherings } from "@/lib/queries/gatherings";
 
 export function generateStaticParams() {
   return cities.map((city) => ({ city: city.slug }));
@@ -48,7 +49,8 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
     notFound();
   }
 
-  const featured = getFeaturedGatherings(3);
+  const cityId = await getCityIdBySlug(city.slug);
+  const featured = cityId ? await getPublishedGatherings(cityId, 3) : [];
 
   return (
     <>
@@ -106,20 +108,33 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
               </Button>
             }
           />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((gathering) => (
-              <GatheringCard
-                key={gathering.slug}
-                title={gathering.title}
-                description={gathering.shortDescription}
-                category={gathering.category}
-                imageSrc={gathering.imageSrc}
-                imageAlt={gathering.imageAlt}
-                meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
-                href={getGatheringHref(gathering)}
-              />
-            ))}
-          </div>
+          {featured.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {featured.map((gathering) => (
+                <GatheringCard
+                  key={gathering.id}
+                  title={gathering.title}
+                  description={gathering.shortDescription}
+                  category={gathering.category}
+                  imageSrc={gathering.imageSrc}
+                  imageAlt={gathering.imageAlt}
+                  meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
+                  href={gathering.href}
+                  isExample={false}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              title={`No gatherings live in ${city.name} yet`}
+              description="Be the first member or Community Partner to create one."
+              action={
+                <Button asChild variant="primary">
+                  <Link href="/gatherings/create">Create a Gathering</Link>
+                </Button>
+              }
+            />
+          )}
         </Container>
       </Section>
 

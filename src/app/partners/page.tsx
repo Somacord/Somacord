@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { PartnerInquiryForm } from "@/components/forms/partner-inquiry-form";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
@@ -14,8 +15,31 @@ import { partnerHowItWorks, whyPartner } from "@/data/content";
 export const metadata: Metadata = {
   title: "Community Partners",
   description:
-    "Join Somacord as a Community Partner and turn your regulars into an ongoing community — same Somacord Membership pricing, plus gathering tools.",
+    "Join Somacord as a Community Partner and bring your existing community with you — a partnership built for your organization, not a membership.",
 };
+
+const partnerEventFormats = [
+  {
+    icon: "🆓",
+    title: "Free",
+    description: "No cost to attend — a low-risk way to introduce your regulars to Somacord.",
+  },
+  {
+    icon: "🎟",
+    title: "Ticketed",
+    description: "Set your own price — bundle in a drink, a meal, or an activity.",
+  },
+  {
+    icon: "💛",
+    title: "Donation-based",
+    description: "Pay-what-you-want, if that fits your community better.",
+  },
+  {
+    icon: "🔒",
+    title: "Members-only or discounted",
+    description: "Give Somacord members a discount or first access.",
+  },
+];
 
 const partnerTypes = [
   { icon: "☕", title: "Coffee shops", description: "Host standing meetups for your regulars." },
@@ -47,10 +71,10 @@ export default function PartnersPage() {
         imageAlt={photography.communityPartner.alt}
         size="md"
         title="You already bring people together. Let's make it easier."
-        description="Join Somacord as a Community Partner and turn your regulars into an ongoing community — same Somacord Membership pricing, plus gathering tools."
+        description="Join Somacord as a Community Partner and bring your existing community with you — a partnership built for your organization, not a membership."
         actions={
           <Button asChild variant="primary">
-            <Link href="/signup">Become a Partner</Link>
+            <Link href="#apply">Become a Partner</Link>
           </Button>
         }
       />
@@ -74,11 +98,12 @@ export default function PartnersPage() {
           </div>
 
           <div className="rounded-card bg-warm-sand mt-4 px-8 py-7">
-            <h3 className="mb-2 text-lg">One membership, not a separate tier</h3>
+            <h3 className="mb-2 text-lg">A partnership, not a membership</h3>
             <p className="text-sand-ink text-sm">
-              Partners pay the same Somacord Membership pricing as every member. The difference is
-              role and ability — partners get gathering-organizing tools and can invite their
-              existing community into Somacord.
+              Community Partners are organizations, not members — you don&apos;t sign up for the
+              Somacord Membership. Instead, we work out the right fit for your organization: a
+              one-time event, or an ongoing partnership. Reach out and we&apos;ll figure out what
+              makes sense together.
             </p>
           </div>
         </Container>
@@ -103,6 +128,26 @@ export default function PartnersPage() {
         </Container>
       </Section>
 
+      <Section tone="sand">
+        <Container>
+          <SectionHeader
+            eyebrow="How Partner Events Work"
+            title="You set the format — we bring the people"
+            subhead="Free, ticketed, donation-based, or members-only. It's your event, priced your way."
+          />
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {partnerEventFormats.map((format) => (
+              <PartnerTypeCard
+                key={format.title}
+                icon={format.icon}
+                title={format.title}
+                description={format.description}
+              />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
       <Section>
         <Container>
           <SectionHeader
@@ -114,15 +159,13 @@ export default function PartnersPage() {
       </Section>
 
       <Section tone="dark">
-        <Container className="max-w-xl text-center">
+        <Container id="apply" className="max-w-xl scroll-mt-24 text-center">
           <h2 className="mb-4 text-[36px]">Ready to bring your community to Somacord?</h2>
           <p className="mb-8 text-white/85">
-            Apply as a Community Partner — same Somacord Membership pricing, plus tools to organize
-            and grow your gatherings.
+            Tell us about your organization — a member of our team will follow up to figure out the
+            right fit, whether that&apos;s a single event or an ongoing partnership.
           </p>
-          <Button asChild variant="primary">
-            <Link href="/signup">Become a Partner</Link>
-          </Button>
+          <PartnerInquiryForm />
         </Container>
       </Section>
     </>
