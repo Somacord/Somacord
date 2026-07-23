@@ -37,8 +37,13 @@ export default async function HomePage() {
     cityId ? getPublishedGatherings(cityId) : Promise.resolve([] as GatheringListItem[]),
     getMyRsvpGatherings(user.id),
   ]);
-  const upcoming = cityGatherings.slice(0, 2);
-  const recommended = cityGatherings.slice(2, 5);
+  // Exclude gatherings already shown below in "My RSVPs" — otherwise a
+  // member's own gathering shows up twice on their first dashboard visit,
+  // once with no RSVP indicator (looking unclaimed) and once as "going".
+  const myRsvpIds = new Set(myRsvps.map((gathering) => gathering.id));
+  const discoverable = cityGatherings.filter((gathering) => !myRsvpIds.has(gathering.id));
+  const upcoming = discoverable.slice(0, 2);
+  const recommended = discoverable.slice(2, 5);
   const speedConnect = getUpcomingSpeedConnect();
   const firstName = user.name?.split(" ")[0];
 
@@ -90,6 +95,15 @@ export default async function HomePage() {
                     />
                   ))}
                 </div>
+              ) : cityGatherings.length > 0 ? (
+                <p className="text-ink-muted text-sm">
+                  You&apos;re going to everything happening in {user.city ?? "your city"} right now
+                  — check back soon for more, or{" "}
+                  <Link href="/gatherings/create" className="text-cord-blue font-medium underline">
+                    create your own
+                  </Link>
+                  .
+                </p>
               ) : (
                 <p className="text-ink-muted text-sm">
                   No upcoming gatherings yet —{" "}
