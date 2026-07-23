@@ -1,6 +1,6 @@
 # Somacord — Phase 1 Build Plan: Organizations
 
-**Status:** Planning only. No code, migrations, or schema have been changed to produce this document. Requires explicit approval before implementation starts.
+**Status:** Implemented and verified. The `organizations`/`organization_managers` tables, RLS policies, and non-destructive `partners` backfill described below have been applied via `supabase/migrations/20260723010706_organizations.sql` and confirmed against the live Supabase project — see Acceptance Criteria.
 
 Source: [`somacord-docs/docs/engineering/marketplace-implementation-plan.md`](somacord-docs/docs/engineering/marketplace-implementation-plan.md) §0 (architecture review), §2, §3, §9, §10, §12.
 
@@ -98,7 +98,7 @@ alter table public.users
 
 ## Acceptance Criteria
 
-Phase 1 is done when all of the following are true:
+Phase 1 is done when all of the following are true. All were verified against the live Supabase project:
 
 1. `organizations` and `organization_managers` tables exist in the live Supabase project with RLS enabled and the policies above.
 2. `users.role` accepts `'admin'` without breaking any existing row (constraint change verified additive, not destructive).
@@ -108,4 +108,4 @@ Phase 1 is done when all of the following are true:
 6. A test `admin`-role user can `select`/`insert`/`update` `organizations` and `organization_managers` per the RLS policies; a regular `member` cannot write to an org they don't manage.
 7. No frontend code changed. No Stripe code exists. No `gatherings` table change exists.
 
-Not implemented until this plan and file are reviewed and approved.
+Implemented, applied to the live Supabase project, and verified. See the Backend Requirements section above for the application-code piece (`Organization`/`OrganizationManager` types, `requireAdmin()`) that shipped alongside this migration.
