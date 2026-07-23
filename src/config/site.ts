@@ -35,7 +35,7 @@ export const siteConfig = {
   name: "Somacord",
   tagline: "Real friendships start with one hello.",
   description:
-    "Somacord is a friendship-first social club — guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
+    "Somacord is a friendship-first social club — free to join, with guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
   url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
 
   /** Salt Lake City only at MVP launch — see docs/business/launch-strategy.md */
@@ -53,8 +53,9 @@ export const siteConfig = {
       { id: "monthly", label: "Monthly", price: 29, interval: "month" },
     ] as const satisfies readonly MembershipPricingPlan[],
     benefits: [
-      "Support Somacord as an early member while we grow",
+      "Optional — not required to join or use Somacord",
       "One flat price — no tiers, no hidden fees",
+      "Support Somacord as an early member while we grow",
     ],
   },
 

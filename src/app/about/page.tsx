@@ -80,6 +80,7 @@ export default function AboutPage() {
             <Button asChild variant="primary">
               <Link href="/signup">Join Somacord</Link>
             </Button>
+            <p className="text-ink-muted mt-3 text-sm">Free to join — no credit card required.</p>
           </div>
         </Container>
       </Section>

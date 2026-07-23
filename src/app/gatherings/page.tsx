@@ -43,7 +43,7 @@ export default async function GatheringsPage() {
         <SectionHeader
           eyebrow="Gatherings"
           title="Something's always happening nearby"
-          subhead={`Community-created meetups, Community Partner experiences, and free Speed Connect sessions in ${siteConfig.launchCity.name}.`}
+          subhead={`Free to browse and RSVP — community-created meetups, Community Partner experiences, and Speed Connect sessions in ${siteConfig.launchCity.name}.`}
           action={
             current ? (
               <Button asChild variant="secondary-light" size="small">

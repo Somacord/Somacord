@@ -121,13 +121,15 @@ export default async function HomePage() {
             imageAlt={photography.dinnerGathering.alt}
           >
             <Eyebrow>Membership Preview</Eyebrow>
-            <h2 className="mb-4 text-[32px]">One membership. $29/month.</h2>
+            <h2 className="mb-4 text-[32px]">An optional upgrade, whenever you&apos;re ready.</h2>
             <p className="mb-6 text-base leading-relaxed text-[#55636A]">
-              The {siteConfig.membership.name} is one flat price — no tiers, no add-ons. It directly
-              supports Somacord as we grow in {siteConfig.launchCity.name}.
+              The {siteConfig.membership.name} is $29/month, one flat price — no tiers, no add-ons.
+              It&apos;s entirely optional, and directly supports Somacord as we grow in{" "}
+              {siteConfig.launchCity.name}.
             </p>
             <CheckList
               items={[
+                "Optional — not required to join or use Somacord",
                 "One flat price — no tiers, no hidden fees",
                 "Support Somacord as an early member while we grow",
               ]}

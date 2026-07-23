@@ -20,6 +20,11 @@ export const homeFaqs: FaqItemData[] = [
       "Somacord is a friendship-first social club — guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
   },
   {
+    question: "Do I have to pay to join?",
+    answer:
+      "No — creating a Somacord account is free. You can browse gatherings, build a profile, RSVP, and try Speed Connect without paying anything. Somacord Membership ($29/month) is an optional upgrade for later, if you'd like to support Somacord as an early member.",
+  },
+  {
     question: "Is Somacord a dating app?",
     answer:
       "No. Somacord is built around friendship, not dating or professional networking. There's no swiping, ranking, or appearance-based matching anywhere on Somacord.",
@@ -41,6 +46,11 @@ export const homeFaqs: FaqItemData[] = [
 ];
 
 export const membershipFaqs: FaqItemData[] = [
+  {
+    question: "Do I need to become a member to use Somacord?",
+    answer:
+      "No — creating an account, browsing gatherings, RSVPing, and trying Speed Connect are all free. Membership is an optional way to support Somacord once you've experienced it, never a requirement to join.",
+  },
   {
     question: `What's included in the ${siteConfig.membership.name}?`,
     answer:
