@@ -29,7 +29,7 @@ id, user_id, scheduled_at, status (booked | completed | no_show), provider (meet
 ## Relationships
 - One user has one profile
 - One user has zero or one active membership
-- A user with role `community_partner` also has a `partners` row (same membership, added capability)
+- A user with role `community_partner` also has a `partners` row identifying their organization — identity metadata, not an added capability; gathering creation is available to any signed-in member
 - A gathering belongs to one city and one creator (member or partner)
 - RSVPs link users to gatherings, many-to-many
 

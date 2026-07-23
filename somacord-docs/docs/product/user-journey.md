@@ -22,6 +22,6 @@ Visitor (already runs a coffee shop, hiking group, club, or hobby group)
 → Grow local presence
 → Remain a Somacord member (same Somacord Membership pricing)
 
-There is no separate partner subscription or tier. Partners are members with organizing tools.
+There is no separate partner subscription or tier, and no separate permission level — any signed-in member can create gatherings. Partners are members who bring an existing community with them, rather than building one from scratch.
 
 See [/docs/business/membership.md](../business/membership.md) and [/docs/business/community-partners.md](../business/community-partners.md) for the business-side detail behind this journey.

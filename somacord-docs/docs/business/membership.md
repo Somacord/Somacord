@@ -1,7 +1,7 @@
 # Somacord Membership
 
 ## Model
-One membership — the "Somacord Membership" — available Monthly ($39), Quarterly ($99), or Yearly ($349). Members and Community Partners share the same membership; the difference is role and ability, not price. There is no separate partner subscription or tier.
+One membership — the "Somacord Membership" — available Monthly ($39), Quarterly ($99), or Yearly ($349). Members and Community Partners share the same membership and the same ability to create gatherings. Members create community; Community Partners bring an existing community with them — partner status is an identity, not a permission level, and there is no separate partner subscription or tier.
 
 Full pricing detail: [pricing.md](pricing.md).
 

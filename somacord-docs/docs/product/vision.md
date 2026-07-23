@@ -17,7 +17,7 @@ Adults want a better social life but lack an easy, low-pressure way to meet good
 ## Product Principles
 1. Show, don't tell. Show people experiencing connection, not explanations of loneliness or psychology.
 2. Friendship first. Never appearance-first, never swiping, never attractiveness scoring.
-3. One community, one membership. Members and Community Partners share the same Somacord Membership pricing; the difference is role and ability, not price.
+3. One community, one membership. Members and Community Partners share the same Somacord Membership pricing and the same ability to create gatherings. Members create community; Community Partners bring an existing community with them — partner status is an identity, not a permission level.
 4. Guided, not mechanical. Speed Connect provides just enough structure to make a first hello easy, then gets out of the way.
 5. Examples over invention. Never fabricate testimonials, member counts, or events that do not exist yet; label examples clearly.
 

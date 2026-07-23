@@ -48,7 +48,7 @@ export const membershipFaqs: FaqItemData[] = [
   },
   {
     question: "Do Community Partners pay a different price?",
-    answer: `No — Community Partners pay the same ${siteConfig.membership.name} pricing as every member. The difference is role and ability, not price: partners get gathering-organizing tools and can invite their existing community into Somacord.`,
+    answer: `No — Community Partners pay the same ${siteConfig.membership.name} pricing as every member, with the same ability to create gatherings. The difference is what they bring: partners already have an existing community, and introduce it to Somacord.`,
   },
   {
     question: "Do I need to be a member to try Speed Connect?",

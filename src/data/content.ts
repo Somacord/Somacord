@@ -19,7 +19,7 @@ export const values = [
   {
     title: "One community, one membership",
     description:
-      "Members and Community Partners share the same Somacord Membership pricing; the difference is role and ability, not price.",
+      "Members and Community Partners share the same Somacord Membership pricing and the same ability to create gatherings. Members create community; Community Partners bring an existing community with them.",
   },
   {
     title: "Guided, not mechanical",
@@ -74,9 +74,9 @@ export const whyPartner = [
     description: "Reach adults actively looking for local connection.",
   },
   {
-    title: "Simple gathering tools",
+    title: "Represent your organization",
     description:
-      "Add and manage gatherings for your existing community, right alongside standard community gatherings.",
+      "Your gatherings show up under your organization's name, so the regulars you invite know it's really you.",
   },
   {
     title: "One membership, no separate fees",
