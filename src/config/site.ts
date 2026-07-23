@@ -62,7 +62,12 @@ export const siteConfig = {
   signIn: { label: "Sign In", href: "/signin" } satisfies NavLink,
   signUp: { label: "Sign Up", href: "/signup" } satisfies NavLink,
 
-  /** Footer link groups — mirrors the approved website mockup footer */
+  /**
+   * Footer link groups. "Explore" and the core of "Community" mirror the
+   * approved website mockup footer exactly; a "Company" column was added
+   * for About/Contact since those pages didn't exist yet when the mockup
+   * was built.
+   */
   footerNav: {
     explore: [
       { label: "Gatherings", href: "/gatherings" },
@@ -72,11 +77,16 @@ export const siteConfig = {
     ] satisfies NavLink[],
     community: [
       { label: "Partners", href: "/partners" },
-      { label: "About", href: "/about" },
       { label: "Sign In", href: "/signin" },
       { label: "Sign Up", href: "/signup" },
     ] satisfies NavLink[],
+    company: [
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ] satisfies NavLink[],
   },
+
+  contactEmail: "hello@somacord.com",
 } as const;
 
 export type SiteConfig = typeof siteConfig;

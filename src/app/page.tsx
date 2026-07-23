@@ -1,36 +1,172 @@
 import Link from "next/link";
 
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
+import { CheckList } from "@/components/ui/check-list";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { Faq } from "@/components/ui/faq";
+import { GatheringCard } from "@/components/ui/gathering-card";
 import { Hero } from "@/components/ui/hero";
+import { SectionHeader } from "@/components/ui/section-header";
+import { SplitLayout } from "@/components/ui/split-layout";
+import { Steps } from "@/components/ui/steps";
 import { photography } from "@/config/media";
 import { siteConfig } from "@/config/site";
+import { homeFaqs } from "@/data/faq";
+import { getFeaturedGatherings, getGatheringHref } from "@/data/gatherings";
 
 /**
- * Homepage — foundation pass only.
- *
- * This renders the approved hero (docs/design/website-mockups.md) using
- * the shared layout and design system. The remaining homepage sections
- * (Gatherings Showcase, How It Works, Membership Preview, Community
- * Partners teaser) are product features and are intentionally left for
- * a follow-up pass — see the engineering summary for scope notes.
+ * Homepage — docs/design/website-mockups.md ("Homepage").
+ * Section order follows the approved MVP build plan for this phase:
+ * Hero → How It Works → Featured Gatherings → Community Partners →
+ * Membership Preview → FAQ → Final CTA.
  */
 export default function HomePage() {
+  const featured = getFeaturedGatherings(3);
+
   return (
-    <Hero
-      imageSrc={photography.homepageHero1.src}
-      imageAlt={photography.homepageHero1.alt}
-      title="Real friendships start with one hello."
-      description={siteConfig.description}
-      actions={
-        <>
+    <>
+      <Hero
+        imageSrc={photography.homepageHero1.src}
+        imageAlt={photography.homepageHero1.alt}
+        title="Real friendships start with one hello."
+        description={siteConfig.description}
+        actions={
+          <>
+            <Button asChild variant="primary">
+              <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
+            </Button>
+            <Button asChild variant="secondary-dark">
+              <Link href="/gatherings">Browse Gatherings</Link>
+            </Button>
+          </>
+        }
+      />
+
+      <Section tone="sky">
+        <Container>
+          <SectionHeader eyebrow="How It Works" title="Low-pressure, by design" />
+          <Steps
+            steps={[
+              {
+                number: 1,
+                title: "Try Speed Connect, free",
+                description:
+                  "A short, guided conversation experience — no commitment, no awkward small talk to figure out on your own.",
+              },
+              {
+                number: 2,
+                title: "Meet a few new people",
+                description:
+                  "Speed Connect is built for a handful of genuine first conversations, not a crowd.",
+              },
+              {
+                number: 3,
+                title: "Turn it into friendship",
+                description:
+                  "Join gatherings, meet the same faces again, and let real connection build over time.",
+              },
+            ]}
+          />
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SectionHeader
+            eyebrow="Gatherings Showcase"
+            title="Something's always happening nearby"
+            action={
+              <Button asChild variant="secondary-light" size="small">
+                <Link href="/gatherings">See all gatherings</Link>
+              </Button>
+            }
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((gathering) => (
+              <GatheringCard
+                key={gathering.slug}
+                title={gathering.title}
+                description={gathering.shortDescription}
+                category={gathering.category}
+                imageSrc={gathering.imageSrc}
+                imageAlt={gathering.imageAlt}
+                meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
+                href={getGatheringHref(gathering)}
+              />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="sand">
+        <Container>
+          <SplitLayout
+            imageSrc={photography.communityPartner.src}
+            imageAlt={photography.communityPartner.alt}
+            reverse
+          >
+            <Eyebrow>Community Partners</Eyebrow>
+            <h2 className="mb-4 text-[32px]">
+              Local spots already bring people together. We help them do it better.
+            </h2>
+            <p className="mb-6 text-base leading-relaxed text-[#55636A]">
+              Coffee shops, restaurants, clubs, and hobby groups join as Community Partners — same
+              $39/month, plus tools to organize and grow their gatherings on Somacord.
+            </p>
+            <Button asChild variant="secondary-light">
+              <Link href="/partners">Become a Partner</Link>
+            </Button>
+          </SplitLayout>
+        </Container>
+      </Section>
+
+      <Section>
+        <Container>
+          <SplitLayout
+            imageSrc={photography.dinnerGathering.src}
+            imageAlt={photography.dinnerGathering.alt}
+          >
+            <Eyebrow>Membership Preview</Eyebrow>
+            <h2 className="mb-4 text-[32px]">One membership. One price. One community.</h2>
+            <p className="mb-6 text-base leading-relaxed text-[#55636A]">
+              The Founding Membership gets you community access, local gatherings, ongoing Speed
+              Connect, and the ability to create your own gatherings — for $39/month.
+            </p>
+            <CheckList
+              items={[
+                "Unlimited Speed Connect sessions",
+                "Full access to community & partner gatherings",
+                "Create and host your own gatherings",
+              ]}
+            />
+            <Button asChild variant="primary">
+              <Link href="/membership">See Membership</Link>
+            </Button>
+          </SplitLayout>
+        </Container>
+      </Section>
+
+      <Section tone="sky">
+        <Container className="max-w-3xl">
+          <SectionHeader eyebrow="FAQ" title="Common questions" align="center" />
+          <Faq items={homeFaqs} />
+        </Container>
+      </Section>
+
+      <Section tone="dark">
+        <Container className="max-w-xl text-center">
+          <Eyebrow className="text-warm-sand">Ready when you are</Eyebrow>
+          <h2 className="mb-4 text-[36px]">Your first hello is one Speed Connect away.</h2>
+          <p className="mb-8 text-white/85">
+            Free, guided, and low-pressure — see who you meet this week.
+          </p>
           <Button asChild variant="primary">
             <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
           </Button>
-          <Button asChild variant="secondary-dark">
-            <Link href="/gatherings">Browse Gatherings</Link>
-          </Button>
-        </>
-      }
-    />
+        </Container>
+      </Section>
+    </>
   );
 }
