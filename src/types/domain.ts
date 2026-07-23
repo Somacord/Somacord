@@ -9,7 +9,7 @@
  * extend them alongside future schema changes, not ahead of them.
  */
 
-export type UserRole = "member" | "community_partner";
+export type UserRole = "member" | "community_partner" | "admin";
 
 export interface SomacordUser {
   id: string;
@@ -113,6 +113,42 @@ export interface Partner {
   organizationName: string;
   organizationType: PartnerOrganizationType;
   verified: boolean;
+}
+
+/**
+ * Organizations (Phase 1 of the marketplace implementation plan) —
+ * supersedes `Partner`/`PartnerOrganizationType` above, which mirror the
+ * legacy `public.partners` table (kept in place, unread by the app, for
+ * backward compatibility). See docs/business/community-partners.md and
+ * docs/engineering/marketplace-implementation-plan.md.
+ */
+export type OrganizationType =
+  | "coffee_shop"
+  | "restaurant"
+  | "brewery"
+  | "coworking_space"
+  | "club"
+  | "hobby_group"
+  | "event_organizer"
+  | "community_organization"
+  | "nonprofit";
+
+export interface Organization {
+  id: string;
+  name: string;
+  organizationType: OrganizationType;
+  description: string | null;
+  cityId: string | null;
+  verified: boolean;
+}
+
+export type OrganizationManagerRole = "owner" | "manager";
+
+/** Many-to-many: which users can act for which organizations. */
+export interface OrganizationManager {
+  organizationId: string;
+  userId: string;
+  role: OrganizationManagerRole;
 }
 
 export type SpeedConnectSessionStatus = "booked" | "completed" | "no_show";

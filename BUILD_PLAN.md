@@ -51,6 +51,7 @@ create table public.organization_managers (
 ```
 
 **Schema change on an existing table:**
+
 ```sql
 alter table public.users
   drop constraint if exists users_role_check,
@@ -58,6 +59,7 @@ alter table public.users
 ```
 
 **RLS** (both new tables `enable row level security`):
+
 - `organizations`: `select` public; `insert` restricted to `service_role`/`admin`; `update` allowed for `organization_managers` members or `admin`.
 - `organization_managers`: members can view their own org's manager list; `role = 'owner'` or `admin` can insert/delete other managers.
 - Both need `grant select/insert/update/delete ... to authenticated` and `grant select ... to anon` (organizations only) following the existing grant pattern in `20260723010703_initial_schema.sql`.
@@ -79,20 +81,20 @@ alter table public.users
 
 ## Deferred (explicitly out of scope for this phase)
 
-| Deferred item | Belongs to |
-|---|---|
-| `gatherings.owner_type` / `organization_id` | Phase 2 |
-| `event_ticket_tiers`, `event_tickets` | Phase 2 |
-| Partner Event creation, editing, publishing | Phase 2 |
-| `partner_promotions` (Option A) | Phase 2 |
-| `partner_subscriptions` (Option B) | Phase 5 |
-| Stripe products, Checkout, webhook endpoint | Phase 2+ |
-| `organizations.stripe_connect_account_id`, Stripe Connect payouts | Phase 6 (final) |
-| Self-serve organization/manager UI, manager invite flow | Post-launch, once concierge onboarding doesn't scale |
-| Partner application/intake table | Not planned — a spreadsheet is sufficient while onboarding is manual |
-| `requireOrganizationManager()` helper | Phase 2 (first phase that actually calls it) |
-| Meetaway/Speed Connect freemium session limits | Separate, already-tracked gap (`database-schema.md`) — unrelated to Organizations |
-| Event Series (recurring gatherings) | Documented-future only, no phase assigned |
+| Deferred item                                                     | Belongs to                                                                        |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `gatherings.owner_type` / `organization_id`                       | Phase 2                                                                           |
+| `event_ticket_tiers`, `event_tickets`                             | Phase 2                                                                           |
+| Partner Event creation, editing, publishing                       | Phase 2                                                                           |
+| `partner_promotions` (Option A)                                   | Phase 2                                                                           |
+| `partner_subscriptions` (Option B)                                | Phase 5                                                                           |
+| Stripe products, Checkout, webhook endpoint                       | Phase 2+                                                                          |
+| `organizations.stripe_connect_account_id`, Stripe Connect payouts | Phase 6 (final)                                                                   |
+| Self-serve organization/manager UI, manager invite flow           | Post-launch, once concierge onboarding doesn't scale                              |
+| Partner application/intake table                                  | Not planned — a spreadsheet is sufficient while onboarding is manual              |
+| `requireOrganizationManager()` helper                             | Phase 2 (first phase that actually calls it)                                      |
+| Meetaway/Speed Connect freemium session limits                    | Separate, already-tracked gap (`database-schema.md`) — unrelated to Organizations |
+| Event Series (recurring gatherings)                               | Documented-future only, no phase assigned                                         |
 
 ## Acceptance Criteria
 
