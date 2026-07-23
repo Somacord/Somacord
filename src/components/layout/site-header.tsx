@@ -38,7 +38,7 @@ export function SiteHeader() {
             src="/brand/somacord-logo-horizontal-light.png"
             alt={siteConfig.name}
             height={32}
-            width={160}
+            width={64}
             className="h-8 w-auto"
             priority
           />

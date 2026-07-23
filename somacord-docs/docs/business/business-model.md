@@ -2,7 +2,7 @@
 
 Index of already-approved business decisions. See linked docs for full detail; no separate business-model narrative has been drafted beyond what's captured here.
 
-- **Core model:** One community, one membership — members and Community Partners pay the same $39/month; the difference is role and ability, not price. See [pricing.md](pricing.md) and [membership.md](membership.md).
+- **Core model:** One community, one membership — members and Community Partners pay the same Somacord Membership pricing (Monthly $39, Quarterly $99, Yearly $349); the difference is role and ability, not price. See [pricing.md](pricing.md) and [membership.md](membership.md).
 - **Growth mechanism:** Community Partners bring their existing local audiences into Somacord. See [community-partners.md](community-partners.md).
 - **Future revenue:** Premium (company-produced) experiences, considered post-launch only, not part of MVP pricing. See [pricing.md](pricing.md#future-premium-experiences).
 - **Target users:** See [/docs/product/vision.md](../product/vision.md#target-users).

@@ -60,6 +60,18 @@ export function SiteFooter() {
                 ))}
               </ul>
             </div>
+            <div>
+              <h5 className="mb-3.5 text-[13px] tracking-[0.06em] text-white uppercase">Company</h5>
+              <ul className="flex flex-col gap-2.5">
+                {siteConfig.footerNav.company.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm text-white/70 hover:text-white">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -68,8 +80,7 @@ export function SiteFooter() {
             © {year} {siteConfig.name}. All rights reserved.
           </span>
           <span>
-            {siteConfig.launchCity.name} · {siteConfig.membership.name} $
-            {siteConfig.membership.price}/{siteConfig.membership.interval}
+            {siteConfig.launchCity.name} · {siteConfig.membership.name}
           </span>
         </div>
       </Container>

@@ -5,14 +5,13 @@ import { cn } from "@/lib/utils";
 /**
  * "Example" content label.
  *
- * Launch Honesty Rule: until real gatherings/members exist in a city,
- * any placeholder content must be clearly labeled "Example" and never
- * imply an active community that doesn't exist yet. See
- * /somacord-docs/docs/product/mvp-requirements.md#launch-honesty-rule.
+ * Until real gatherings/members exist in a city, any placeholder content
+ * must be clearly labeled "Example" and never imply an active community
+ * that doesn't exist yet. See /somacord-docs/docs/product/mvp-requirements.md.
  *
  * Every component that renders sample data (GatheringCard, PricingCard's
  * "example month", etc.) should compose this rather than a bare string,
- * so the rule can never be silently dropped by a feature page.
+ * so the labeling can never be silently dropped by a feature page.
  */
 export function ExampleTag({
   className,

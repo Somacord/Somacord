@@ -15,10 +15,21 @@
  * need to be made in one place.
  */
 
+import type { MembershipPlan as MembershipPlanId } from "@/types/domain";
+
 export type NavLink = {
   label: string;
   href: string;
 };
+
+/** A billing option shown on the Membership page (id matches the domain `MembershipPlan` enum). */
+export interface MembershipPricingPlan {
+  id: MembershipPlanId;
+  label: string;
+  price: number;
+  /** Billing period, for display (e.g. "$39/month"). */
+  interval: string;
+}
 
 export const siteConfig = {
   name: "Somacord",
@@ -27,19 +38,22 @@ export const siteConfig = {
     "Somacord is a friendship-first social club — guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
 
-  /** Launch Honesty Rule: Salt Lake City only at MVP launch. */
+  /** Salt Lake City only at MVP launch — see docs/business/launch-strategy.md */
   launchCity: {
     name: "Salt Lake City",
     slug: "salt-lake-city",
     state: "UT",
   },
 
-  /** One membership, one price — see docs/business/pricing.md */
+  /** One membership, three ways to pay — see docs/business/pricing.md */
   membership: {
-    name: "Founding Membership",
-    price: 39,
+    name: "Somacord Membership",
     currency: "USD",
-    interval: "month" as const,
+    plans: [
+      { id: "monthly", label: "Monthly", price: 39, interval: "month" },
+      { id: "quarterly", label: "Quarterly", price: 99, interval: "quarter" },
+      { id: "yearly", label: "Yearly", price: 349, interval: "year" },
+    ] as const satisfies readonly MembershipPricingPlan[],
     benefits: [
       "Community access",
       "Local experiences (gatherings)",
@@ -62,7 +76,12 @@ export const siteConfig = {
   signIn: { label: "Sign In", href: "/signin" } satisfies NavLink,
   signUp: { label: "Sign Up", href: "/signup" } satisfies NavLink,
 
-  /** Footer link groups — mirrors the approved website mockup footer */
+  /**
+   * Footer link groups. "Explore" and the core of "Community" mirror the
+   * approved website mockup footer exactly; a "Company" column was added
+   * for About/Contact since those pages didn't exist yet when the mockup
+   * was built.
+   */
   footerNav: {
     explore: [
       { label: "Gatherings", href: "/gatherings" },
@@ -72,11 +91,16 @@ export const siteConfig = {
     ] satisfies NavLink[],
     community: [
       { label: "Partners", href: "/partners" },
-      { label: "About", href: "/about" },
       { label: "Sign In", href: "/signin" },
       { label: "Sign Up", href: "/signup" },
     ] satisfies NavLink[],
+    company: [
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ] satisfies NavLink[],
   },
+
+  contactEmail: "hello@somacord.com",
 } as const;
 
 export type SiteConfig = typeof siteConfig;

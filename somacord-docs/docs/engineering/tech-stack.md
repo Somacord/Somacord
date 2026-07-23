@@ -10,7 +10,7 @@
 - PostgreSQL
 
 ## Payments
-- Stripe (membership billing, $39/month)
+- Stripe (Somacord Membership billing — monthly, quarterly, and yearly plans)
 
 ## Hosting
 - Vercel

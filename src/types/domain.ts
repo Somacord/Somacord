@@ -64,12 +64,16 @@ export interface Rsvp {
 
 export type MembershipStatus = "active" | "canceled";
 
+/** Somacord Membership billing plan — see docs/business/pricing.md */
+export type MembershipPlan = "monthly" | "quarterly" | "yearly";
+
 export interface Membership {
   id: string;
   userId: string;
   status: MembershipStatus;
-  /** Founding Membership price — see docs/business/pricing.md */
-  price: 39.0;
+  plan: MembershipPlan;
+  /** 39.00 (monthly), 99.00 (quarterly), or 349.00 (yearly) — see docs/business/pricing.md */
+  price: number;
   stripeSubscriptionId: string | null;
   startedAt: string;
 }

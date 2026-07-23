@@ -59,9 +59,15 @@ export const env = {
     get webhookSecret() {
       return requireEnv("STRIPE_WEBHOOK_SECRET");
     },
-    /** Price ID for the $39/month Founding Membership — see docs/business/pricing.md */
-    get membershipPriceId() {
-      return requireEnv("STRIPE_FOUNDING_MEMBERSHIP_PRICE_ID");
+    /** Price IDs for the Somacord Membership plans — see docs/business/pricing.md */
+    get membershipMonthlyPriceId() {
+      return requireEnv("STRIPE_MEMBERSHIP_MONTHLY_PRICE_ID");
+    },
+    get membershipQuarterlyPriceId() {
+      return requireEnv("STRIPE_MEMBERSHIP_QUARTERLY_PRICE_ID");
+    },
+    get membershipYearlyPriceId() {
+      return requireEnv("STRIPE_MEMBERSHIP_YEARLY_PRICE_ID");
     },
   },
 

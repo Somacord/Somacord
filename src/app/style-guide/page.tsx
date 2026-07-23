@@ -242,12 +242,11 @@ export default function StyleGuidePage() {
           />
           <PricingCard
             eyebrow={siteConfig.membership.name}
-            price={siteConfig.membership.price}
-            interval={siteConfig.membership.interval}
+            plans={siteConfig.membership.plans}
             benefits={siteConfig.membership.benefits}
-            ctaLabel="Become a Founding Member"
+            ctaLabel="Become a Member"
             ctaHref="/membership"
-            footnote="Community Partners pay the same $39/month — the difference is role, not price."
+            footnote="Community Partners pay the same membership pricing — the difference is role, not price."
           />
         </Container>
       </Section>

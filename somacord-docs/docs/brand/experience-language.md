@@ -5,7 +5,7 @@ Naming and terminology rules for consistent product, marketing, and engineering 
 ## Customer-Facing Terms
 - **"Speed Connect"** — the guided-conversation experience. This is the only customer-facing name; it is never referred to by its underlying vendor/technology name.
 - **"Gatherings"** — the general term for community and partner experiences/events. Prefer "gatherings" over "events" in customer-facing copy.
-- **"Founding Membership"** — the $39/month membership plan name.
+- **"Somacord Membership"** — the membership plan name, available Monthly ($39), Quarterly ($99), or Yearly ($349).
 - **"Community Partners"** — coffee shops, restaurants, clubs, hobby groups, and event organizers who join Somacord to organize gatherings for their existing community.
 
 ## Internal-Only Terms

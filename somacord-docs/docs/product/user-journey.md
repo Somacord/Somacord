@@ -6,7 +6,7 @@ Visitor
 → Discover Somacord
 → Join Free Speed Connect
 → Experience first connection
-→ Become Member ($39/month)
+→ Become Member (Somacord Membership)
 → Discover gatherings
 → Join community
 → Create gatherings
@@ -20,7 +20,7 @@ Visitor (already runs a coffee shop, hiking group, club, or hobby group)
 → Add gatherings
 → Invite their existing community
 → Grow local presence
-→ Remain a Somacord member (same $39/month)
+→ Remain a Somacord member (same Somacord Membership pricing)
 
 There is no separate partner subscription or tier. Partners are members with organizing tools.
 
