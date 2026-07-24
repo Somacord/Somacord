@@ -40,6 +40,11 @@ export const homeFaqs: FaqItemData[] = [
       "Somacord is currently live in Salt Lake City. We'll bring Somacord to more cities over time.",
   },
   {
+    question: "When is the first event?",
+    answer:
+      "We're building the founding Salt Lake City community right now. Create your free account and we'll email you the moment the first event is announced.",
+  },
+  {
     question: "How much does membership cost?",
     answer: `The ${siteConfig.membership.name} is ${planSummary} — one flat price that directly supports Somacord as we grow. Browsing gatherings, RSVPing, and trying Speed Connect are all free and don't require a membership.`,
   },
