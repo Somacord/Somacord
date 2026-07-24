@@ -25,6 +25,10 @@ export function SignUpForm({ next }: SignUpFormProps) {
       <div className="rounded-card border-soft-sky bg-soft-sky/40 border px-6 py-8 text-center">
         <h3 className="mb-2 text-xl">Check your email</h3>
         <p className="text-ink-muted text-sm">{state.message}</p>
+        <p className="text-ink-muted mt-4 text-sm">
+          You&apos;re one of the first founding members in {siteConfig.launchCity.name}. We&apos;ll
+          email you the moment the first event is announced.
+        </p>
       </div>
     );
   }
