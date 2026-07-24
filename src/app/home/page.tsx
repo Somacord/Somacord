@@ -106,11 +106,8 @@ export default async function HomePage() {
                 </p>
               ) : (
                 <p className="text-ink-muted text-sm">
-                  No upcoming gatherings yet —{" "}
-                  <Link href="/gatherings/create" className="text-cord-blue font-medium underline">
-                    create the first one
-                  </Link>
-                  .
+                  You&apos;re one of the first founding members in {user.city ?? "your city"}.
+                  We&apos;ll email you the moment the first event is announced.
                 </p>
               )}
             </div>
