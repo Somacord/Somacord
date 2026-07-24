@@ -1,18 +1,11 @@
 /**
  * Placeholder data for the Member Dashboard (/home) that's still out of
- * scope for this pass — Speed Connect booking and Community Updates.
- * Gatherings/RSVPs on the dashboard are real, fetched from Supabase via
- * src/lib/queries/gatherings.ts — see src/app/home/page.tsx.
+ * scope for this pass — Community Updates. Gatherings/RSVPs on the
+ * dashboard are real, fetched from Supabase via
+ * src/lib/queries/gatherings.ts — see src/app/home/page.tsx. Speed
+ * Connect has no real booking system yet, so the dashboard shows a plain
+ * "coming soon" message instead of placeholder session data.
  */
-
-export interface PlaceholderSpeedConnectSession {
-  scheduledFor: string;
-  format: string;
-}
-
-export function getUpcomingSpeedConnect(): PlaceholderSpeedConnectSession | null {
-  return { scheduledFor: "This Thursday, 6:00 PM", format: "Virtual — 4 people" };
-}
 
 export interface CommunityUpdate {
   title: string;
