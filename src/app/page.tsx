@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { CheckList } from "@/components/ui/check-list";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Faq } from "@/components/ui/faq";
-import { GatheringCard } from "@/components/ui/gathering-card";
 import { Hero } from "@/components/ui/hero";
 import { SectionHeader } from "@/components/ui/section-header";
 import { SplitLayout } from "@/components/ui/split-layout";
@@ -14,36 +13,26 @@ import { Steps } from "@/components/ui/steps";
 import { photography } from "@/config/media";
 import { siteConfig } from "@/config/site";
 import { homeFaqs } from "@/data/faq";
-import { getCityIdBySlug, getPublishedGatherings } from "@/lib/queries/gatherings";
 
 /**
- * Homepage — docs/design/website-mockups.md ("Homepage").
- * Section order: Hero → How It Works → Featured Gatherings → Membership
- * Preview → Community Partners → FAQ → Final CTA. Membership comes
- * before the Community Partners teaser since the primary homepage
- * audience is individual visitors, not businesses — see the first-time-
- * visitor audit that reordered this from the original build-plan order.
+ * Homepage — Salt Lake City founding-member early-access page. No specific
+ * event, date, or venue is claimed here (none exists yet) — the page's job
+ * is capturing free signups before a venue/partner is secured, not showing
+ * off gatherings. Section order: Hero → How It Works → Membership Preview
+ * → Community Partners → FAQ → Final CTA.
  */
-export default async function HomePage() {
-  const cityId = await getCityIdBySlug(siteConfig.launchCity.slug);
-  const featured = cityId ? await getPublishedGatherings(cityId, 3) : [];
-
+export default function HomePage() {
   return (
     <>
       <Hero
         imageSrc={photography.homepageHero1.src}
         imageAlt={photography.homepageHero1.alt}
-        title="Real friendships start with one hello."
-        description="Somacord is free to join. Attend local gatherings and try the experience for yourself. Membership comes later if you love it."
+        title="Be one of the first to join Somacord in Salt Lake City."
+        description="Somacord is free to join. Reserve your spot as a founding Salt Lake City member. Membership comes later if you love it."
         actions={
-          <>
-            <Button asChild variant="primary">
-              <Link href="/signup">Join Free &amp; Find Your Community</Link>
-            </Button>
-            <Button asChild variant="secondary-dark">
-              <Link href="/gatherings">Explore Gatherings</Link>
-            </Button>
-          </>
+          <Button asChild variant="primary">
+            <Link href="/signup">Reserve Your Spot as a Founding Member</Link>
+          </Button>
         }
       />
 
@@ -72,45 +61,6 @@ export default async function HomePage() {
               },
             ]}
           />
-        </Container>
-      </Section>
-
-      <Section>
-        <Container>
-          <SectionHeader
-            eyebrow="Gatherings Showcase"
-            title="Something's always happening nearby"
-            action={
-              <Button asChild variant="secondary-light" size="small">
-                <Link href="/gatherings">See all gatherings</Link>
-              </Button>
-            }
-          />
-          {featured.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featured.map((gathering) => (
-                <GatheringCard
-                  key={gathering.id}
-                  title={gathering.title}
-                  description={gathering.shortDescription}
-                  category={gathering.category}
-                  imageSrc={gathering.imageSrc}
-                  imageAlt={gathering.imageAlt}
-                  meta={[`📍 ${gathering.location}`, `🗓 ${gathering.schedule}`]}
-                  href={gathering.href}
-                  isExample={false}
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="text-ink-muted">
-              {siteConfig.launchCity.name} gatherings are just getting started — check back soon, or{" "}
-              <Link href="/speed-connect" className="text-cord-blue font-medium underline">
-                join a free Speed Connect
-              </Link>{" "}
-              in the meantime.
-            </p>
-          )}
         </Container>
       </Section>
 
