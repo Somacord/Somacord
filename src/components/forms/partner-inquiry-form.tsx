@@ -40,10 +40,10 @@ export function PartnerInquiryForm() {
   return (
     <form action={formAction} className="space-y-5 text-left">
       <div className="grid gap-5 sm:grid-cols-2">
-        <FormField label="Your name" htmlFor="partner-inquiry-name">
+        <FormField label="Your name" htmlFor="partner-inquiry-name" labelClassName="text-white">
           <Input id="partner-inquiry-name" name="name" type="text" autoComplete="name" required />
         </FormField>
-        <FormField label="Email" htmlFor="partner-inquiry-email">
+        <FormField label="Email" htmlFor="partner-inquiry-email" labelClassName="text-white">
           <Input
             id="partner-inquiry-email"
             name="email"
@@ -53,13 +53,19 @@ export function PartnerInquiryForm() {
           />
         </FormField>
       </div>
-      <FormField label="Organization name" htmlFor="partner-inquiry-org">
+      <FormField
+        label="Organization name"
+        htmlFor="partner-inquiry-org"
+        labelClassName="text-white"
+      >
         <Input id="partner-inquiry-org" name="organizationName" type="text" required />
       </FormField>
       <FormField
         label="Tell us about your organization"
         htmlFor="partner-inquiry-message"
         hint="Optional — what you do, and what kind of gathering you'd want to host."
+        labelClassName="text-white"
+        hintClassName="text-white/70"
       >
         <Textarea id="partner-inquiry-message" name="message" rows={4} />
       </FormField>
