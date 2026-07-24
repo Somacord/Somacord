@@ -2,15 +2,37 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 
 import { SignOutButton } from "@/components/forms/sign-out-button";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { useAuthStatus } from "@/lib/hooks/use-auth-status";
+import { type AuthDebugInfo, type AuthStatus, useAuthStatus } from "@/lib/hooks/use-auth-status";
 import { cn } from "@/lib/utils";
+
+/**
+ * TEMPORARY — remove alongside the debug fields in useAuthStatus once the
+ * production header/footer auth bug is confirmed fixed. Only renders when
+ * the page is loaded with `?authdebug=1`, so it's invisible to every real
+ * visitor and only shows up for whoever adds that to the link themselves.
+ * Reads useSearchParams() in its own small component (rather than in
+ * SiteHeader directly) so only this piece opts out of static rendering —
+ * wrapping it in Suspense keeps every other page prerenderable.
+ */
+function AuthDebugLine({ debug, status }: { debug: AuthDebugInfo; status: AuthStatus }) {
+  const searchParams = useSearchParams();
+  if (searchParams.get("authdebug") !== "1") return null;
+
+  return (
+    <div className="bg-warm-sand px-3 py-1 text-center text-xs font-medium text-black">
+      Debug — Supabase keys found: {debug.configured ? "Yes" : "No"} · Request sent:{" "}
+      {debug.requestAttempted ? "Yes" : "No"} · Error:{" "}
+      {debug.errorMessage ? debug.errorMessage : "none"} · Result: {status}
+    </div>
+  );
+}
 
 /**
  * Site header / primary navigation — docs/design/design-system.md ("Navigation")
@@ -34,7 +56,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [lastPathname, setLastPathname] = React.useState(pathname);
-  const { status, user } = useAuthStatus();
+  const { status, user, debug } = useAuthStatus();
 
   // Close the mobile menu on navigation without a synchronous setState-in-effect:
   // update derived state during render when the pathname prop we're tracking changes.
@@ -45,6 +67,9 @@ export function SiteHeader() {
 
   return (
     <header className="border-soft-sky sticky top-0 z-50 border-b bg-white/85 backdrop-blur-md">
+      <React.Suspense fallback={null}>
+        <AuthDebugLine debug={debug} status={status} />
+      </React.Suspense>
       <Container className="flex items-center justify-between gap-6 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label={siteConfig.name}>
           <Image
