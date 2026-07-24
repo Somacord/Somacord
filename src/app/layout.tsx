@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   icons: {
-    icon: "/brand/somacord-icon-only.png",
+    icon: "/brand/somacord-icon.svg",
     apple: "/brand/somacord-icon-only.png",
   },
 };
