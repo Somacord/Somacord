@@ -34,7 +34,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [lastPathname, setLastPathname] = React.useState(pathname);
-  const { status, user } = useAuthStatus();
+  const { status, user, debug } = useAuthStatus();
 
   // Close the mobile menu on navigation without a synchronous setState-in-effect:
   // update derived state during render when the pathname prop we're tracking changes.
@@ -45,6 +45,12 @@ export function SiteHeader() {
 
   return (
     <header className="border-soft-sky sticky top-0 z-50 border-b bg-white/85 backdrop-blur-md">
+      {/* TEMPORARY — remove once the production header/footer auth bug is confirmed fixed. */}
+      <div className="bg-warm-sand px-3 py-1 text-center text-xs font-medium text-black">
+        Debug — Supabase keys found: {debug.configured ? "Yes" : "No"} · Request sent:{" "}
+        {debug.requestAttempted ? "Yes" : "No"} · Error:{" "}
+        {debug.errorMessage ? debug.errorMessage : "none"} · Result: {status}
+      </div>
       <Container className="flex items-center justify-between gap-6 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label={siteConfig.name}>
           <Image
