@@ -32,9 +32,9 @@ export default async function SignUpPage({
       <Container className="max-w-md">
         <div className="mb-8 text-center">
           <Eyebrow>Join Somacord</Eyebrow>
-          <h1 className="mb-2 text-[30px]">Create your free account</h1>
+          <h1 className="mb-2 text-[30px]">Reserve your spot</h1>
           <p className="text-ink-muted text-sm">
-            Create your free account to join events and start meeting people.{" "}
+            Create your free account to reserve your spot as a founding Salt Lake City member.{" "}
             {siteConfig.membership.name} is optional and comes later if you love it.
           </p>
         </div>
