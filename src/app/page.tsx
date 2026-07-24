@@ -124,9 +124,10 @@ export default function HomePage() {
       <Section tone="dark">
         <Container className="max-w-xl text-center">
           <Eyebrow className="text-warm-sand">Ready when you are</Eyebrow>
-          <h2 className="mb-4 text-[36px]">Your first gathering is one free account away.</h2>
+          <h2 className="mb-4 text-[36px]">Reserve your spot as a founding member.</h2>
           <p className="mb-8 text-white/85">
-            Simple to join and free to start. See what is happening near you this week.
+            Simple to join and free to start. We will email you the moment the first event is
+            announced.
           </p>
           <Button asChild variant="primary">
             <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
