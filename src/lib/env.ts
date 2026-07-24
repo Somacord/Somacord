@@ -7,6 +7,22 @@
  * given environment. Callers get a clear error the moment they actually
  * try to use a missing value.
  *
+ * IMPORTANT — NEXT_PUBLIC_* variables must be read with a literal,
+ * static `process.env.NEXT_PUBLIC_X` expression at each call site, not
+ * through a helper that takes the variable name as a parameter. Next.js
+ * only inlines NEXT_PUBLIC_* values into the browser bundle by finding
+ * that exact literal pattern at build time — `process.env[name]`, where
+ * `name` is a variable, can't be statically resolved, so on the client
+ * it silently returns undefined even when the variable is set correctly
+ * everywhere else. This bit a real production bug (the header/footer
+ * couldn't tell who was signed in) even though NEXT_PUBLIC_SUPABASE_URL
+ * and NEXT_PUBLIC_SUPABASE_ANON_KEY were genuinely present in Vercel the
+ * whole time — server-side code has a real process.env at runtime and
+ * never hit this, only client-side code did. `readEnv`/`requireEnv`
+ * below are safe for server-only variables (never read from a "use
+ * client" file); every NEXT_PUBLIC_* getter is written out by hand
+ * instead, on purpose — do not "simplify" them back to readEnv/requireEnv.
+ *
  * See .env.example for the full list of variables this project expects.
  */
 
@@ -24,19 +40,32 @@ function requireEnv(name: string): string {
   return value;
 }
 
+/** Throws with the standard message if a NEXT_PUBLIC_* value (already read via a literal expression) is missing. */
+function assertPublicEnv(value: string | undefined, name: string): string {
+  if (!value) {
+    throw new Error(
+      `Missing required environment variable "${name}". Copy .env.example to .env.local and fill in your ${name} value.`,
+    );
+  }
+  return value;
+}
+
 export const env = {
   site: {
     get url() {
-      return readEnv("NEXT_PUBLIC_APP_URL") ?? "http://localhost:3000";
+      return process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
     },
   },
 
   supabase: {
     get url() {
-      return requireEnv("NEXT_PUBLIC_SUPABASE_URL");
+      return assertPublicEnv(process.env.NEXT_PUBLIC_SUPABASE_URL, "NEXT_PUBLIC_SUPABASE_URL");
     },
     get anonKey() {
-      return requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+      return assertPublicEnv(
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      );
     },
     get serviceRoleKey() {
       return requireEnv("SUPABASE_SERVICE_ROLE_KEY");
@@ -44,7 +73,7 @@ export const env = {
     /** Non-throwing check, safe to use in middleware before Supabase is configured. */
     get isConfigured() {
       return Boolean(
-        readEnv("NEXT_PUBLIC_SUPABASE_URL") && readEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+        process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
       );
     },
   },
@@ -54,7 +83,10 @@ export const env = {
       return requireEnv("STRIPE_SECRET_KEY");
     },
     get publishableKey() {
-      return requireEnv("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY");
+      return assertPublicEnv(
+        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+        "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+      );
     },
     get webhookSecret() {
       return requireEnv("STRIPE_WEBHOOK_SECRET");
