@@ -34,8 +34,8 @@ export default async function SignUpPage({
           <Eyebrow>Join Somacord</Eyebrow>
           <h1 className="mb-2 text-[30px]">Reserve your spot</h1>
           <p className="text-ink-muted text-sm">
-            Create your free account to reserve your spot as a founding Salt Lake City member.{" "}
-            {siteConfig.membership.name} is optional and comes later if you love it.
+            Create your free account to reserve your spot in Salt Lake City&apos;s founding
+            community. {siteConfig.membership.name} is optional and comes later if you love it.
           </p>
         </div>
         <Panel>

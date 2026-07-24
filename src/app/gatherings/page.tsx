@@ -17,7 +17,7 @@ import { getCurrentUser } from "@/lib/supabase/auth";
 
 export const metadata: Metadata = {
   title: "Gatherings",
-  description: `Browse community and Community Partner gatherings, plus free Speed Connect sessions, in ${siteConfig.launchCity.name}.`,
+  description: `Browse community and Community Partner gatherings and free Speed Connect sessions in ${siteConfig.launchCity.name}.`,
 };
 
 const speedConnectTile: GatheringSummary = {
@@ -27,7 +27,7 @@ const speedConnectTile: GatheringSummary = {
   shortDescription: "The easiest way to meet a few new people this week.",
   imageSrc: photography.coffeeGathering.src,
   imageAlt: photography.coffeeGathering.alt,
-  location: "Virtual & in-person",
+  location: "Virtual and in person",
   schedule: "Daily slots",
   href: "/speed-connect",
 };
@@ -43,7 +43,7 @@ export default async function GatheringsPage() {
         <SectionHeader
           eyebrow="Gatherings"
           title="Something's always happening nearby"
-          subhead={`Free to browse and RSVP — community-created meetups, Community Partner experiences, and Speed Connect sessions in ${siteConfig.launchCity.name}.`}
+          subhead={`Free to browse and RSVP. Enjoy community meetups and Community Partner experiences and Speed Connect sessions in ${siteConfig.launchCity.name}.`}
           action={
             current ? (
               <Button asChild variant="secondary-light" size="small">
@@ -54,8 +54,8 @@ export default async function GatheringsPage() {
         />
         {gatherings.length === 0 && (
           <p className="text-ink-muted mb-6 text-sm">
-            {siteConfig.launchCity.name} gatherings are just getting started — Speed Connect is live
-            now, and real gatherings are on the way.{" "}
+            {siteConfig.launchCity.name} gatherings are just getting started. Speed Connect is live
+            now. Real gatherings are on the way.{" "}
             {current ? (
               <Link href="/gatherings/create" className="text-cord-blue font-medium underline">
                 Create the first one

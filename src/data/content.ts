@@ -75,12 +75,12 @@ export const whyPartner = [
   {
     title: "Represent your organization",
     description:
-      "Your gatherings show up under your organization's name, so the regulars you invite know it's really you.",
+      "Your gatherings show up under your organization's name. The regulars you invite will know it's really you.",
   },
   {
     title: "No membership fee",
     description:
-      "You don't pay for a Somacord Membership — partnership works differently, from a one-time event to an ongoing relationship built for your organization.",
+      "You don't pay for a Somacord Membership. Partnership works differently. It can range from a single event to an ongoing relationship built for your organization.",
   },
 ];
 
@@ -90,12 +90,12 @@ export const partnerHowItWorks = [
     number: 1,
     title: "Join as a Community Partner",
     description:
-      "Sign up and tell us about the coffee shop, restaurant, club, or group you already run.",
+      "Sign up and tell us about the coffee shop or restaurant or club or group you already run.",
   },
   {
     number: 2,
     title: "Create your profile",
-    description: "Let members know what you're about and what kind of gatherings you host.",
+    description: "Let people know what you're about and what kind of gatherings you host.",
   },
   {
     number: 3,
@@ -105,6 +105,6 @@ export const partnerHowItWorks = [
   {
     number: 4,
     title: "Grow your local presence",
-    description: "Reach new people actively looking for local connection, on your own terms.",
+    description: "Reach new people actively looking for local connection on your own terms.",
   },
 ];

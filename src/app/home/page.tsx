@@ -104,7 +104,7 @@ export default async function HomePage() {
                 </p>
               ) : (
                 <p className="text-ink-muted text-sm">
-                  You&apos;re one of the first founding members in {user.city ?? "your city"}.
+                  You&apos;re one of the first to join Somacord in {user.city ?? "your city"}.
                   We&apos;ll email you the moment the first event is announced.
                 </p>
               )}

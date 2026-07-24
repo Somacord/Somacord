@@ -17,7 +17,7 @@ export function NameStep({ firstName, lastName, onChange, onNext, onBack }: Name
     <div>
       <h2 className="mb-1 text-2xl">What&apos;s your name?</h2>
       <p className="text-ink-muted mb-6 text-sm">
-        This is how you&apos;ll appear to other members.
+        This is how you&apos;ll appear to others on Somacord.
       </p>
       <div className="mb-6 grid gap-5 sm:grid-cols-2">
         <FormField label="First name" htmlFor="onboarding-first-name">

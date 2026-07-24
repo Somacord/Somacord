@@ -26,7 +26,7 @@ export function SignUpForm({ next }: SignUpFormProps) {
         <h3 className="mb-2 text-xl">Check your email</h3>
         <p className="text-ink-muted text-sm">{state.message}</p>
         <p className="text-ink-muted mt-4 text-sm">
-          You&apos;re one of the first founding members in {siteConfig.launchCity.name}. We&apos;ll
+          You&apos;re one of the first to join Somacord in {siteConfig.launchCity.name}. We&apos;ll
           email you the moment the first event is announced.
         </p>
       </div>
@@ -54,7 +54,7 @@ export function SignUpForm({ next }: SignUpFormProps) {
         <FormField
           label="City"
           htmlFor="signup-city"
-          hint="Somacord is currently available in one city — more are on the way."
+          hint="Somacord is currently available in one city. More are on the way."
         >
           <Input
             id="signup-city"
@@ -86,7 +86,7 @@ export function SignUpForm({ next }: SignUpFormProps) {
       </form>
 
       <p className="text-ink-muted text-center text-sm">
-        Already a member?{" "}
+        Already have an account?{" "}
         <Link
           href={next ? `/signin?next=${encodeURIComponent(next)}` : "/signin"}
           className="text-cord-blue font-medium underline"
