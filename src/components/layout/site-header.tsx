@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
+import { SomacordLogo } from "@/components/brand/logo";
 import { SignOutButton } from "@/components/forms/sign-out-button";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
@@ -47,14 +47,7 @@ export function SiteHeader() {
     <header className="border-soft-sky sticky top-0 z-50 border-b bg-white/85 backdrop-blur-md">
       <Container className="flex items-center justify-between gap-6 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label={siteConfig.name}>
-          <Image
-            src="/brand/somacord-logo-horizontal-light.png"
-            alt={siteConfig.name}
-            height={32}
-            width={64}
-            className="h-8 w-auto"
-            priority
-          />
+          <SomacordLogo className="text-cord-blue h-10 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">

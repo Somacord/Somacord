@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
+import { SomacordLogo } from "@/components/brand/logo";
 import { SignOutButton } from "@/components/forms/sign-out-button";
 import { Container } from "@/components/layout/container";
 import { siteConfig } from "@/config/site";
@@ -27,21 +27,7 @@ export function SiteFooter() {
       <Container className="!px-0">
         <div className="mb-10 flex flex-wrap justify-between gap-8">
           <div>
-            {/*
-              The reverse lockup's plate is Deep Cord Blue — per
-              docs/brand/logo-guidelines.md it must only be used on a Deep
-              Cord Blue background, so the footer itself is that color
-              (bg-cord-blue) rather than a separate dark shade. That's what
-              makes the logo blend into the section instead of showing as a
-              mismatched rectangle.
-            */}
-            <Image
-              src="/brand/somacord-logo-reverse-dark-bg.png"
-              alt={siteConfig.name}
-              height={40}
-              width={80}
-              className="h-10 w-auto rounded-md"
-            />
+            <SomacordLogo className="h-11 w-auto text-white" />
             <p className="mt-3 max-w-[260px] text-[13px] text-white/55">
               A friendship-first social club for adults who want a better social life.
             </p>
