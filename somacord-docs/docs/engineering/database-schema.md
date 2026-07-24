@@ -3,7 +3,7 @@
 ## Core Entities
 
 ### users
-id, email, name, city, created_at, role (member | community_partner)
+id, email, name, city, created_at, role (member | community_partner | admin)
 
 ### profiles
 user_id, interests[], activities[], looking_for (free text), avatar_url
@@ -26,10 +26,17 @@ user_id, organization_name, organization_type (coffee_shop | restaurant | club |
 ### speed_connect_sessions
 id, user_id, scheduled_at, status (booked | completed | no_show), provider (meetaway)
 
+### organizations
+id, name, organization_type (coffee_shop | restaurant | brewery | coworking_space | club | hobby_group | event_organizer | community_organization | nonprofit), description, city_id, verified, created_at, updated_at
+
+### organization_managers
+organization_id, user_id, role (owner | manager), created_at — many-to-many join between `organizations` and `users`
+
 ## Relationships
 - One user has one profile
 - One user has zero or one active membership
-- A user with role `community_partner` also has a `partners` row identifying their organization
+- A user with role `community_partner` also has a `partners` row identifying their organization (legacy, kept for backward compatibility — see Known Gaps below for how this relates to `organizations`)
+- One organization can have several managers, and one user can manage several organizations, via `organization_managers`
 - A gathering belongs to one city and one creator (member or partner)
 - RSVPs link users to gatherings, many-to-many
 
@@ -37,9 +44,9 @@ See [architecture.md](architecture.md) for how this schema fits into the broader
 
 ## Known Gaps vs. Business Model v2
 
-[/docs/business/business-model.md](../business/business-model.md) (approved) describes a target model this schema does not yet implement. Nothing below has been changed in code or the database — this is a gap list, not a migration plan:
+[/docs/business/business-model.md](../business/business-model.md) (approved) describes a target model this schema is partway toward. One gap below has been closed (Organizations); the rest have not:
 
-- **No `organizations` table.** Community Partners are modeled as `users.role = 'community_partner'` plus a `partners` row keyed 1:1 on `user_id`. The target model treats organizations as businesses distinct from users, with many-to-many managers (one org, multiple managers; one user, multiple orgs managed). The current schema can express neither multiple managers per organization nor one manager across several organizations.
+- ~~No `organizations` table.~~ **Resolved.** `organizations` and `organization_managers` exist with many-to-many managers (one org can have several managers; one user can manage several orgs) — see Core Entities above. The legacy `partners` table (1:1 on `user_id`) is kept for backward compatibility and is no longer written to; it's been non-destructively backfilled into `organizations`. What's still missing: any self-serve UI on top of this data model — organizations are created by staff via the service-role client, not by partners themselves.
 - **No event-type distinction beyond a label.** `gatherings.category` is `community | partner` — a display label on one shared table. The target model has three distinct event types with different owners (member-created Community Gatherings, organization-created Partner Events, Somacord-created flagship Events), and Partner Events need fields this schema has none of: ticket price, free/paid/donation/member-discount/members-only status, bundled-item description, capacity per ticket tier.
 - **`memberships` is now consumer-only, unenforced.** The table still allows any `user_id` (partner or member) to hold a membership row. Under the new model Community Partners don't purchase the Somacord Membership — nothing in the schema or RLS currently prevents a partner from having one anyway, since partner status was never a gate to begin with.
 - **No partner-pricing tables at all.** Option A (one-time promotion, $99/event or 15–20% revenue share) and Option B (ongoing subscription, $149/mo or $1,500/yr) — see [pricing.md](../business/pricing.md#community-partner-pricing-b2b) — have no backing tables, and nothing models "flat fee vs. revenue share vs. subscription" as a per-partner, per-event choice.

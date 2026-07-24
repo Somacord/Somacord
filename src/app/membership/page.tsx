@@ -17,7 +17,7 @@ import { membershipFaqs } from "@/data/faq";
 
 export const metadata: Metadata = {
   title: "Membership",
-  description: `The ${siteConfig.membership.name} — $29/month, one flat price, to support Somacord as an early member.`,
+  description: `Somacord is free to join. The ${siteConfig.membership.name} ($29/month) is an optional way to support Somacord as an early member.`,
 };
 
 const exampleMonth = [
@@ -51,12 +51,17 @@ export default function MembershipPage() {
               <br />
               Everyone joins the same community.
             </h1>
+            <p className="text-ink-muted mt-4 text-sm">
+              Somacord is free to join — browsing gatherings, RSVPing, building your profile, and
+              trying Speed Connect don&apos;t require a membership. This is an optional way to
+              support Somacord once you&apos;ve experienced it.
+            </p>
           </div>
           <PricingCard
             eyebrow={siteConfig.membership.name}
             plans={siteConfig.membership.plans}
             benefits={siteConfig.membership.benefits}
-            ctaLabel="Become a Member"
+            ctaLabel="Love Somacord? Become a member."
             ctaHref="/signup"
             footnote={
               <>
@@ -111,11 +116,11 @@ export default function MembershipPage() {
         <Container className="max-w-xl text-center">
           <h2 className="mb-4 text-[36px]">Ready to become a member?</h2>
           <p className="mb-8 text-white/85">
-            $29/month, one flat price — support Somacord&apos;s growth in{" "}
+            Entirely optional — $29/month, one flat price, to support Somacord&apos;s growth in{" "}
             {siteConfig.launchCity.name} from day one.
           </p>
           <Button asChild variant="primary">
-            <Link href="/signup">Become a Member</Link>
+            <Link href="/signup">Love Somacord? Become a member.</Link>
           </Button>
         </Container>
       </Section>

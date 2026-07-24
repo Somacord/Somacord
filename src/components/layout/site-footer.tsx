@@ -9,17 +9,17 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-charcoal px-5 py-14 text-white/75 sm:px-10">
+    <footer className="bg-cord-blue px-5 py-14 text-white/75 sm:px-10">
       <Container className="!px-0">
         <div className="mb-10 flex flex-wrap justify-between gap-8">
           <div>
             {/*
-              The approved logo exports are flat, fully-opaque PNGs (no
-              transparency), so the light/horizontal lockup can't be
-              recolored for a dark footer with a CSS filter. The reverse
-              lockup already ships with its own Deep Cord Blue plate per
-              docs/brand/logo-guidelines.md, so it's used here as a small
-              self-contained badge instead.
+              The reverse lockup's plate is Deep Cord Blue — per
+              docs/brand/logo-guidelines.md it must only be used on a Deep
+              Cord Blue background, so the footer itself is that color
+              (bg-cord-blue) rather than a separate dark shade. That's what
+              makes the logo blend into the section instead of showing as a
+              mismatched rectangle.
             */}
             <Image
               src="/brand/somacord-logo-reverse-dark-bg.png"

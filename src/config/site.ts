@@ -35,7 +35,7 @@ export const siteConfig = {
   name: "Somacord",
   tagline: "Real friendships start with one hello.",
   description:
-    "Somacord is a friendship-first social club — guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
+    "Somacord is a friendship-first social club — free to join, with guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
   url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
 
   /** Salt Lake City only at MVP launch — see docs/business/launch-strategy.md */
@@ -53,21 +53,26 @@ export const siteConfig = {
       { id: "monthly", label: "Monthly", price: 29, interval: "month" },
     ] as const satisfies readonly MembershipPricingPlan[],
     benefits: [
-      "Support Somacord as an early member while we grow",
+      "Optional — not required to join or use Somacord",
       "One flat price — no tiers, no hidden fees",
+      "Support Somacord as an early member while we grow",
     ],
   },
 
-  /** Primary top nav — docs/design/design-system.md ("Navigation") */
+  /**
+   * Primary top nav — docs/design/design-system.md ("Navigation").
+   * Membership is intentionally left out of the main nav for first-time
+   * visitors (it's still reachable via the footer) — leading with it here
+   * reads as "pay to join," which isn't how Somacord works.
+   */
   primaryNav: [
     { label: "Gatherings", href: "/gatherings" },
     { label: "Cities", href: "/cities/salt-lake-city" },
     { label: "Partners", href: "/partners" },
     { label: "How It Works", href: "/speed-connect" },
-    { label: "Membership", href: "/membership" },
   ] satisfies NavLink[],
 
-  primaryCta: { label: "Join a Free Speed Connect", href: "/speed-connect" } satisfies NavLink,
+  primaryCta: { label: "Join Free", href: "/signup" } satisfies NavLink,
   signIn: { label: "Sign In", href: "/signin" } satisfies NavLink,
   signUp: { label: "Sign Up", href: "/signup" } satisfies NavLink,
 

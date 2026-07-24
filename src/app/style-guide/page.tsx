@@ -221,9 +221,10 @@ export default function StyleGuidePage() {
             imageAlt={photography.walkingTogether.alt}
           >
             <Eyebrow>Membership Preview</Eyebrow>
-            <h3 className="mb-3 text-2xl">One membership. One price. One community.</h3>
+            <h3 className="mb-3 text-2xl">An optional upgrade, whenever you&apos;re ready.</h3>
             <CheckList
               items={[
+                "Optional — not required to join or use Somacord",
                 "One flat price — no tiers, no hidden fees",
                 "Support Somacord as an early member while we grow",
               ]}
@@ -244,7 +245,7 @@ export default function StyleGuidePage() {
             eyebrow={siteConfig.membership.name}
             plans={siteConfig.membership.plans}
             benefits={siteConfig.membership.benefits}
-            ctaLabel="Become a Member"
+            ctaLabel="Love Somacord? Become a member."
             ctaHref="/membership"
             footnote="Community Partners are organizations, not members — see /partners for how they work with Somacord instead."
           />

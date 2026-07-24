@@ -21,7 +21,7 @@ Three event types, three different owners — see [community-partners.md](commun
 
 - **Community Gatherings** — created by members, organic community building (coffee meetups, hikes, board games).
 - **Partner Events** — created by Community Partner organizations, bring new people into a business while creating a real community experience (brewery mixers, trivia nights, workshops).
-- **Somacord Events** — created by Somacord itself, premium flagship experiences that define the brand (Speed Networking, New in Town, Singles Social, Professional Networking).
+- **Official Somacord Events** — created by Somacord itself, premium flagship experiences that define the brand (Speed Networking, New in Town, Singles Social, Professional Networking).
 
 ## Revenue Priority
 
@@ -60,6 +60,6 @@ Meetaway (customer-facing: Speed Connect) uses a freemium model whose entire pur
 
 This replaces the prior model, which described Community Partners as members who paid the same Somacord Membership and got "gathering-organizing tools." Under this model, Community Partners are organizations with their own partner products (see [community-partners.md](community-partners.md)) — they do not purchase the Member subscription.
 
-**The current implementation has not caught up to this document yet** — Community Partners are still modeled as a `users.role` value plus a 1:1 `partners` row, not as a separate Organizations entity. See [/docs/engineering/database-schema.md](../engineering/database-schema.md#known-gaps-vs-business-model-v2) for the specific gap and what it would take to close it.
+**The Organizations data model has since been implemented** — `organizations` and `organization_managers` tables exist with many-to-many managers, applied and verified against the live database. What's still outstanding is the partner-facing product surface built on top of it (self-serve org/manager UI, Partner Event ticketing, partner billing) — launch remains concierge-run, with Somacord staff creating organizations on partners' behalf. See [/docs/engineering/database-schema.md](../engineering/database-schema.md#known-gaps-vs-business-model-v2) for exactly what's built vs. still open.
 
 **Status:** Directional model, approved. Exact partner pricing (flat fee vs. revenue share vs. subscription) is intentionally left flexible until validated — see [pricing.md](pricing.md). A dedicated unit-economics narrative (CAC/LTV) has not been drafted yet.
