@@ -3,13 +3,12 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { ExampleTag } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { GatheringCard } from "@/components/ui/gathering-card";
 import { Panel } from "@/components/ui/panel";
 import { SectionHeader } from "@/components/ui/section-header";
 import { siteConfig } from "@/config/site";
-import { communityUpdates, getUpcomingSpeedConnect } from "@/data/dashboard";
+import { communityUpdates } from "@/data/dashboard";
 import {
   getCityIdBySlug,
   getMyRsvpGatherings,
@@ -44,7 +43,6 @@ export default async function HomePage() {
   const discoverable = cityGatherings.filter((gathering) => !myRsvpIds.has(gathering.id));
   const upcoming = discoverable.slice(0, 2);
   const recommended = discoverable.slice(2, 5);
-  const speedConnect = getUpcomingSpeedConnect();
   const firstName = user.name?.split(" ")[0];
 
   return (
@@ -106,7 +104,7 @@ export default async function HomePage() {
                 </p>
               ) : (
                 <p className="text-ink-muted text-sm">
-                  You&apos;re one of the first founding members in {user.city ?? "your city"}.
+                  You&apos;re one of the first to join Somacord in {user.city ?? "your city"}.
                   We&apos;ll email you the moment the first event is announced.
                 </p>
               )}
@@ -165,24 +163,11 @@ export default async function HomePage() {
 
           <div className="space-y-8">
             <Panel>
-              <ExampleTag />
               <h3 className="mb-1 text-lg">Speed Connect</h3>
-              {speedConnect ? (
-                <>
-                  <p className="text-ink mb-1 text-sm font-medium">{speedConnect.scheduledFor}</p>
-                  <p className="text-ink-muted mb-4 text-sm">{speedConnect.format}</p>
-                  <Button variant="secondary-light" size="small" className="w-full">
-                    Manage booking
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <p className="text-ink-muted mb-4 text-sm">No upcoming session booked.</p>
-                  <Button asChild variant="primary" size="small" className="w-full">
-                    <Link href="/speed-connect">Book a Speed Connect</Link>
-                  </Button>
-                </>
-              )}
+              <p className="text-ink-muted text-sm">
+                Speed Connect is coming soon. Check back here to book a session once it&apos;s
+                ready.
+              </p>
             </Panel>
 
             <Panel>

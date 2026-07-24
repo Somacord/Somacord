@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 const exampleMonth = [
   {
     title: "4 coffee meetups",
-    description: "Drop into a standing weekly gathering, no RSVP pressure.",
+    description: "Drop into a standing weekly gathering. No RSVP pressure.",
     image: photography.coffeeGathering,
   },
   {
@@ -33,7 +33,7 @@ const exampleMonth = [
   },
   {
     title: "1 game night",
-    description: "Low-key, recurring, easy to become a regular.",
+    description: "Relaxed and recurring. Easy to become a regular.",
     image: photography.gameNight,
   },
 ];
@@ -52,9 +52,9 @@ export default function MembershipPage() {
               Everyone joins the same community.
             </h1>
             <p className="text-ink-muted mt-4 text-sm">
-              Somacord is free to join — browsing gatherings, RSVPing, building your profile, and
-              trying Speed Connect don&apos;t require a membership. This is an optional way to
-              support Somacord once you&apos;ve experienced it.
+              Somacord is free to join. Browse gatherings. RSVP. Build your profile. Try Speed
+              Connect. None of that requires a membership. This is an optional way to support
+              Somacord once you&apos;ve experienced it.
             </p>
           </div>
           <PricingCard
@@ -116,7 +116,7 @@ export default function MembershipPage() {
         <Container className="max-w-xl text-center">
           <h2 className="mb-4 text-[36px]">Ready to become a member?</h2>
           <p className="mb-8 text-white/85">
-            Entirely optional — $29/month, one flat price, to support Somacord&apos;s growth in{" "}
+            Entirely optional. $29/month. One flat price. It supports Somacord&apos;s growth in{" "}
             {siteConfig.launchCity.name} from day one.
           </p>
           <Button asChild variant="primary">

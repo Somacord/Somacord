@@ -11,28 +11,28 @@ import { siteConfig } from "@/config/site";
 
 const planSummary = siteConfig.membership.plans
   .map((plan) => `${plan.label.toLowerCase()} ($${plan.price}/${plan.interval})`)
-  .join(", ");
+  .join(" or ");
 
 export const homeFaqs: FaqItemData[] = [
   {
     question: "What is Somacord?",
     answer:
-      "Somacord is a friendship-first social club — guided conversations and local gatherings for adults who want a better social life, not another app to swipe through.",
+      "Somacord is a social club built around friendship. Enjoy guided conversations and local gatherings for a better social life instead of another app to swipe through.",
   },
   {
     question: "Do I have to pay to join?",
     answer:
-      "No — creating a Somacord account is free. You can browse gatherings, build a profile, RSVP, and try Speed Connect without paying anything. Somacord Membership ($29/month) is an optional upgrade for later, if you'd like to support Somacord as an early member.",
+      "No. Creating a Somacord account is free. You can browse gatherings. Build a profile. RSVP. Try Speed Connect without paying anything. Somacord Membership ($29/month) is an optional upgrade for later if you'd like to support Somacord as an early member.",
   },
   {
     question: "Is Somacord a dating app?",
     answer:
-      "No. Somacord is built around friendship, not dating or professional networking. There's no swiping, ranking, or appearance-based matching anywhere on Somacord.",
+      "No. Somacord is built around friendship. It is not for dating or professional networking. There is no swiping or ranking or matching based on appearance anywhere on Somacord.",
   },
   {
     question: "What is Speed Connect?",
     answer:
-      "Speed Connect is a short, guided conversation experience that makes a first hello easy. It's free, with no signup commitment required to try.",
+      "Speed Connect is a short guided conversation experience that makes a first hello easy. It's free. No signup commitment is required to try.",
   },
   {
     question: "Where is Somacord available?",
@@ -46,7 +46,7 @@ export const homeFaqs: FaqItemData[] = [
   },
   {
     question: "How much does membership cost?",
-    answer: `The ${siteConfig.membership.name} is ${planSummary} — one flat price that directly supports Somacord as we grow. Browsing gatherings, RSVPing, and trying Speed Connect are all free and don't require a membership.`,
+    answer: `The ${siteConfig.membership.name} is ${planSummary}. It is one flat price that directly supports Somacord as we grow. Browsing gatherings and RSVPing and trying Speed Connect are all free. None of that requires a membership.`,
   },
 ];
 
@@ -54,25 +54,25 @@ export const membershipFaqs: FaqItemData[] = [
   {
     question: "Do I need to become a member to use Somacord?",
     answer:
-      "No — creating an account, browsing gatherings, RSVPing, and trying Speed Connect are all free. Membership is an optional way to support Somacord once you've experienced it, never a requirement to join.",
+      "No. Creating an account is free. Browsing gatherings is free. RSVPing is free. Trying Speed Connect is free. Membership is an optional way to support Somacord once you've experienced it. It is never a requirement to join.",
   },
   {
     question: `What's included in the ${siteConfig.membership.name}?`,
     answer:
-      "One flat price, with no tiers or add-ons. Membership directly supports Somacord as we grow — the core experience (gatherings, RSVPs, and Speed Connect) is the same whether or not you're a member.",
+      "One flat price. No tiers. No extra fees. Membership directly supports Somacord as we grow. The core experience (gatherings and RSVPs and Speed Connect) is the same whether or not you're a member.",
   },
   {
     question: "Do Community Partners pay for a Somacord Membership?",
     answer:
-      "No — Community Partners are organizations, not members, so they don't purchase the Somacord Membership at all. They partner with Somacord differently, from a one-time event to an ongoing relationship. See the Community Partners page for how that works.",
+      "No. Community Partners are organizations. They are not members. They do not purchase the Somacord Membership at all. They partner with Somacord differently. That can range from a single event to an ongoing relationship. See the Community Partners page for how that works.",
   },
   {
     question: "Do I need to be a member to try Speed Connect?",
-    answer: "No — Speed Connect is free to try, membership or not.",
+    answer: "No. Speed Connect is free to try whether or not you have a membership.",
   },
   {
     question: "Can I create my own gatherings?",
     answer:
-      "Yes — any signed-in member, free or paid, can create and host a gathering. Community Partners can create their own events too.",
+      "Yes. Any user who is signed in can create and host a gathering whether or not they have a membership. Community Partners can create their own events too.",
   },
 ];
