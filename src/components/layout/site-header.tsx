@@ -9,12 +9,8 @@ import { SignOutButton } from "@/components/forms/sign-out-button";
 import { Container } from "@/components/layout/container";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { env } from "@/lib/env";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { useAuthStatus } from "@/lib/hooks/use-auth-status";
 import { cn } from "@/lib/utils";
-
-type HeaderUser = { name: string | null } | null;
-type AuthStatus = "loading" | "signed-in" | "signed-out";
 
 /**
  * Site header / primary navigation — docs/design/design-system.md ("Navigation")
@@ -38,47 +34,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [lastPathname, setLastPathname] = React.useState(pathname);
-  const [user, setUser] = React.useState<HeaderUser>(null);
-  const [status, setStatus] = React.useState<AuthStatus>(() =>
-    env.supabase.isConfigured ? "loading" : "signed-out",
-  );
-
-  React.useEffect(() => {
-    if (!env.supabase.isConfigured) return;
-
-    const supabase = createSupabaseBrowserClient();
-    let active = true;
-
-    async function loadUser() {
-      const { data } = await supabase.auth.getUser();
-      if (!active) return;
-
-      if (!data.user) {
-        setUser(null);
-        setStatus("signed-out");
-        return;
-      }
-
-      const { data: row } = await supabase
-        .from("users")
-        .select("name")
-        .eq("id", data.user.id)
-        .maybeSingle();
-      if (active) {
-        setUser({ name: row?.name ?? null });
-        setStatus("signed-in");
-      }
-    }
-
-    loadUser();
-
-    const { data: listener } = supabase.auth.onAuthStateChange(() => loadUser());
-
-    return () => {
-      active = false;
-      listener.subscription.unsubscribe();
-    };
-  }, []);
+  const { status, user } = useAuthStatus();
 
   // Close the mobile menu on navigation without a synchronous setState-in-effect:
   // update derived state during render when the pathname prop we're tracking changes.
