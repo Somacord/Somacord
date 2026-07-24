@@ -14,6 +14,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 type HeaderUser = { name: string | null } | null;
+type AuthStatus = "loading" | "signed-in" | "signed-out";
 
 /**
  * Site header / primary navigation — docs/design/design-system.md ("Navigation")
@@ -28,15 +29,19 @@ type HeaderUser = { name: string | null } | null;
  * Auth state is checked client-side (not passed down from the root
  * layout) so every marketing page can stay statically generated —
  * reading the session server-side in the root layout would force every
- * route in the app to render dynamically. The tradeoff is a brief
- * signed-out-looking flash on first paint for already-authenticated
- * visitors, which resolves as soon as the client-side check completes.
+ * route in the app to render dynamically. Until that check resolves, the
+ * header shows neither the signed-in nor signed-out nav — a signed-in
+ * user briefly seeing "Sign In" / "Join Free" would be actively wrong,
+ * not just a loading flicker, especially over a slow connection.
  */
 export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [lastPathname, setLastPathname] = React.useState(pathname);
   const [user, setUser] = React.useState<HeaderUser>(null);
+  const [status, setStatus] = React.useState<AuthStatus>(() =>
+    env.supabase.isConfigured ? "loading" : "signed-out",
+  );
 
   React.useEffect(() => {
     if (!env.supabase.isConfigured) return;
@@ -50,6 +55,7 @@ export function SiteHeader() {
 
       if (!data.user) {
         setUser(null);
+        setStatus("signed-out");
         return;
       }
 
@@ -58,7 +64,10 @@ export function SiteHeader() {
         .select("name")
         .eq("id", data.user.id)
         .maybeSingle();
-      if (active) setUser({ name: row?.name ?? null });
+      if (active) {
+        setUser({ name: row?.name ?? null });
+        setStatus("signed-in");
+      }
     }
 
     loadUser();
@@ -102,7 +111,7 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
-          {user ? (
+          {status === "signed-in" ? (
             <>
               <Link
                 href="/profile"
@@ -112,24 +121,26 @@ export function SiteHeader() {
               </Link>
               <SignOutButton className="text-ink hover:text-cord-blue text-sm font-medium whitespace-nowrap transition-colors" />
             </>
-          ) : (
+          ) : status === "signed-out" ? (
             <Link
               href={siteConfig.signIn.href}
               className="text-ink hover:text-cord-blue text-sm font-medium whitespace-nowrap transition-colors"
             >
               {siteConfig.signIn.label}
             </Link>
-          )}
+          ) : null}
         </nav>
 
         <div className="hidden lg:block">
-          <Button asChild variant="primary" size="small">
-            {user ? (
-              <Link href="/home">{user.name ? `Hi, ${user.name.split(" ")[0]}` : "My Home"}</Link>
-            ) : (
+          {status === "signed-in" ? (
+            <Button asChild variant="primary" size="small">
+              <Link href="/home">{user?.name ? `Hi, ${user.name.split(" ")[0]}` : "My Home"}</Link>
+            </Button>
+          ) : status === "signed-out" ? (
+            <Button asChild variant="primary" size="small">
               <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
-            )}
-          </Button>
+            </Button>
+          ) : null}
         </div>
 
         <button
@@ -174,7 +185,7 @@ export function SiteHeader() {
                 {link.label}
               </Link>
             ))}
-            {user ? (
+            {status === "signed-in" ? (
               <>
                 <Link
                   href="/home"
@@ -190,7 +201,7 @@ export function SiteHeader() {
                 </Link>
                 <SignOutButton className="text-ink hover:bg-soft-sky rounded-md px-2 py-2.5 text-left text-sm font-medium" />
               </>
-            ) : (
+            ) : status === "signed-out" ? (
               <>
                 <Link
                   href={siteConfig.signIn.href}
@@ -202,7 +213,7 @@ export function SiteHeader() {
                   <Link href={siteConfig.primaryCta.href}>{siteConfig.primaryCta.label}</Link>
                 </Button>
               </>
-            )}
+            ) : null}
           </Container>
         </div>
       </div>
